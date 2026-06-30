@@ -3,8 +3,6 @@ import { Routes, Route } from "react-router-dom";
 
 import Landing from "./pages/Landing";
 import AdminLogin from "./pages/AdminLogin";
-import OwnerLogin from "./pages/OwnerLogin";
-import OwnerRegister from "./pages/OwnerRegister";
 import PlayerRegistration from "./pages/PlayerRegistration";
 import BroadcastDisplay from "./pages/BroadcastDisplay";
 import TeamProfile from "./pages/TeamProfile";
@@ -31,8 +29,6 @@ export default function App() {
       <Route path="/team/:teamId" element={<TeamProfile />} />
       <Route path="/watch/:tournamentId" element={<BroadcastDisplay />} />
       <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/owner/login" element={<OwnerLogin />} />
-      <Route path="/owner/register" element={<OwnerRegister />} />
       <Route path="/player-registration" element={<PlayerRegistration />} />
 
       {/* ── Admin (protected) ── */}

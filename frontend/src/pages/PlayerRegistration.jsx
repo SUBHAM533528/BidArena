@@ -21,11 +21,8 @@ const ROLE_CONFIG = {
 };
 
 const initialForm = {
-  fullName: "", mobile: "", email: "", dob: "",
+  fullName: "", mobile: "", 
   role: "Batsman", battingStyle: "", bowlingStyle: "",
-  district: "", state: "", experience: "",
-  previousTeams: "", matchesPlayed: "", runs: "", wickets: "",
-  basePrice: "",
 };
 
 export default function PlayerRegistration() {
@@ -149,22 +146,7 @@ export default function PlayerRegistration() {
             <Label>Mobile Number *</Label>
             <Input required value={form.mobile} onChange={(e) => setForm({ ...form, mobile: e.target.value })} />
           </div>
-          <div>
-            <Label>Email *</Label>
-            <Input type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-          </div>
-          <div>
-            <Label>Date of Birth *</Label>
-            <Input type="date" required value={form.dob} onChange={(e) => setForm({ ...form, dob: e.target.value })} />
-          </div>
-          <div>
-            <Label>District *</Label>
-            <Input required value={form.district} onChange={(e) => setForm({ ...form, district: e.target.value })} />
-          </div>
-          <div>
-            <Label>State *</Label>
-            <Input required value={form.state} onChange={(e) => setForm({ ...form, state: e.target.value })} />
-          </div>
+          
 
           {/* ── Cricket Profile ── */}
           <div className="sm:col-span-2 mt-2">
@@ -218,50 +200,8 @@ export default function PlayerRegistration() {
             </div>
           )}
 
-          <div>
-            <Label>Experience (years)</Label>
-            <Input type="number" min="0" value={form.experience} onChange={(e) => setForm({ ...form, experience: e.target.value })} />
-          </div>
-          <div>
-            <Label>Previous Teams</Label>
-            <Input placeholder="e.g. City XI, College A" value={form.previousTeams} onChange={(e) => setForm({ ...form, previousTeams: e.target.value })} />
-          </div>
-
-          {/* ── Statistics ── */}
-          <div className="sm:col-span-2 mt-2">
-            <p className="text-xs uppercase tracking-widest text-slate-500 mb-3 border-b border-stadium-700 pb-1">Career Statistics</p>
-          </div>
-
-          <div>
-            <Label>Matches Played</Label>
-            <Input type="number" min="0" value={form.matchesPlayed} onChange={(e) => setForm({ ...form, matchesPlayed: e.target.value })} />
-          </div>
-          {roleConf.hasBatting && (
-            <div>
-              <Label>Runs Scored</Label>
-              <Input type="number" min="0" value={form.runs} onChange={(e) => setForm({ ...form, runs: e.target.value })} />
-            </div>
-          )}
-          {roleConf.hasBowling && (
-            <div>
-              <Label>Wickets Taken</Label>
-              <Input type="number" min="0" value={form.wickets} onChange={(e) => setForm({ ...form, wickets: e.target.value })} />
-            </div>
-          )}
-
-          <div>
-            <Label>
-              Base Price (₹)
-              {tournament?.defaultBasePrice && <span className="text-slate-500 ml-1 text-xs">— default: ₹{tournament.defaultBasePrice.toLocaleString()}</span>}
-            </Label>
-            <Input
-              type="number"
-              min="0"
-              required
-              value={form.basePrice}
-              onChange={(e) => setForm({ ...form, basePrice: e.target.value })}
-            />
-          </div>
+          
+          
 
           {/* ── Uploads ── */}
           <div className="sm:col-span-2 mt-2">
