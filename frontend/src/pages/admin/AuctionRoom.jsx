@@ -70,7 +70,7 @@ export default function AuctionRoom() {
         <div>
           <p className="label-xs mb-1">Live</p>
           <div className="flex items-center gap-3">
-            <h1 className="font-display text-3xl text-slate-100">Auction Room</h1>
+            <h1 className="font-display text-3xl text-green-700">Auction Room</h1>
             {t && (
               <Badge color={t.auctionMode==="serial"?"green":"gold"}>
                 {t.auctionMode==="serial"?"Serial":"Random"}
@@ -86,7 +86,7 @@ export default function AuctionRoom() {
           )}
           <button onClick={()=>window.open(`/watch/${tid}`,"_blank")}
             className="px-3 py-1.5 text-xs border border-ink-500 hover:border-gold-500 text-slate-400 hover:text-gold-400 rounded transition">
-            TV Display ↗
+            TV Display
           </button>
         </div>
       </div>
@@ -101,7 +101,7 @@ export default function AuctionRoom() {
           </div>
           <Button variant="primary" size="sm"
             onClick={()=>{ emit("admin:next_player",startPrice?{startingPrice:+startPrice}:{}); setStartPrice(""); }}>
-            {t?.auctionMode==="serial"?"Next Player →":"Random Player →"}
+            {t?.auctionMode==="serial"?"Next Player":"Random Player"}
           </Button>
           <Button variant="ghost" size="sm" onClick={()=>emit("admin:pause_auction")}>Pause</Button>
           <Button variant="ghost" size="sm" onClick={()=>emit("admin:resume_auction")}>Resume</Button>
@@ -137,7 +137,7 @@ export default function AuctionRoom() {
 
             {!player ? (
               <div className="flex flex-col items-center justify-center h-80 text-slate-600">
-                <p className="text-4xl mb-3">🏏</p>
+                <i className="fa-solid fa-baseball-bat-ball text-4xl opacity-30" />
                 <p className="text-sm">No player in auction. Click "Next Player" to begin.</p>
               </div>
             ) : (
@@ -146,7 +146,7 @@ export default function AuctionRoom() {
                 <div className="h-32 w-32 rounded-lg bg-ink-700 overflow-hidden flex items-center justify-center shrink-0">
                   {player.photo
                     ? <img src={player.photo} className="h-full w-full object-cover" alt={player.fullName}/>
-                    : <span className="text-4xl opacity-40">🏏</span>}
+                    : <i className="fa-solid fa-baseball-bat-ball text-xl opacity-40" />}
                 </div>
                 {/* Info */}
                 <div className="flex-1 min-w-0">
@@ -243,7 +243,7 @@ export default function AuctionRoom() {
                 style={{borderColor: isLeading?"#f2b70566":undefined, borderWidth: isLeading?"1px":undefined}}>
                 <div className="flex items-center gap-2 mb-2">
                   <div className="h-7 w-7 rounded bg-ink-600 overflow-hidden flex items-center justify-center shrink-0">
-                    {tm.logo?<img src={tm.logo} className="h-full w-full object-cover"/>:<span className="text-xs">🛡</span>}
+                    {tm.logo?<img src={tm.logo} className="h-full w-full object-cover"/>:<i className="fa-solid fa-shield-halved text-base opacity-60" />}
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-medium text-slate-200 truncate">{tm.name}</p>

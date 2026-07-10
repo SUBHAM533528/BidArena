@@ -25,7 +25,7 @@ export default function ChangePassword() {
     setLoading(true);
     try {
       await api.put("/auth/change-password", { currentPassword:form.current, newPassword:form.next });
-      setMsg({ text:"Password updated successfully ✓", ok:true });
+      setMsg({ text:"Password updated successfully", ok:true });
       setForm({ current:"", next:"", confirm:"" });
       setTimeout(() => navigate("/admin/settings"), 2000);
     } catch(err) {
@@ -44,7 +44,7 @@ export default function ChangePassword() {
       <div className="max-w-lg">
         <div className="card p-6">
           <div className="flex items-center gap-4 mb-6 pb-5 border-b dark:border-ink-800 border-ink-100">
-            <div className="h-12 w-12 rounded-xl dark:bg-ink-800 bg-ink-100 border dark:border-ink-700 border-ink-200 flex items-center justify-center text-xl">🔐</div>
+            <div className="h-12 w-12 rounded-xl dark:bg-ink-800 bg-ink-100 border dark:border-ink-700 border-ink-200 flex items-center justify-center text-xl">icon</div>
             <div>
               <p className="font-semibold dark:text-ink-200 text-ink-800">Admin Password</p>
               <p className="text-xs dark:text-ink-500 text-ink-400 mt-0.5">Choose a strong password. There is no "forgot password" option.</p>
@@ -89,7 +89,7 @@ export default function ChangePassword() {
                 {rules.map(r => (
                   <div key={r.label} className="flex items-center gap-2.5">
                     <div className={`h-4 w-4 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${r.ok ? "bg-jade-500 text-white" : "dark:bg-ink-700 bg-ink-200 dark:text-ink-600 text-ink-400"}`}>
-                      {r.ok ? "✓" : ""}
+                      {r.ok ? <i className="fa-solid fa-check text-2xs" /> : ""}
                     </div>
                     <span className={`text-xs transition-colors ${r.ok ? "dark:text-jade-400 text-jade-600" : "dark:text-ink-500 text-ink-400"}`}>{r.label}</span>
                   </div>

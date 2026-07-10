@@ -62,7 +62,7 @@ export default function TeamDetail() {
       <div className="flex flex-wrap items-start justify-between gap-4 mb-8">
         <div className="flex items-center gap-4">
           <div className="h-14 w-14 rounded-xl dark:bg-ink-700 bg-ink-100 border dark:border-ink-600 border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
-            {team.logo ? <img src={team.logo} className="h-full w-full object-cover" alt={team.name} /> : <span className="text-2xl">🛡️</span>}
+            {team.logo ? <img src={team.logo} className="h-full w-full object-cover" alt={team.name} /> : <i className="fa-solid fa-shield-halved text-base opacity-60" />}
           </div>
           <div>
             <h1 className="font-display text-3xl font-bold dark:text-white text-ink-900">{team.name}</h1>
@@ -71,7 +71,7 @@ export default function TeamDetail() {
         </div>
         <div className="flex gap-2">
           <Button onClick={downloadPDF} variant="primary" disabled={downloading}>
-            {downloading ? "⏳ Generating…" : "⬇ Download Squad PDF"}
+            {downloading ? "Generating…" : "⬇ Download Squad PDF"}
           </Button>
           <Link to={`/team/${teamId}`} target="_blank"
             className="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm font-semibold border dark:border-ink-700 border-ink-300 dark:text-ink-300 text-ink-700 rounded-lg hover:border-gold-500 hover:text-gold-500 transition">
@@ -117,7 +117,7 @@ export default function TeamDetail() {
       {/* Squad table by role */}
       {(team.squad?.length || 0) === 0 ? (
         <div className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 p-10">
-          <Empty icon="🏏" title="No players purchased yet" />
+          <Empty icon="fa-solid fa-baseball-bat-ball" title="No players purchased yet" />
         </div>
       ) : (
         Object.entries(byRole).map(([role, players]) => (
@@ -150,7 +150,7 @@ export default function TeamDetail() {
                           <td>
                             <div className="flex items-center gap-3">
                               <div className="h-8 w-8 rounded-lg dark:bg-ink-700 bg-ink-100 overflow-hidden flex items-center justify-center border dark:border-ink-600 border-ink-200 shrink-0">
-                                {p.photo ? <img src={p.photo} className="h-full w-full object-cover" /> : <span className="text-sm opacity-40">🏏</span>}
+                                {p.photo ? <img src={p.photo} className="h-full w-full object-cover" /> : <i className="fa-solid fa-baseball-bat-ball text-xl opacity-40" />}
                               </div>
                               <span className="font-semibold dark:text-ink-100 text-ink-900">{p.fullName}</span>
                             </div>

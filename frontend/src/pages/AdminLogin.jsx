@@ -41,11 +41,10 @@ export default function AdminLogin() {
             <Button type="submit" className="w-full" size="lg" disabled={loading}>{loading?"Signing in…":"Sign in to Admin"}</Button>
           </form>
           <div className="mt-5 pt-5 border-t dark:border-ink-800 border-ink-100 text-sm text-center space-y-2">
-            <p className="dark:text-ink-500 text-ink-400">Not an admin? <Link to="/owner/login" className="text-gold-500 hover:text-gold-400 font-semibold">Owner Login →</Link></p>
-            <Link to="/" className="text-2xs dark:text-ink-600 text-ink-400 hover:text-gold-500 transition block">← Back to Home</Link>
+            
+            <Link to="/" className="text-2xs dark:text-ink-600 text-ink-400 hover:text-gold-500 transition block">Back to Home</Link>
           </div>
         </div>
-        <p className="text-center text-2xs dark:text-ink-700 text-ink-300 mt-4">Default: admin@auction.com / Admin@123</p>
       </div>
     </div>
   );

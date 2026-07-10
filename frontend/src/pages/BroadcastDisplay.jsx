@@ -103,13 +103,13 @@ export default function BroadcastDisplay() {
 
           {!player ? (
             <div className="text-center opacity-20">
-              <p className="text-8xl mb-4">🏏</p>
+              <i className="fa-solid fa-baseball-bat-ball text-4xl opacity-30" />
               <p>Waiting for next player…</p>
             </div>
           ) : (
             <>
               <div className="h-32 w-32 sm:h-44 sm:w-44 rounded-3xl bg-[#1a1d24] overflow-hidden flex items-center justify-center border border-[#242830] mb-5">
-                {player.photo ? <img src={player.photo} className="h-full w-full object-cover" alt={player.fullName}/> : <span className="text-6xl">🏏</span>}
+                {player.photo ? <img src={player.photo} className="h-full w-full object-cover" alt={player.fullName}/> : <i className="fa-solid fa-baseball-bat-ball text-xl opacity-40" />}
               </div>
               <h1 className="font-display font-extrabold text-3xl sm:text-5xl text-white text-center tracking-tight">{player.fullName}</h1>
               <p className="text-gray-500 mt-2 text-base sm:text-lg">{player.role}</p>
@@ -177,7 +177,7 @@ export default function BroadcastDisplay() {
                 <div key={t._id} className={`p-3 rounded-xl border transition-all ${isLead?"border-gold-500/60 bg-gold-950/15 scale-[1.02]":"border-[#1a1d24] bg-[#111318]"}`}>
                   <div className="flex items-center gap-2 mb-2">
                     <div className="h-7 w-7 rounded-full bg-[#1a1d24] overflow-hidden flex items-center justify-center shrink-0">
-                      {t.logo?<img src={t.logo} className="h-full w-full object-cover"/>:"🛡️"}
+                      {t.logo?<img src={t.logo} className="h-full w-full object-cover"/>:"shield"}
                     </div>
                     <p className={`text-sm truncate ${isLead?"font-bold text-gold-400":"font-medium"}`}>{t.name}</p>
                     {isLead && <span className="text-2xs text-gold-400 ml-auto shrink-0 font-semibold">● bidding</span>}

@@ -79,7 +79,7 @@ export default function Settings() {
           <div className="sm:col-span-2">
             <Label>Auction Mode</Label>
             <div className="grid grid-cols-2 gap-3 mt-2">
-              {[["random","🎲 Random","Players drawn randomly from the pool"],["serial","🔢 Serial","Players go up in registration order"]].map(([val,title,desc])=>(
+              {[["random","Random","Players drawn randomly from the pool"],["serial","Serial","Players go up in registration order"]].map(([val,title,desc])=>(
                 <button type="button" key={val} onClick={()=>setForm({...form,auctionMode:val})}
                   className={`p-3 rounded-xl border text-left transition-all ${form.auctionMode===val
                     ? "border-gold-500 bg-gold-500/8 dark:bg-gold-500/10"
@@ -99,7 +99,7 @@ export default function Settings() {
           <div className="sm:col-span-2"><Label>Contact Details</Label><Input value={form.contactDetails} onChange={e=>setForm({...form,contactDetails:e.target.value})}/></div>
           <div className="sm:col-span-2 flex items-center gap-3 pt-1">
             <Button type="submit">Save Settings</Button>
-            {saved && <span className="text-jade-500 text-sm font-medium animate-fade-up">Saved ✓</span>}
+            {saved && <span className="text-jade-500 text-sm font-medium animate-fade-up">Saved</span>}
           </div>
         </form>
       </div>
@@ -113,7 +113,7 @@ export default function Settings() {
           </div>
           <Link to="/admin/change-password"
             className="px-4 py-2 text-sm font-semibold border dark:border-ink-700 border-ink-300 dark:text-ink-300 text-ink-600 rounded-lg hover:border-gold-500 hover:text-gold-500 transition">
-            Change Password →
+            Change Password
           </Link>
         </div>
       </div>

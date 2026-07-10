@@ -42,18 +42,18 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <StatCard label="Total Teams"    value={stats.totalTeams}    accent="gold"  icon="🛡️" />
-        <StatCard label="Players"        value={stats.totalPlayers}  accent="slate" icon="🏏" />
-        <StatCard label="Sold"           value={stats.soldPlayers}   accent="green" icon="✓"
+        <StatCard label="Total Teams"    value={stats.totalTeams}    accent="gold"  icon="fa-solid fa-shield-halved" />
+        <StatCard label="Players"        value={stats.totalPlayers}  accent="slate" icon="fa-solid fa-baseball-bat-ball" />
+        <StatCard label="Sold"           value={stats.soldPlayers}   accent="green" icon="fa-solid fa-check"
           sub={`₹${(stats.totalAuctionValue/100000).toFixed(1)}L total`} />
-        <StatCard label="Unsold"         value={stats.unsoldPlayers} accent="red"   icon="✕" />
+        <StatCard label="Unsold"         value={stats.unsoldPlayers} accent="red"   icon="fa-solid fa-xmark" />
       </div>
 
       <div className="grid md:grid-cols-2 gap-4">
         <div className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 p-5">
           <p className="eyebrow mb-5">Team Spending</p>
           {spendData.every(d => d.spent === 0)
-            ? <Empty icon="💰" title="No bids placed yet" />
+            ? <Empty icon="fa-solid fa-sack-dollar" title="No bids placed yet" />
             : (
               <ResponsiveContainer width="100%" height={200}>
                 <BarChart data={spendData} barSize={28} margin={{ top:4, right:4, bottom:0, left:0 }}>
@@ -69,7 +69,7 @@ export default function Dashboard() {
         <div className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 p-5">
           <p className="eyebrow mb-5">Sold by Role</p>
           {roleData.length === 0
-            ? <Empty icon="🎯" title="No players sold yet" />
+            ? <Empty icon="fa-solid fa-bullseye" title="No players sold yet" />
             : (
               <ResponsiveContainer width="100%" height={200}>
                 <PieChart>

@@ -50,7 +50,7 @@ export default function SoldPlayers() {
 
       {players.length === 0 ? (
         <div className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 p-10">
-          <Empty icon="✅" title="No players sold yet" body="Sold players will appear here once bidding starts." />
+          <Empty icon="fa-solid fa-circle-check" title="No players sold yet" body="Sold players will appear here once bidding starts." />
         </div>
       ) : (
         <div className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 overflow-hidden shadow-card-dark">
@@ -78,7 +78,7 @@ export default function SoldPlayers() {
                         <td>
                           <div className="flex items-center gap-3">
                             <div className="h-9 w-9 rounded-lg dark:bg-ink-700 bg-ink-100 overflow-hidden flex items-center justify-center border dark:border-ink-600 border-ink-200 shrink-0">
-                              {p.photo ? <img src={p.photo} className="h-full w-full object-cover" /> : <span className="text-base opacity-40">🏏</span>}
+                              {p.photo ? <img src={p.photo} className="h-full w-full object-cover" /> : <i className="fa-solid fa-baseball-bat-ball text-xl opacity-40" />}
                             </div>
                             <span className="font-semibold dark:text-ink-100 text-ink-900">{p.fullName}</span>
                           </div>
@@ -101,7 +101,7 @@ export default function SoldPlayers() {
                             <Link to={`/admin/teams/${p.soldTo._id}`}
                               className="flex items-center gap-2 group">
                               <div className="h-6 w-6 rounded dark:bg-ink-700 bg-ink-100 overflow-hidden flex items-center justify-center border dark:border-ink-600 border-ink-200 shrink-0">
-                                {p.soldTo.logo ? <img src={p.soldTo.logo} className="h-full w-full object-cover" /> : <span className="text-xs">🛡</span>}
+                                {p.soldTo.logo ? <img src={p.soldTo.logo} className="h-full w-full object-cover" /> : <i className="fa-solid fa-shield-halved text-base opacity-60" />}
                               </div>
                               <span className="text-sm font-medium dark:text-ink-300 text-ink-600 group-hover:text-gold-500 transition truncate">{p.soldTo.name}</span>
                             </Link>

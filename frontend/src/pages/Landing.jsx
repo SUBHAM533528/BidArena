@@ -34,9 +34,9 @@ export default function Landing() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">
-            <Link to="/player-registration" className="px-3 py-2 text-sm dark:text-ink-400 text-ink-500 dark:hover:text-ink-200 hover:text-ink-800 rounded-lg dark:hover:bg-ink-800 hover:bg-ink-100 transition">Player Registration</Link>            
+            <Link to="/player-registration" className="px-3 py-2 text-sm dark:text-ink-400 text-ink-500 dark:hover:text-ink-200 hover:text-ink-800 rounded-lg dark:hover:bg-ink-800 hover:bg-ink-100 transition">Player Registration</Link>
             <div className="ml-3 pl-3 border-l dark:border-ink-800 border-ink-200">
-              {/* <ThemeToggle /> */}
+              <ThemeToggle />
             </div>
           </nav>
 
@@ -53,7 +53,7 @@ export default function Landing() {
         {nav && (
           <div className="md:hidden dark:bg-ink-950 bg-white border-t dark:border-ink-800 border-ink-200 px-4 py-3 space-y-1 animate-slide-down">
             {[["/player-registration","Player Registration"],["/owner/register","Team Owner Signup"],["/owner/login","Owner Login"],
-              ...(t?[[`/watch/${t._id}`,"📡 Watch Live Auction"]]:[])]
+              ...(t?[[`/watch/${t._id}`,"Watch Live Auction"]]:[])]
               .map(([to, label]) => (
                 <Link key={to} to={to} onClick={() => setNav(false)}
                   className="block px-3 py-2.5 text-sm rounded-lg dark:text-ink-300 text-ink-600 dark:hover:bg-ink-800 hover:bg-ink-100 transition">
@@ -82,7 +82,7 @@ export default function Landing() {
             {/* Countdowns */}
             {tStart && tStart > now && (
               <div className="mb-8 p-4 rounded-xl dark:bg-ink-800/60 bg-white border dark:border-ink-700 border-ink-200">
-                <p className="eyebrow mb-3">🏆 Tournament starts in</p>
+                <p className="eyebrow mb-3">Tournament starts in</p>
                 <CountdownTimer target={t.startDate} />
               </div>
             )}
@@ -95,13 +95,16 @@ export default function Landing() {
                 <CountdownTimer target={t.registrationEndDate} />
                 <Link to="/player-registration"
                   className="inline-flex items-center gap-1.5 mt-4 px-4 py-2 bg-jade-600 hover:bg-jade-500 text-white text-sm font-semibold rounded-lg transition">
-                  Register as Player →
+                  Register as Player
                 </Link>
               </div>
             )}
 
             <div className="flex flex-wrap gap-3">
-
+              <Link to="/owner/register"
+                className="px-6 py-3 bg-gold-500 hover:bg-gold-400 active:bg-gold-600 text-ink-950 font-bold text-sm rounded-lg transition shadow-sm hover:shadow-md">
+                Register Your Team
+              </Link>
               <Link to="/player-registration"
                 className="px-6 py-3 dark:bg-ink-800 bg-white dark:hover:bg-ink-700 hover:bg-ink-50 dark:text-ink-200 text-ink-700 font-semibold text-sm rounded-lg border dark:border-ink-700 border-ink-300 transition">
                 Player Registration
@@ -124,11 +127,11 @@ export default function Landing() {
               </div>
               <div className="divide-y dark:divide-ink-800 divide-ink-100">
                 {[
-                  ["📍 Venue",       t.venue || "TBA"],
-                  ["📅 Start",       t.startDate ? new Date(t.startDate).toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"}) : "TBA"],
-                  ["📅 End",         t.endDate   ? new Date(t.endDate).toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"})   : "TBA"],
-                  ["🛡️ Max Teams",   `${t.maxTeams} teams`],
-                  ["🏏 Max Players", `${t.maxPlayers} players`],
+                  ["Venue",       t.venue || "TBA"],
+                  ["Start",       t.startDate ? new Date(t.startDate).toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"}) : "TBA"],
+                  ["End",         t.endDate   ? new Date(t.endDate).toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"})   : "TBA"],
+                  ["Max Teams",   `${t.maxTeams} teams`],
+                  ["Max Players", `${t.maxPlayers} players`],
                 ].map(([l, v]) => (
                   <div key={l} className="flex justify-between items-center px-6 py-3">
                     <span className="text-sm dark:text-ink-500 text-ink-500">{l}</span>
@@ -146,7 +149,7 @@ export default function Landing() {
           ) : (
             <div className="hidden md:flex items-center justify-center h-64 rounded-2xl border-2 border-dashed dark:border-ink-800 border-ink-200">
               <div className="text-center">
-                <p className="text-5xl mb-3">🏏</p>
+                <i className="fa-solid fa-baseball-bat-ball text-4xl opacity-30" />
                 <p className="dark:text-ink-500 text-ink-400 text-sm">No active tournament</p>
               </div>
             </div>
@@ -174,7 +177,7 @@ export default function Landing() {
                     <div className="flex items-center gap-3 mb-4">
                       <div className="h-10 w-10 rounded-lg dark:bg-ink-700 bg-ink-100 overflow-hidden flex items-center justify-center shrink-0 border dark:border-ink-600 border-ink-200">
                         {tm.logo ? <img src={tm.logo} className="h-full w-full object-cover" alt={tm.name} />
-                          : <span className="text-xl">🛡️</span>}
+                          : <i className="fa-solid fa-shield-halved text-base opacity-60" />}
                       </div>
                       <div className="min-w-0">
                         <p className="text-sm font-bold dark:text-ink-100 text-ink-900 truncate group-hover:text-gold-500 transition">{tm.name}</p>
@@ -191,7 +194,7 @@ export default function Landing() {
                       </div>
                       <div className="flex justify-between text-2xs mt-1.5 dark:text-ink-600 text-ink-400">
                         <span>{tm.squad?.length || 0}/{tm.maxPlayers} players</span>
-                        <span className="group-hover:text-gold-500 transition">View squad →</span>
+                        <span className="group-hover:text-gold-500 transition">View squad</span>
                       </div>
                     </div>
                   </Link>
@@ -205,12 +208,11 @@ export default function Landing() {
       {/* ── FOOTER ──────────────────────────────── */}
       <footer className="border-t dark:border-ink-800 border-ink-200 dark:bg-ink-950 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center justify-center gap-2">
-            <span className="font-display text-base font-semibold text-gold-500">BidArena</span>
-            <span className="text-xs mt-1 dark:text-ink-600 text-ink-400">©{new Date().getFullYear()} all rights reserved here</span>
+          <div className="flex items-center gap-2">
+            <span className="font-display text-3xl font-semibold text-gold-500">BidArena</span>
+            <span className="text-sm dark:text-ink-600 text-ink-400 mt-2">©{new Date().getFullYear()} all rights reserved here</span>
           </div>
           <div className="flex gap-6 text-sm dark:text-ink-500 text-ink-400">
-          
             <Link to="/player-registration" className="hover:text-gold-500 transition">Player Registration</Link>
             {t && <Link to={`/watch/${t._id}`} className="hover:text-gold-500 transition">Watch Auction</Link>}
           </div>

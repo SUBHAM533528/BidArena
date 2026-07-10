@@ -37,14 +37,14 @@ export default function UnsoldPlayers() {
       </div>
 
       {players.length === 0 ? (
-        <div className="card p-10"><Empty icon="✅" title="No unsold players" body="All players either sold or still in pool."/></div>
+        <div className="card p-10"><Empty icon="fa-solid fa-circle-check" title="No unsold players" body="All players either sold or still in pool."/></div>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {players.map(p => (
             <div key={p._id} className="card p-4">
               <div className="flex items-center gap-3 mb-3">
                 <div className="h-12 w-12 rounded-xl dark:bg-ink-800 bg-ink-100 border dark:border-ink-700 border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
-                  {p.photo ? <img src={p.photo} className="h-full w-full object-cover"/> : <span className="text-xl opacity-40">🏏</span>}
+                  {p.photo ? <img src={p.photo} className="h-full w-full object-cover"/> : <i className="fa-solid fa-baseball-bat-ball text-xl opacity-40" />}
                 </div>
                 <div className="min-w-0">
                   <p className="font-bold text-sm dark:text-ink-100 text-ink-900 truncate">{p.fullName}</p>

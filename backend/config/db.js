@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const connectDB = async () => {
-  const uri = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/cricket_auction";
+  const uri = process.env.MONGO_URI;
   try {
     const conn = await mongoose.connect(uri, {
       serverSelectionTimeoutMS: 10000,
@@ -32,5 +32,6 @@ mongoose.connection.on("disconnected", () =>
 mongoose.connection.on("reconnected", () =>
   console.log("✅  MongoDB reconnected.")
 );
+
 
 module.exports = connectDB;

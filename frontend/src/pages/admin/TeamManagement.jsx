@@ -92,7 +92,7 @@ export default function TeamManagement() {
       {/* Team grid */}
       {teams.length === 0 ? (
         <div className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 p-10">
-          <Empty icon="🛡️" title="No teams yet" body="Add your first team using the button above." />
+          <Empty icon="fa-solid fa-shield-halved" title="No teams yet" body="Add your first team using the button above." />
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -103,7 +103,7 @@ export default function TeamManagement() {
               <div key={t._id} className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 p-5 hover:border-gold-500/40 transition shadow-card-light dark:shadow-card-dark">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="h-12 w-12 rounded-xl dark:bg-ink-700 bg-ink-100 border dark:border-ink-600 border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
-                    {t.logo ? <img src={t.logo} className="h-full w-full object-cover" alt={t.name} /> : <span className="text-xl">🛡️</span>}
+                    {t.logo ? <img src={t.logo} className="h-full w-full object-cover" alt={t.name} /> : <i className="fa-solid fa-shield-halved text-base opacity-60" />}
                   </div>
                   <div className="min-w-0">
                     <p className="font-bold dark:text-ink-100 text-ink-900 truncate">{t.name}</p>

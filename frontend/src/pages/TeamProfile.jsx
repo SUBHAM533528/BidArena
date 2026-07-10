@@ -26,7 +26,7 @@ export default function TeamProfile() {
   if (loading) return (
     <div className="min-h-screen dark:bg-ink-900 bg-ink-50 flex items-center justify-center">
       <div className="text-center">
-        <div className="text-5xl animate-pulse mb-3">🏏</div>
+        <i className="fa-solid fa-baseball-bat-ball text-4xl animate-pulse text-gold-500" />
         <p className="text-sm dark:text-ink-500 text-ink-400">Loading team…</p>
       </div>
     </div>
@@ -37,7 +37,7 @@ export default function TeamProfile() {
       <div className="text-center">
         <div className="text-5xl mb-4">🛡️</div>
         <p className="dark:text-ink-300 text-ink-600 font-semibold mb-2">Team not found</p>
-        <Link to="/" className="text-sm text-gold-500 hover:text-gold-400">← Back to home</Link>
+        <Link to="/" className="text-sm text-gold-500 hover:text-gold-400">Back to home</Link>
       </div>
     </div>
   );
@@ -69,7 +69,7 @@ export default function TeamProfile() {
           <div className="flex items-center gap-4">
             <ThemeToggle />
             <Link to="/" className="text-sm dark:text-ink-400 text-ink-500 hover:text-gold-500 transition">
-              ← All Teams
+              All Teams
             </Link>
           </div>
         </div>
@@ -88,7 +88,7 @@ export default function TeamProfile() {
               <div className="h-24 w-24 rounded-2xl dark:bg-ink-700 bg-ink-100 border dark:border-ink-600 border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
                 {team.logo
                   ? <img src={team.logo} className="h-full w-full object-cover" alt={team.name} />
-                  : <span className="text-4xl">🛡️</span>}
+                  : <i className="fa-solid fa-shield-halved text-base opacity-60" />}
               </div>
 
               <div className="flex-1 min-w-0">
@@ -141,7 +141,7 @@ export default function TeamProfile() {
         {/* ── SQUAD ───────────────────────────── */}
         {totalPlayers === 0 ? (
           <div className="dark:bg-ink-850 bg-white rounded-2xl border dark:border-ink-700 border-ink-200 p-10">
-            <Empty icon="🏏" title="No players purchased yet"
+            <Empty icon="fa-solid fa-baseball-bat-ball" title="No players purchased yet"
               body="This team hasn't made any bids yet. Check back once the auction begins." />
           </div>
         ) : (
@@ -163,7 +163,7 @@ export default function TeamProfile() {
                       <div className="h-14 w-14 rounded-xl dark:bg-ink-700 bg-ink-100 overflow-hidden flex items-center justify-center border dark:border-ink-600 border-ink-200">
                         {p.photo
                           ? <img src={p.photo} className="h-full w-full object-cover" alt={p.fullName} />
-                          : <span className="text-2xl opacity-40">🏏</span>}
+                          : <i className="fa-solid fa-baseball-bat-ball text-xl opacity-40" />}
                       </div>
                       <span className="absolute -top-1.5 -left-1.5 h-5 w-5 rounded-full dark:bg-ink-900 bg-white border dark:border-ink-700 border-ink-200 flex items-center justify-center text-2xs font-bold dark:text-ink-500 text-ink-400">
                         {idx + 1}

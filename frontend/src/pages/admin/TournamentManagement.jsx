@@ -75,7 +75,7 @@ export default function TournamentManagement() {
       )}
 
       {tournaments.length === 0 ? (
-        <div className="card p-10"><Empty icon="🏆" title="No tournaments yet" body="Create your first tournament above."/></div>
+        <div className="card p-10"><Empty icon="fa-solid fa-trophy" title="No tournaments yet" body="Create your first tournament above."/></div>
       ) : (
         <div className="grid md:grid-cols-2 gap-4">
           {tournaments.map(t => (

@@ -4,27 +4,19 @@ import { useAuth } from "../context/AuthContext";
 
 export default function ProtectedRoute({ children, roles }) {
   const { user, loading } = useAuth();
-
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-stadium-950">
+      <div className="min-h-screen flex items-center justify-center dark:bg-ink-900 bg-ink-50">
         <div className="text-center">
-          <p className="text-4xl mb-3 animate-pulse">🏏</p>
-          <p className="text-floodlight-400 text-sm">Loading...</p>
+          <i className="fa-solid fa-baseball-bat-ball text-4xl text-gold-500 animate-pulse" />
+          <p className="dark:text-ink-400 text-ink-500 text-sm mt-3">Loading…</p>
         </div>
       </div>
     );
   }
-
   if (!user) {
-    // Send admins to admin login, owners to owner login
-    const dest = roles?.includes("super_admin") ? "/admin/login" : "/owner/login";
-    return <Navigate to={dest} replace />;
+    return <Navigate to={roles?.includes("super_admin") ? "/admin/login" : "/owner/login"} replace />;
   }
-
-  if (roles && !roles.includes(user.role)) {
-    return <Navigate to="/" replace />;
-  }
-
+  if (roles && !roles.includes(user.role)) return <Navigate to="/" replace />;
   return children;
 }

@@ -6,7 +6,7 @@ import { Select, Button, Empty } from "../../components/UI";
 const PDF_REPORTS = [
   {
     key:      "all-players",
-    icon:     "👥",
+    icon: "fa-solid fa-users",
     title:    "All Registered Players",
     desc:     "Every player who registered — name, role, district, base price, approval status.",
     filename: "all_registered_players.pdf",
@@ -15,7 +15,7 @@ const PDF_REPORTS = [
   },
   {
     key:      "sold-players",
-    icon:     "✅",
+    icon: "fa-solid fa-circle-check",
     title:    "Sold Players Report",
     desc:     "All sold players ranked by final price, with team, profit over base price, and totals.",
     filename: "sold_players.pdf",
@@ -24,7 +24,7 @@ const PDF_REPORTS = [
   },
   {
     key:      "unsold-players",
-    icon:     "❌",
+    icon: "fa-solid fa-circle-xmark",
     title:    "Unsold Players Report",
     desc:     "Players who went through auction but remained unsold — by role and base price.",
     filename: "unsold_players.pdf",
@@ -33,7 +33,7 @@ const PDF_REPORTS = [
   },
   {
     key:      "all-teams",
-    icon:     "🏆",
+    icon: "fa-solid fa-trophy",
     title:    "All Teams Combined",
     desc:     "Cover page + one full squad page per team. Share with organisers, sponsors, or media.",
     filename: "all_teams_squads.pdf",
@@ -126,7 +126,7 @@ export default function Reports() {
               className={`dark:bg-ink-850 bg-white rounded-xl border transition-all duration-200 p-5 ${r.accent} shadow-card-light dark:shadow-card-dark`}>
               <div className="flex items-start gap-4">
                 <div className="h-11 w-11 rounded-xl dark:bg-ink-800 bg-ink-100 flex items-center justify-center text-2xl shrink-0">
-                  {r.icon}
+                  <i className={r.icon} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
@@ -140,7 +140,7 @@ export default function Reports() {
                     disabled={downloading === r.filename}
                     onClick={() => dlPDF(`pdf/${r.key}`, r.filename)}
                   >
-                    {downloading === r.filename ? "⏳ Generating…" : "⬇ Download PDF"}
+                    {downloading === r.filename ? "Generating…" : "Download PDF"}
                   </Button>
                 </div>
               </div>
@@ -158,7 +158,7 @@ export default function Reports() {
 
         {teams.length === 0 ? (
           <div className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 p-8">
-            <Empty icon="🛡️" title="No teams yet" body="Add teams in Team Management first." />
+            <Empty icon="fa-solid fa-shield-halved" title="No teams yet" body="Add teams in Team Management first." />
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -168,7 +168,7 @@ export default function Reports() {
                 <div className="h-12 w-12 rounded-xl dark:bg-ink-700 bg-ink-100 mx-auto mb-3 overflow-hidden flex items-center justify-center border dark:border-ink-600 border-ink-200">
                   {tm.logo
                     ? <img src={tm.logo} className="h-full w-full object-cover" alt={tm.name} />
-                    : <span className="text-xl">🛡️</span>}
+                    : <i className="fa-solid fa-shield-halved text-base opacity-60" />}
                 </div>
                 <p className="font-bold text-sm dark:text-ink-100 text-ink-900 truncate mb-0.5">{tm.name}</p>
                 <p className="text-2xs dark:text-ink-500 text-ink-400 mb-3">{tm.squad?.length || 0} players</p>
@@ -178,7 +178,7 @@ export default function Reports() {
                     disabled={downloading === tm._id}
                     className="flex-1 py-1.5 text-2xs font-semibold rounded-lg dark:bg-ink-700 bg-ink-100 dark:text-ink-300 text-ink-600 hover:bg-gold-500/10 hover:text-gold-500 border dark:border-ink-600 border-ink-200 transition disabled:opacity-40"
                   >
-                    {downloading === tm._id ? "⏳" : "⬇ PDF"}
+                    {downloading === tm._id ? "Loading…" : "PDF"}
                   </button>
                   <Link to={`/admin/teams/${tm._id}`}
                     className="flex-1 py-1.5 text-2xs font-semibold rounded-lg dark:bg-ink-700 bg-ink-100 dark:text-ink-300 text-ink-600 hover:bg-gold-500/10 hover:text-gold-500 border dark:border-ink-600 border-ink-200 transition text-center">
@@ -200,7 +200,7 @@ export default function Reports() {
         <div className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 overflow-hidden shadow-card-light dark:shadow-card-dark">
           {bids.length === 0 ? (
             <div className="p-8">
-              <Empty icon="🔨" title="No bids recorded yet" body="Bid logs appear here once the auction starts." />
+              <Empty icon="fa-solid fa-gavel" title="No bids recorded yet" body="Bid logs appear here once the auction starts." />
             </div>
           ) : (
             <div className="overflow-x-auto">
