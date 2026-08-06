@@ -1,4 +1,5 @@
 require("dotenv").config();
+const seedAdmin = require("./utils/seedAdmin");
 const express = require("express");
 const http = require("http");
 const cors = require("cors");
@@ -18,8 +19,9 @@ const auctionRoutes = require("./routes/auctionRoutes");
 const reportRoutes = require("./routes/reportRoutes");
 
 connectDB();
-require('./utils/seedAdmin')();
-
+connectDB().then(() => {
+  seedAdmin();
+});
 
 const app = express();
 const server = http.createServer(app);
