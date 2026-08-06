@@ -3,8 +3,10 @@ const Player = require("../models/Player");
 exports.registerPlayer = async (req, res) => {
   try {
     const data = { ...req.body };
-    if (req.files?.photo) data.photo = `/uploads/players/${req.files.photo[0].filename}`;
-    if (req.files?.idProof) data.idProof = `/uploads/players/${req.files.idProof[0].filename}`;
+    if (req.files?.photo)
+      data.photo = `/uploads/players/${req.files.photo[0].filename}`;
+    if (req.files?.idProof)
+      data.idProof = `/uploads/players/${req.files.idProof[0].filename}`;
     const player = await Player.create(data);
     res.status(201).json(player);
   } catch (err) {
@@ -19,7 +21,8 @@ exports.getPlayers = async (req, res) => {
   if (req.query.role) filter.role = req.query.role;
   if (req.query.district) filter.district = new RegExp(req.query.district, "i");
   if (req.query.state) filter.state = new RegExp(req.query.state, "i");
-  if (req.query.auctionEligible) filter.auctionEligible = req.query.auctionEligible === "true";
+  if (req.query.auctionEligible)
+    filter.auctionEligible = req.query.auctionEligible === "true";
   if (req.query.auctionStatus) filter.auctionStatus = req.query.auctionStatus;
   if (req.query.search) filter.fullName = new RegExp(req.query.search, "i");
 
@@ -38,8 +41,10 @@ exports.getPlayer = async (req, res) => {
 exports.updatePlayer = async (req, res) => {
   try {
     const data = { ...req.body };
-    if (req.files?.photo) data.photo = `/uploads/players/${req.files.photo[0].filename}`;
-    if (req.files?.idProof) data.idProof = `/uploads/players/${req.files.idProof[0].filename}`;
+    if (req.files?.photo)
+      data.photo = `/uploads/players/${req.files.photo[0].filename}`;
+    if (req.files?.idProof)
+      data.idProof = `/uploads/players/${req.files.idProof[0].filename}`;
     const player = await Player.findByIdAndUpdate(req.params.id, data, {
       new: true,
       runValidators: true,
@@ -59,7 +64,11 @@ exports.deletePlayer = async (req, res) => {
 
 exports.setStatus = async (req, res) => {
   const { status } = req.body; // Approved | Rejected | Pending
-  const player = await Player.findByIdAndUpdate(req.params.id, { status }, { new: true });
+  const player = await Player.findByIdAndUpdate(
+    req.params.id,
+    { status },
+    { new: true },
+  );
   if (!player) return res.status(404).json({ message: "Player not found" });
   res.json(player);
 };
@@ -69,7 +78,7 @@ exports.setAuctionEligible = async (req, res) => {
   const player = await Player.findByIdAndUpdate(
     req.params.id,
     { auctionEligible: !!eligible },
-    { new: true }
+    { new: true },
   );
   if (!player) return res.status(404).json({ message: "Player not found" });
   res.json(player);
@@ -80,7 +89,7 @@ exports.resetAuctionStatus = async (req, res) => {
   const player = await Player.findByIdAndUpdate(
     req.params.id,
     { auctionStatus: "Not Started", soldTo: null, soldPrice: 0 },
-    { new: true }
+    { new: true },
   );
   if (!player) return res.status(404).json({ message: "Player not found" });
   res.json(player);

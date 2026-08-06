@@ -19,7 +19,7 @@ export default function AdminLayout() {
               <div className="w-4 h-px dark:bg-ink-400 bg-ink-600 mb-1.5" />
               <div className="w-4 h-px dark:bg-ink-400 bg-ink-600" />
             </button>
-            <span className="font-display text-sm font-semibold text-gold-500">BidArena</span>
+            <span className="font-display text-sm font-semibold text-gold-500">StrikeZone</span>
           </div>
           <ThemeToggle />
         </div>

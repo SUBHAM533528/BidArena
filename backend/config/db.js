@@ -1,17 +1,17 @@
 const mongoose = require("mongoose");
 
 const connectDB = async () => {
-  const uri = process.env.MONGO_URI;
+  const uri = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/cricket_auction";
   try {
     const conn = await mongoose.connect(uri, {
       serverSelectionTimeoutMS: 10000,
       socketTimeoutMS: 45000,
     });
-    console.log(`✅  MongoDB connected: ${conn.connection.host}`);
-    console.log(`📦  Database: ${conn.connection.name}`);
-    console.log(`🔭  View data in MongoDB Compass: ${uri}`);
+    console.log(` MongoDB connected: ${conn.connection.host}`);
+    console.log(`Database: ${conn.connection.name}`);
+    console.log(`View data in MongoDB Compass: ${uri}`);
   } catch (err) {
-    console.error("\n❌  MongoDB connection failed!");
+    console.error("\n  MongoDB connection failed!");
     console.error(`    Error: ${err.message}`);
     console.error("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
     console.error("  Make sure MongoDB is running on your PC:");
@@ -27,11 +27,10 @@ const connectDB = async () => {
 };
 
 mongoose.connection.on("disconnected", () =>
-  console.warn("⚠️  MongoDB disconnected. Retrying...")
+  console.warn("MongoDB disconnected. Retrying...")
 );
 mongoose.connection.on("reconnected", () =>
-  console.log("✅  MongoDB reconnected.")
+  console.log("MongoDB reconnected.")
 );
-
 
 module.exports = connectDB;

@@ -20,8 +20,8 @@ const tournamentSchema = new mongoose.Schema(
     },
     auctionTimerSeconds: { type: Number, default: 60 },
     auctionMode: { type: String, enum: ["random", "serial"], default: "random" },
-    defaultBasePrice: { type: Number, default: 100000 },
-    defaultTeamPurse: { type: Number, default: 10000000 },
+    defaultBasePrice: { type: Number, default: 300 },
+    defaultTeamPurse: { type: Number, default: 10000 },
     closedMessage: {
       type: String,
       default: "Player Registration is Currently Closed",

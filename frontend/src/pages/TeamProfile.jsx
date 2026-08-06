@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import api from "../api/axios";
 import { Empty, ThemeToggle } from "../components/UI";
+import SEO, { buildBreadcrumbSchema } from "../components/SEO";
 import StadiumBg from "../components/StadiumBg";
 
 const ROLE_BADGE = {
@@ -63,8 +64,8 @@ export default function TeamProfile() {
       {/* ── NAV ─────────────────────────────────── */}
       <header className="sticky top-0 z-30 dark:bg-ink-950/90 bg-white/90 backdrop-blur-md border-b dark:border-ink-800 border-ink-200">
         <div className="max-w-5xl mx-auto px-4 sm:px-8 h-14 flex items-center justify-between">
-          <Link to="/" className="font-display text-base font-bold text-gold-500 tracking-wide">
-            StrikeZone <span className="dark:text-ink-500 text-ink-400 font-normal">Auctions</span>
+          <Link to="/" className="font-display text-2xl font-bold text-gold-500 tracking-wide">
+            Bid<span className="dark:text-ink-500 text-ink-400 font-normal">Arena</span>
           </Link>
           <div className="flex items-center gap-4">
             <ThemeToggle />

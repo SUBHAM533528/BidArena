@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 
 const playerSchema = new mongoose.Schema(
   {
-    tournament: { type: mongoose.Schema.Types.ObjectId, ref: "Tournament", required: true },
+    tournament: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Tournament",
+      required: true,
+    },
     fullName: { type: String, required: true, trim: true },
     photo: { type: String, default: "" },
     mobile: { type: String, required: true },
@@ -37,10 +41,14 @@ const playerSchema = new mongoose.Schema(
       enum: ["Not Started", "In Auction", "Sold", "Unsold"],
       default: "Not Started",
     },
-    soldTo: { type: mongoose.Schema.Types.ObjectId, ref: "Team", default: null },
+    soldTo: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Team",
+      default: null,
+    },
     soldPrice: { type: Number, default: 0 },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model("Player", playerSchema);

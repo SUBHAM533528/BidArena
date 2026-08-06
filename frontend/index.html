@@ -3,19 +3,55 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BidArena</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Apply saved theme before React mounts to prevent flash of wrong theme -->
+
+    <!-- ── Primary Meta ── -->
+    <title>BidArena Auctions — Live Cricket Tournament Auction Platform</title>
+    <meta name="description"
+      content="IPL-style live cricket auction platform. Create tournaments, register players, conduct live auctions with real-time bidding, purse tracking and team management." />
+    <meta name="keywords"
+      content="cricket auction, IPL auction system, live cricket bidding, player auction, cricket tournament management, cricket team auction" />
+    <meta name="author"    content="BidArena" />
+    <meta name="theme-color" content="#f59e0b" />
+
+    <!-- ── Open Graph ── -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:title"       content="BidArena — Live Cricket Tournament Auction Platform" />
+    <meta property="og:description" content="IPL-style live cricket auction platform. Real-time bidding, team management and player auctions." />
+    <meta property="og:image"       content="/og-default.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale"      content="en_IN" />
+
+    <!-- ── Twitter Card ── -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content="BidArena — Live Cricket Auction Platform" />
+    <meta name="twitter:description" content="IPL-style live cricket auction platform. Real-time bidding and team management." />
+    <meta name="twitter:image"       content="/og-default.png" />
+
+    <!-- ── Favicon ── -->
+    <link rel="icon"             type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest"         href="/site.webmanifest" />
+
+    <!-- ── Performance: preconnect to external resources ── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+
+    <!-- ── Font Awesome ── -->
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- ── Inline theme script: runs before React mounts (prevents flash) ── -->
     <script>
       (function() {
         try {
           var saved = localStorage.getItem('theme');
-          // Default to dark; only switch to light if explicitly saved
-          if (saved === 'light') {
-            document.documentElement.classList.remove('dark');
-          } else {
-            document.documentElement.classList.add('dark');
-          }
+          if (saved === 'light') document.documentElement.classList.remove('dark');
+          else document.documentElement.classList.add('dark');
         } catch(e) {
           document.documentElement.classList.add('dark');
         }

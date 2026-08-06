@@ -6,7 +6,6 @@ import AdminLogin from "./pages/AdminLogin";
 import PlayerRegistration from "./pages/PlayerRegistration";
 import BroadcastDisplay from "./pages/BroadcastDisplay";
 import TeamProfile from "./pages/TeamProfile";
-
 import AdminLayout from "./layouts/AdminLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/admin/Dashboard";
@@ -31,7 +30,7 @@ export default function App() {
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/player-registration" element={<PlayerRegistration />} />
 
-      {/* ── Admin (protected) ── */}
+      
       <Route
         path="/admin"
         element={

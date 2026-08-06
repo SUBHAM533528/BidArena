@@ -29,7 +29,7 @@ function drawHeader(doc, title, subtitle) {
   doc.rect(0, 78, doc.page.width, 4).fill(C.gold);
 
   doc.fillColor(C.gold).font("Helvetica-Bold").fontSize(22)
-     .text("StrikeZone Auctions", 40, 22);
+     .text("BidArena", 40, 22);
   doc.fillColor(C.muted).font("Helvetica").fontSize(9)
      .text(subtitle || new Date().toLocaleString(), 40, 50);
 

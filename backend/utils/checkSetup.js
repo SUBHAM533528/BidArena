@@ -14,7 +14,7 @@ console.log("\n🔍  StrikeZone Auctions — Setup Check\n");
 REQUIRED_VARS.forEach((key) => {
   const val = process.env[key];
   if (!val || val.includes("<") || val.includes("change_this")) {
-    console.error(`  ❌  ${key} is not set (still has placeholder value)`);
+    console.error(`${key} is not set (still has placeholder value)`);
     allGood = false;
   } else {
     console.log(`  ✅  ${key} is set`);
@@ -22,7 +22,7 @@ REQUIRED_VARS.forEach((key) => {
 });
 
 if (!allGood) {
-  console.error("\n  👉  Edit backend/.env and replace the placeholder values.\n");
+  console.error("\n  Edit backend/.env and replace the placeholder values.\n");
   process.exit(1);
 }
 
@@ -31,12 +31,12 @@ console.log("\n  🔌  Testing MongoDB connection...");
 mongoose
   .connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 8000 })
   .then(() => {
-    console.log("  ✅  MongoDB connected successfully!\n");
-    console.log("  🚀  You're good to go. Run: npm run seed && npm run dev\n");
+    console.log(" MongoDB connected successfully!\n");
+    console.log(" You're good to go. Run: npm run seed && npm run dev\n");
     process.exit(0);
   })
   .catch((err) => {
-    console.error(`  ❌  MongoDB connection failed: ${err.message}\n`);
+    console.error(` MongoDB connection failed: ${err.message}\n`);
     console.error("  Is your MONGO_URI correct? Check:");
     console.error("  • Atlas: username/password correct? IP whitelist set to 0.0.0.0/0?");
     console.error("  • Local: is mongod running? (run: net start MongoDB)\n");

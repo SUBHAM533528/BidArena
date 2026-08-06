@@ -18,7 +18,8 @@ exports.getTournaments = async (req, res) => {
 
 exports.getTournament = async (req, res) => {
   const tournament = await Tournament.findById(req.params.id);
-  if (!tournament) return res.status(404).json({ message: "Tournament not found" });
+  if (!tournament)
+    return res.status(404).json({ message: "Tournament not found" });
   res.json(tournament);
 };
 
@@ -30,7 +31,8 @@ exports.updateTournament = async (req, res) => {
       new: true,
       runValidators: true,
     });
-    if (!tournament) return res.status(404).json({ message: "Tournament not found" });
+    if (!tournament)
+      return res.status(404).json({ message: "Tournament not found" });
     res.json(tournament);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -39,13 +41,15 @@ exports.updateTournament = async (req, res) => {
 
 exports.deleteTournament = async (req, res) => {
   const tournament = await Tournament.findByIdAndDelete(req.params.id);
-  if (!tournament) return res.status(404).json({ message: "Tournament not found" });
+  if (!tournament)
+    return res.status(404).json({ message: "Tournament not found" });
   res.json({ message: "Tournament deleted" });
 };
 
 exports.toggleActive = async (req, res) => {
   const tournament = await Tournament.findById(req.params.id);
-  if (!tournament) return res.status(404).json({ message: "Tournament not found" });
+  if (!tournament)
+    return res.status(404).json({ message: "Tournament not found" });
   tournament.isActive = !tournament.isActive;
   await tournament.save();
   res.json(tournament);
@@ -53,7 +57,8 @@ exports.toggleActive = async (req, res) => {
 
 exports.toggleRegistration = async (req, res) => {
   const tournament = await Tournament.findById(req.params.id);
-  if (!tournament) return res.status(404).json({ message: "Tournament not found" });
+  if (!tournament)
+    return res.status(404).json({ message: "Tournament not found" });
   tournament.registrationOpen = !tournament.registrationOpen;
   await tournament.save();
   res.json(tournament);

@@ -36,9 +36,16 @@ exports.register = async (req, res) => {
     const finalRole = allowedSelfRoles.includes(role) ? role : "player";
 
     const exists = await User.findOne({ email });
-    if (exists) return res.status(400).json({ message: "Email already registered" });
+    if (exists)
+      return res.status(400).json({ message: "Email already registered" });
 
-    const user = await User.create({ name, email, password, mobile, role: finalRole });
+    const user = await User.create({
+      name,
+      email,
+      password,
+      mobile,
+      role: finalRole,
+    });
     sendAuthResponse(user, res, 201);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -75,11 +82,16 @@ exports.changePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
     if (!currentPassword || !newPassword || newPassword.length < 6) {
-      return res.status(400).json({ message: "Provide current password and a new password (min 6 chars)" });
+      return res
+        .status(400)
+        .json({
+          message: "Provide current password and a new password (min 6 chars)",
+        });
     }
     const user = await User.findById(req.user._id).select("+password");
     const valid = await user.comparePassword(currentPassword);
-    if (!valid) return res.status(401).json({ message: "Current password is incorrect" });
+    if (!valid)
+      return res.status(401).json({ message: "Current password is incorrect" });
     user.password = newPassword;
     await user.save();
     res.json({ message: "Password updated successfully" });

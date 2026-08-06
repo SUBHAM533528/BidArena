@@ -77,7 +77,7 @@ export function ThemeToggle() {
       style={{ background: dark ? "#1e293b" : "#cbd5e1" }}>
       <span className="absolute top-1 h-5 w-5 rounded-full shadow-md transition-transform duration-300 flex items-center justify-center"
         style={{ left:"4px", transform: dark ? "translateX(28px)" : "translateX(0)", background: dark ? "#f59e0b" : "#ffffff" }}>
-        <i className={`fa-solid ${dark ? "" : ""} text-[10px] ${dark ? "text-ink-900" : "text-gold-500"}`} />
+        <i className={`fa-solid ${dark ? "fa-moon" : "fa-sun"} text-[10px] ${dark ? "text-ink-900" : "text-gold-500"}`} />
       </span>
     </button>
   );

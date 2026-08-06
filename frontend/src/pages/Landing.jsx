@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import api from "../api/axios";
 import CountdownTimer from "../components/CountdownTimer";
 import StadiumBg from "../components/StadiumBg";
+import SEO, { buildSportsEventSchema, buildOrganizationSchema } from "../components/SEO";
 import { ThemeToggle } from "../components/UI";
 
 export default function Landing() {
@@ -28,13 +29,14 @@ export default function Landing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-3 shrink-0">
             {t?.logo && <img src={t.logo} className="h-8 w-8 rounded object-cover" alt="logo" />}
-            <span className="font-display text-3xl font-semibold text-gold-500 tracking-wide">
+            <span className="font-display text-2xl font-semibold text-gold-500 tracking-wide">
               Bid<span className="dark:text-ink-400 text-ink-400 font-normal">Arena</span>
             </span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">
             <Link to="/player-registration" className="px-3 py-2 text-sm dark:text-ink-400 text-ink-500 dark:hover:text-ink-200 hover:text-ink-800 rounded-lg dark:hover:bg-ink-800 hover:bg-ink-100 transition">Player Registration</Link>
+            
             <div className="ml-3 pl-3 border-l dark:border-ink-800 border-ink-200">
               <ThemeToggle />
             </div>
@@ -101,10 +103,6 @@ export default function Landing() {
             )}
 
             <div className="flex flex-wrap gap-3">
-              <Link to="/owner/register"
-                className="px-6 py-3 bg-gold-500 hover:bg-gold-400 active:bg-gold-600 text-ink-950 font-bold text-sm rounded-lg transition shadow-sm hover:shadow-md">
-                Register Your Team
-              </Link>
               <Link to="/player-registration"
                 className="px-6 py-3 dark:bg-ink-800 bg-white dark:hover:bg-ink-700 hover:bg-ink-50 dark:text-ink-200 text-ink-700 font-semibold text-sm rounded-lg border dark:border-ink-700 border-ink-300 transition">
                 Player Registration
@@ -207,10 +205,12 @@ export default function Landing() {
 
       {/* ── FOOTER ──────────────────────────────── */}
       <footer className="border-t dark:border-ink-800 border-ink-200 dark:bg-ink-950 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-12 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="font-display text-3xl font-semibold text-gold-500">BidArena</span>
-            <span className="text-sm dark:text-ink-600 text-ink-400 mt-2">©{new Date().getFullYear()} all rights reserved here</span>
+              <span className="font-display text-2xl font-semibold text-gold-500 tracking-wide">
+              Bid<span className="dark:text-ink-400 text-ink-400 font-normal">Arena</span>
+            </span>
+            <span className="text-sm mt-2 dark:text-ink-600 text-ink-400">©{new Date().getFullYear()} all rights reserves here</span>
           </div>
           <div className="flex gap-6 text-sm dark:text-ink-500 text-ink-400">
             <Link to="/player-registration" className="hover:text-gold-500 transition">Player Registration</Link>
@@ -221,3 +221,7 @@ export default function Landing() {
     </div>
   );
 }
+
+
+
+

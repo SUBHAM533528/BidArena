@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from "../api/axios";
 import { Card, Input, Label, Select, Button } from "../components/UI";
 import StadiumBg from "../components/StadiumBg";
+import SEO from "../components/SEO";
 
 // Role-aware options so players don't type styles manually
 const BATTING_STYLES = ["Right-hand Bat", "Left-hand Bat"];
@@ -153,18 +154,7 @@ export default function PlayerRegistration() {
             <Label>Email *</Label>
             <Input type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
           </div>
-          <div>
-            <Label>Date of Birth *</Label>
-            <Input type="date" required value={form.dob} onChange={(e) => setForm({ ...form, dob: e.target.value })} />
-          </div>
-          <div>
-            <Label>District *</Label>
-            <Input required value={form.district} onChange={(e) => setForm({ ...form, district: e.target.value })} />
-          </div>
-          <div>
-            <Label>State *</Label>
-            <Input required value={form.state} onChange={(e) => setForm({ ...form, state: e.target.value })} />
-          </div>
+          
 
           {/* ── Cricket Profile ── */}
           <div className="sm:col-span-2 mt-2">
@@ -214,54 +204,13 @@ export default function PlayerRegistration() {
           {/* Wicket Keeper gloves note */}
           {form.role === "Wicket Keeper" && (
             <div className="glass rounded-lg px-3 py-2 text-xs text-floodlight-400">
-              🧤 Wicket Keeper — glove side follows batting hand automatically
+              Wicket Keeper — glove side follows batting hand automatically
             </div>
           )}
 
-          <div>
-            <Label>Experience (years)</Label>
-            <Input type="number" min="0" value={form.experience} onChange={(e) => setForm({ ...form, experience: e.target.value })} />
-          </div>
-          <div>
-            <Label>Previous Teams</Label>
-            <Input placeholder="e.g. City XI, College A" value={form.previousTeams} onChange={(e) => setForm({ ...form, previousTeams: e.target.value })} />
-          </div>
+          
 
-          {/* ── Statistics ── */}
-          <div className="sm:col-span-2 mt-2">
-            <p className="text-xs uppercase tracking-widest text-slate-500 mb-3 border-b border-stadium-700 pb-1">Career Statistics</p>
-          </div>
-
-          <div>
-            <Label>Matches Played</Label>
-            <Input type="number" min="0" value={form.matchesPlayed} onChange={(e) => setForm({ ...form, matchesPlayed: e.target.value })} />
-          </div>
-          {roleConf.hasBatting && (
-            <div>
-              <Label>Runs Scored</Label>
-              <Input type="number" min="0" value={form.runs} onChange={(e) => setForm({ ...form, runs: e.target.value })} />
-            </div>
-          )}
-          {roleConf.hasBowling && (
-            <div>
-              <Label>Wickets Taken</Label>
-              <Input type="number" min="0" value={form.wickets} onChange={(e) => setForm({ ...form, wickets: e.target.value })} />
-            </div>
-          )}
-
-          <div>
-            <Label>
-              Base Price (₹)
-              {tournament?.defaultBasePrice && <span className="text-slate-500 ml-1 text-xs">— default: ₹{tournament.defaultBasePrice.toLocaleString()}</span>}
-            </Label>
-            <Input
-              type="number"
-              min="0"
-              required
-              value={form.basePrice}
-              onChange={(e) => setForm({ ...form, basePrice: e.target.value })}
-            />
-          </div>
+          
 
           {/* ── Uploads ── */}
           <div className="sm:col-span-2 mt-2">
@@ -270,10 +219,6 @@ export default function PlayerRegistration() {
           <div>
             <Label>Profile Photo</Label>
             <Input type="file" accept="image/*" onChange={(e) => setPhoto(e.target.files[0])} />
-          </div>
-          <div>
-            <Label>ID Proof (image or PDF)</Label>
-            <Input type="file" accept="image/*,application/pdf" onChange={(e) => setIdProof(e.target.files[0])} />
           </div>
 
           {error && <p className="text-crimson-400 text-sm sm:col-span-2">{error}</p>}

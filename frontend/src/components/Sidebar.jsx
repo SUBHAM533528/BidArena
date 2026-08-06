@@ -22,7 +22,9 @@ export default function Sidebar({ onClose }) {
     <aside className="sidebar w-64 h-screen flex flex-col border-r">
       <div className="px-6 py-5 border-b dark:border-ink-800 border-ink-200 flex items-center justify-between shrink-0">
         <div>
-          <span className="font-display text-xl font-semibold text-gold-500 tracking-wide">StrikeZone</span>
+          <span className="font-display text-2xl font-semibold text-gold-500 tracking-wide">
+              Bid<span className="dark:text-ink-400 text-ink-400 font-normal">Arena</span>
+            </span>
           <p className="text-2xs text-ink-500 uppercase tracking-widest mt-0.5">Admin Panel</p>
         </div>
         <div className="flex items-center gap-2">

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
+import SEO from "../components/SEO";
 import api from "../api/axios";
 import { getSocket } from "../socket/socket";
 
@@ -49,6 +50,16 @@ export default function BroadcastDisplay() {
 
   return (
     <div className="min-h-screen bg-[#080a0e] text-white flex flex-col overflow-hidden">
+      <SEO
+        title={tournament ? `${tournament.name} — Live Auction Broadcast` : "Live Auction Broadcast"}
+        description="Watch the live cricket player auction in real time. Track bids, team purses and sold players as they happen."
+        noIndex={false}
+      />
+      <SEO
+        title={tournament?.name ? `Live Auction — ${tournament.name}` : "Live Auction"}
+        description="Watch the cricket auction live — real-time bidding, team purse updates, and player sales as they happen."
+        url={`/watch/${tournamentId}`}
+      />
       {/* Header bar */}
       <div className="flex items-center justify-between px-6 sm:px-10 py-4 border-b border-[#1a1d24] shrink-0">
         <div className="flex items-center gap-4">

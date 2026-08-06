@@ -2,15 +2,19 @@ const mongoose = require("mongoose");
 
 const teamSchema = new mongoose.Schema(
   {
-    tournament: { type: mongoose.Schema.Types.ObjectId, ref: "Tournament", required: true },
+    tournament: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Tournament",
+      required: true,
+    },
     name: { type: String, required: true, trim: true },
     logo: { type: String, default: "" },
     ownerName: { type: String, required: true },
     mobile: { type: String, required: true },
     email: { type: String, required: true, lowercase: true },
-    initialPurse: { type: Number, required: true, default: 10000000 },
-    remainingPurse: { type: Number, required: true, default: 10000000 },
-    maxPlayers: { type: Number, required: true, default: 18 },
+    initialPurse: { type: Number, required: true, default: 10000 },
+    remainingPurse: { type: Number, required: true, default: 10000 },
+    maxPlayers: { type: Number, required: true, default: 15 },
     squad: [
       {
         player: { type: mongoose.Schema.Types.ObjectId, ref: "Player" },
@@ -20,7 +24,7 @@ const teamSchema = new mongoose.Schema(
     ],
     isActive: { type: Boolean, default: true },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 teamSchema.virtual("playersCount").get(function () {

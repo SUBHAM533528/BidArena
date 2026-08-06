@@ -4,16 +4,8 @@ const Team = require("../models/Team");
 const Bid = require("../models/Bid");
 const Tournament = require("../models/Tournament");
 
-// In-memory timers keyed by tournamentId (Node single-process; for multi-instance
-// deployments move this to Redis, but this keeps the reference implementation simple)
 const timers = {};
 
-// Every time a timer is (re)scheduled or cleared we bump a "token" for that
-// tournament. A timer callback only acts if its captured token still matches
-// the live token when it fires - this prevents the classic race where a bid
-// lands at the exact moment the countdown hits zero: without this guard, the
-// old timer's expiry check can read the database a split-second before the
-// bid is saved and incorrectly mark the player Unsold.
 const timerTokens = {};
 
 const roomName = (tournamentId) => `auction:${tournamentId}`;
@@ -54,7 +46,7 @@ module.exports = function registerAuctionSocket(io) {
     });
 
     // ---- ADMIN: pick next player (random or serial depending on tournament setting),
-    //            or a specific player by ID, with optional custom starting price ----
+    // or a specific player by ID, with optional custom starting price 
     socket.on("admin:next_player", async ({ tournamentId, playerId, startingPrice }) => {
       try {
         const tournament = await Tournament.findById(tournamentId);
@@ -117,11 +109,7 @@ module.exports = function registerAuctionSocket(io) {
       }
     });
 
-    // ---- ADMIN: manually set/adjust the current bid amount (e.g. correcting the
-    // opening price, or applying a custom increment) before or during bidding.
-    // Allowed any time the player is in auction; if a team has already bid, the
-    // new amount must still be higher than the existing bid and is attributed
-    // to no specific team unless `teamId` is provided. ----
+    
     socket.on("admin:set_current_bid", async ({ tournamentId, amount, teamId }) => {
       try {
         const state = await AuctionState.findOne({ tournament: tournamentId });
@@ -316,15 +304,13 @@ module.exports = function registerAuctionSocket(io) {
   });
 };
 
-// Called when the countdown hits zero. `token` must still match the live
-// token for this tournament or the resolution is stale and is ignored.
 async function resolveTimerExpiry(io, tournamentId, token) {
   if (timerTokens[tournamentId] !== token) return;
 
   const state = await AuctionState.findOne({ tournament: tournamentId });
   if (!state || state.status !== "running") return;
 
-  // re-check after the DB round trip too, in case a bid landed while we were reading
+  
   if (timerTokens[tournamentId] !== token) return;
 
   if (state.currentBidTeam) {

@@ -70,7 +70,7 @@ export default function AuctionRoom() {
         <div>
           <p className="label-xs mb-1">Live</p>
           <div className="flex items-center gap-3">
-            <h1 className="font-display text-3xl text-green-700">Auction Room</h1>
+            <h1 className="font-display text-3xl text-slate-100">Auction Room</h1>
             {t && (
               <Badge color={t.auctionMode==="serial"?"green":"gold"}>
                 {t.auctionMode==="serial"?"Serial":"Random"}
