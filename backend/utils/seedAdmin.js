@@ -1,23 +1,28 @@
-require("dotenv").config();
-const mongoose = require("mongoose");
-const connectDB = require("../config/db");
 const User = require("../models/User");
+const bcrypt = require("bcryptjs");
 
-(async () => {
-  await connectDB();
-  const email = process.env.ADMIN_EMAIL || "admin@auction.com";
-  const exists = await User.findOne({ email });
-  if (exists) {
-    console.log("Admin already exists:", email);
-  } else {
+const seedAdmin = async () => {
+  try {
+    const existing = await User.findOne({ role: "super_admin" });
+    if (existing) {
+      console.log("✅ Admin already exists:", existing.email);
+      return;
+    }
+    const hashed = await bcrypt.hash(
+      process.env.ADMIN_PASSWORD || "Admin@123",
+      10
+    );
     await User.create({
-      name: process.env.ADMIN_NAME || "Super Admin",
-      email,
-      password: process.env.ADMIN_PASSWORD || "Admin@123",
-      role: "super_admin",
+      name:     process.env.ADMIN_NAME     || "Super Admin",
+      email:    process.env.ADMIN_EMAIL    || "admin@auction.com",
+      password: hashed,
+      role:     "super_admin",
+      mobile:   "9861533528",
     });
-    console.log("Super admin created:", email, "/ password:", process.env.ADMIN_PASSWORD || "Admin@123");
+    console.log("✅ Super admin created:", process.env.ADMIN_EMAIL || "admin@auction.com");
+  } catch (err) {
+    console.error("❌ Seed error:", err.message);
   }
-  await mongoose.disconnect();
-  process.exit(0);
-})();
+};
+
+module.exports = seedAdmin;
