@@ -1,11 +1,9 @@
 import { io } from "socket.io-client";
 
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || "https://bidarena-backend-su27.onrender.com";
-
 let socket;
 export const getSocket = () => {
   if (!socket) {
-    socket = io(SOCKET_URL, {
+    socket = io("https://bidarena-backend-su27.onrender.com", {
       transports: ["websocket", "polling"],
       autoConnect: false,
     });
