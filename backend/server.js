@@ -29,7 +29,26 @@ const io = new Server(server, {
   cors: { origin: process.env.CLIENT_URL || "*", credentials: true },
 });
 
-app.use(cors({ origin: process.env.CLIENT_URL || "*", credentials: true }));
+app.use(cors({
+  origin: function(origin, callback) {
+    const allowed = [
+      "http://localhost:5173",
+      "https://bid-arena-77ie.vercel.app",
+      "https://bid-arena-pvn77klmr-symondssubham-3807s-projects.vercel.app",
+      process.env.CLIENT_URL,
+    ];
+    if (!origin || allowed.includes(origin) || origin.endsWith(".vercel.app")) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
+
+
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
