@@ -6,6 +6,7 @@ import { ThemeToggle } from "./UI";
 const NAV = [
   { to:"/admin",             icon:"fa-solid fa-grip",              label:"Dashboard"      },
   { to:"/admin/tournaments", icon:"fa-solid fa-trophy",            label:"Tournaments"    },
+  { to:"/admin/banners",     icon:"fa-solid fa-images",            label:"Banner Slides"  },
   { to:"/admin/teams",       icon:"fa-solid fa-shield-halved",     label:"Teams"          },
   { to:"/admin/players",     icon:"fa-solid fa-baseball-bat-ball", label:"Players"        },
   { to:"/admin/auction",     icon:"fa-solid fa-gavel",             label:"Auction Room"   },

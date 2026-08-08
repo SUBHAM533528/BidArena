@@ -17,6 +17,7 @@ const teamRoutes = require("./routes/teamRoutes");
 const playerRoutes = require("./routes/playerRoutes");
 const auctionRoutes = require("./routes/auctionRoutes");
 const reportRoutes = require("./routes/reportRoutes");
+const bannerRoutes = require("./routes/bannerRoutes");
 
 connectDB();
 connectDB().then(() => {
@@ -65,6 +66,7 @@ app.use("/api/teams", teamRoutes);
 app.use("/api/players", playerRoutes);
 app.use("/api/auction", auctionRoutes);
 app.use("/api/reports", reportRoutes);
+app.use("/api/banners", bannerRoutes);
 
 app.get("/api/health", (req, res) => res.json({ status: "ok" }));
 
