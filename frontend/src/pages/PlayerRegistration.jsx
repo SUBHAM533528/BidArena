@@ -24,9 +24,6 @@ const ROLE_CONFIG = {
 const initialForm = {
   fullName: "", mobile: "", email: "", dob: "",
   role: "Batsman", battingStyle: "", bowlingStyle: "",
-  district: "", state: "", experience: "",
-  previousTeams: "", matchesPlayed: "", runs: "", wickets: "",
-  basePrice: "",
 };
 
 export default function PlayerRegistration() {
@@ -207,10 +204,6 @@ export default function PlayerRegistration() {
               Wicket Keeper — glove side follows batting hand automatically
             </div>
           )}
-
-          
-
-          
 
           {/* ── Uploads ── */}
           <div className="sm:col-span-2 mt-2">

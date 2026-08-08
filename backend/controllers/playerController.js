@@ -5,19 +5,16 @@ const uploadToCloudinary = require("../utils/cloudinary");
 exports.registerPlayer = async (req, res) => {
   try {
     let photoUrl  = "";
-    let idProofUrl = "";
 
     if (req.files?.photo?.[0]) {
       photoUrl = await uploadToCloudinary(req.files.photo[0].buffer, "bidarena/photos");
     }
-    if (req.files?.idProof?.[0]) {
-      idProofUrl = await uploadToCloudinary(req.files.idProof[0].buffer, "bidarena/idproofs");
-    }
+    
 
     const player = await Player.create({
       ...req.body,
       photo:   photoUrl,
-      idProof: idProofUrl,
+
     });
 
     res.status(201).json(player);
@@ -31,8 +28,6 @@ exports.getPlayers = async (req, res) => {
   if (req.query.tournament) filter.tournament = req.query.tournament;
   if (req.query.status) filter.status = req.query.status;
   if (req.query.role) filter.role = req.query.role;
-  if (req.query.district) filter.district = new RegExp(req.query.district, "i");
-  if (req.query.state) filter.state = new RegExp(req.query.state, "i");
   if (req.query.auctionEligible)
     filter.auctionEligible = req.query.auctionEligible === "true";
   if (req.query.auctionStatus) filter.auctionStatus = req.query.auctionStatus;
