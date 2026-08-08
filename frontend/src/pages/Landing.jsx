@@ -3,16 +3,19 @@ import { Link } from "react-router-dom";
 import api from "../api/axios";
 import CountdownTimer from "../components/CountdownTimer";
 import StadiumBg from "../components/StadiumBg";
+import BannerCarousel from "../components/BannerCarousel";
 import SEO, { buildSportsEventSchema, buildOrganizationSchema } from "../components/SEO";
 import { ThemeToggle } from "../components/UI";
 
 export default function Landing() {
   const [tournaments, setTournaments] = useState([]);
   const [teams, setTeams] = useState([]);
+  const [banners, setBanners] = useState([]);
   const [nav, setNav] = useState(false);
   const t = tournaments.find(x => x.isActive) || tournaments[0];
 
   useEffect(() => { api.get("/tournaments").then(r => setTournaments(r.data)).catch(() => {}); }, []);
+  useEffect(() => { api.get("/banners").then(r => setBanners(r.data)).catch(() => {}); }, []);
   useEffect(() => { if (t) api.get(`/teams?tournament=${t._id}`).then(r => setTeams(r.data)).catch(() => {}); }, [t?._id]);
 
   const now = Date.now();
@@ -24,30 +27,40 @@ export default function Landing() {
     <div className="min-h-screen dark:bg-ink-900 bg-ink-50 dark:text-ink-100 text-ink-900 font-body transition-colors duration-300">
       <StadiumBg opacity={0.22} />
 
-      {/* ── NAV ─────────────────────────────────── */}
-      <header className="sticky top-0 z-40 dark:bg-ink-950/90 bg-white/90 backdrop-blur-md border-b dark:border-ink-800 border-ink-200 transition-colors">
+      {/* ── NAV (transparent, floats over the banner carousel) ── */}
+      <header className={`sticky top-0 z-40 transition-colors duration-300 ${
+        nav
+          ? "dark:bg-ink-950 bg-white border-b dark:border-ink-800 border-ink-200"
+          : banners.length > 0
+            ? "bg-transparent border-b border-transparent"
+            : "dark:bg-ink-950/90 bg-white/90 backdrop-blur-md border-b dark:border-ink-800 border-ink-200"
+      }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-3 shrink-0">
             {t?.logo && <img src={t.logo} className="h-8 w-8 rounded object-cover" alt="logo" />}
-            <span className="font-display text-2xl font-semibold text-gold-500 tracking-wide">
-              Bid<span className="dark:text-ink-400 text-ink-400 font-normal">Arena</span>
+            <span className={`font-display text-2xl font-semibold tracking-wide ${banners.length > 0 && !nav ? "text-gold-400" : "text-gold-500"}`}>
+              Bid<span className={banners.length > 0 && !nav ? "text-white/80 font-normal" : "dark:text-ink-400 text-ink-400 font-normal"}>Arena</span>
             </span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">
-            <Link to="/player-registration" className="px-3 py-2 text-sm dark:text-ink-400 text-ink-500 dark:hover:text-ink-200 hover:text-ink-800 rounded-lg dark:hover:bg-ink-800 hover:bg-ink-100 transition">Player Registration</Link>
-            
-            <div className="ml-3 pl-3 border-l dark:border-ink-800 border-ink-200">
+            <Link to="/player-registration" className={`px-3 py-2 text-sm rounded-lg transition ${
+              banners.length > 0 && !nav
+                ? "text-white/90 hover:text-white hover:bg-white/10"
+                : "dark:text-ink-400 text-ink-500 dark:hover:text-ink-200 hover:text-ink-800 dark:hover:bg-ink-800 hover:bg-ink-100"
+            }`}>Player Registration</Link>
+
+            <div className={`ml-3 pl-3 border-l ${banners.length > 0 && !nav ? "border-white/20" : "dark:border-ink-800 border-ink-200"}`}>
               <ThemeToggle />
             </div>
           </nav>
 
           <div className="flex items-center gap-2 md:hidden">
             <ThemeToggle />
-            <button className="p-2 rounded-lg dark:hover:bg-ink-800 hover:bg-ink-100 transition" onClick={() => setNav(!nav)}>
-              <div className={`w-5 h-px dark:bg-ink-400 bg-ink-600 mb-1.5 transition-all ${nav ? "rotate-45 translate-y-2" : ""}`} />
-              <div className={`w-5 h-px dark:bg-ink-400 bg-ink-600 mb-1.5 transition-all ${nav ? "opacity-0" : ""}`} />
-              <div className={`w-5 h-px dark:bg-ink-400 bg-ink-600 transition-all ${nav ? "-rotate-45 -translate-y-2" : ""}`} />
+            <button className={`p-2 rounded-lg transition ${banners.length > 0 && !nav ? "hover:bg-white/10" : "dark:hover:bg-ink-800 hover:bg-ink-100"}`} onClick={() => setNav(!nav)}>
+              <div className={`w-5 h-px mb-1.5 transition-all ${banners.length > 0 && !nav ? "bg-white" : "dark:bg-ink-400 bg-ink-600"} ${nav ? "rotate-45 translate-y-2" : ""}`} />
+              <div className={`w-5 h-px mb-1.5 transition-all ${banners.length > 0 && !nav ? "bg-white" : "dark:bg-ink-400 bg-ink-600"} ${nav ? "opacity-0" : ""}`} />
+              <div className={`w-5 h-px transition-all ${banners.length > 0 && !nav ? "bg-white" : "dark:bg-ink-400 bg-ink-600"} ${nav ? "-rotate-45 -translate-y-2" : ""}`} />
             </button>
           </div>
         </div>
@@ -65,6 +78,13 @@ export default function Landing() {
           </div>
         )}
       </header>
+
+      {/* ── BANNER CAROUSEL (sits right under the transparent navbar) ── */}
+      {banners.length > 0 && (
+        <div className="-mt-16">
+          <BannerCarousel banners={banners} />
+        </div>
+      )}
 
       {/* ── HERO ────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8 pt-20 pb-24 md:pt-28 md:pb-32">

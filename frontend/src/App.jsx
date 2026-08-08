@@ -10,6 +10,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/admin/Dashboard";
 import TournamentManagement from "./pages/admin/TournamentManagement";
+import BannerManagement from "./pages/admin/BannerManagement";
 import TeamManagement from "./pages/admin/TeamManagement";
 import TeamDetail from "./pages/admin/TeamDetail";
 import PlayerManagement from "./pages/admin/PlayerManagement";
@@ -41,6 +42,7 @@ export default function App() {
       >
         <Route index element={<Dashboard />} />
         <Route path="tournaments" element={<TournamentManagement />} />
+        <Route path="banners" element={<BannerManagement />} />
         <Route path="teams" element={<TeamManagement />} />
         <Route path="teams/:teamId" element={<TeamDetail />} />
         <Route path="players" element={<PlayerManagement />} />
