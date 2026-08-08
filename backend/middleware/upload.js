@@ -1,28 +1,22 @@
 const multer = require("multer");
-const path = require("path");
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
-const storage = (folder) =>
-  multer.diskStorage({
-    destination: (req, file, cb) =>
-      cb(null, path.join(__dirname, "..", "uploads", folder)),
-    filename: (req, file, cb) => {
-      const unique = Date.now() + "-" + Math.round(Math.random() * 1e9);
-      cb(null, unique + path.extname(file.originalname));
-    },
-  });
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key:    process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
-const fileFilter = (req, file, cb) => {
-  const allowed = /jpeg|jpg|png|webp|pdf/;
-  const ext = allowed.test(path.extname(file.originalname).toLowerCase());
-  if (ext) cb(null, true);
-  else cb(new Error("Only images/PDF files are allowed"));
-};
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder:         "bidarena",
+    allowed_formats: ["jpg", "jpeg", "png", "pdf"],
+    resource_type:  "auto",
+  },
+});
 
-const upload = (folder) =>
-  multer({
-    storage: storage(folder),
-    fileFilter,
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
-  });
+const upload = multer({ storage });
 
 module.exports = upload;
