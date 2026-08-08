@@ -2,7 +2,7 @@ const Player = require("../models/Player");
 const uploadToCloudinary = require("../utils/cloudinary");
 
 
-exports.register = async (req, res) => {
+exports.registerPlayer = async (req, res) => {
   try {
     let photoUrl  = "";
     let idProofUrl = "";
@@ -53,10 +53,12 @@ exports.getPlayer = async (req, res) => {
 exports.updatePlayer = async (req, res) => {
   try {
     const data = { ...req.body };
-    if (req.files?.photo)
-      data.photo = `/uploads/players/${req.files.photo[0].filename}`;
-    if (req.files?.idProof)
-      data.idProof = `/uploads/players/${req.files.idProof[0].filename}`;
+    if (req.files?.photo?.[0]) {
+      data.photo = await uploadToCloudinary(req.files.photo[0].buffer, "bidarena/photos");
+    }
+    if (req.files?.idProof?.[0]) {
+      data.idProof = await uploadToCloudinary(req.files.idProof[0].buffer, "bidarena/idproofs");
+    }
     const player = await Player.findByIdAndUpdate(req.params.id, data, {
       new: true,
       runValidators: true,
