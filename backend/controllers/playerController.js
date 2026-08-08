@@ -1,16 +1,28 @@
 const Player = require("../models/Player");
+const uploadToCloudinary = require("../utils/cloudinary");
 
-exports.registerPlayer = async (req, res) => {
+
+exports.register = async (req, res) => {
   try {
-    const data = { ...req.body };
-    if (req.files?.photo)
-      data.photo = `/uploads/players/${req.files.photo[0].filename}`;
-    if (req.files?.idProof)
-      data.idProof = `/uploads/players/${req.files.idProof[0].filename}`;
-    const player = await Player.create(data);
+    let photoUrl  = "";
+    let idProofUrl = "";
+
+    if (req.files?.photo?.[0]) {
+      photoUrl = await uploadToCloudinary(req.files.photo[0].buffer, "bidarena/photos");
+    }
+    if (req.files?.idProof?.[0]) {
+      idProofUrl = await uploadToCloudinary(req.files.idProof[0].buffer, "bidarena/idproofs");
+    }
+
+    const player = await Player.create({
+      ...req.body,
+      photo:   photoUrl,
+      idProof: idProofUrl,
+    });
+
     res.status(201).json(player);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 };
 
