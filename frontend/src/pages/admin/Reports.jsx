@@ -63,44 +63,46 @@ export default function Reports() {
   }, [tid]);
 
   const dlPDF = async (endpoint, filename) => {
-    setDownloading(filename);
-    try {
-      const token = localStorage.getItem("token");
-      const qs    = tid ? `?tournament=${tid}` : "";
-      const res   = await fetch(`/api/reports/${endpoint}${qs}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (!res.ok) throw new Error("Failed");
-      const blob = await res.blob();
-      const a    = document.createElement("a");
-      a.href     = URL.createObjectURL(blob);
-      a.download = filename;
-      a.click();
-      URL.revokeObjectURL(a.href);
-    } catch (e) {
-      alert("PDF error: " + e.message);
-    } finally {
-      setDownloading("");
-    }
-  };
+  setDownloading(filename);
+  try {
+    const token = localStorage.getItem("token");
+    const qs    = tid ? `?tournament=${tid}` : "";
+    const res   = await fetch(
+      `https://bidarena-backend-su27.onrender.com/api/reports/${endpoint}${qs}`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    if (!res.ok) throw new Error("Failed");
+    const blob = await res.blob();
+    const a    = document.createElement("a");
+    a.href     = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  } catch (e) {
+    alert("PDF error: " + e.message);
+  } finally {
+    setDownloading("");
+  }
+};
 
   const dlTeamPDF = async (team) => {
-    setDownloading(team._id);
-    try {
-      const token = localStorage.getItem("token");
-      const res   = await fetch(`/api/reports/pdf/team/${team._id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const blob  = await res.blob();
-      const a     = document.createElement("a");
-      a.href      = URL.createObjectURL(blob);
-      a.download  = `${team.name.replace(/\s+/g,"_")}_squad.pdf`;
-      a.click();
-      URL.revokeObjectURL(a.href);
-    } finally {
-      setDownloading("");
-    }
-  };
+  setDownloading(team._id);
+  try {
+    const token = localStorage.getItem("token");
+    const res   = await fetch(
+      `https://bidarena-backend-su27.onrender.com/api/reports/pdf/team/${team._id}`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    const blob  = await res.blob();
+    const a     = document.createElement("a");
+    a.href      = URL.createObjectURL(blob);
+    a.download  = `${team.name.replace(/\s+/g, "_")}_squad.pdf`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  } finally {
+    setDownloading("");
+  }
+};
 
   return (
     <div>

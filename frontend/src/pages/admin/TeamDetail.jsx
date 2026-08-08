@@ -18,20 +18,21 @@ export default function TeamDetail() {
   }, [teamId]);
 
   const downloadPDF = async () => {
-    setDownloading(true);
-    try {
-      const token = localStorage.getItem("token");
-      const res = await fetch(`/api/reports/pdf/team/${teamId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const blob = await res.blob();
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = `${team?.name?.replace(/\s+/g,"_")}_squad.pdf`;
-      a.click();
-      URL.revokeObjectURL(a.href);
-    } finally { setDownloading(false); }
-  };
+  setDownloading(true);
+  try {
+    const token = localStorage.getItem("token");
+    const res = await fetch(
+      `https://bidarena-backend-su27.onrender.com/api/reports/pdf/team/${teamId}`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    const blob = await res.blob();
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `${team?.name?.replace(/\s+/g, "_")}_squad.pdf`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  } finally { setDownloading(false); }
+};
 
   if (!team) return (
     <div className="flex items-center justify-center h-48">
