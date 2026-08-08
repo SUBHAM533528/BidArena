@@ -51,9 +51,7 @@ exports.updatePlayer = async (req, res) => {
     if (req.files?.photo?.[0]) {
       data.photo = await uploadToCloudinary(req.files.photo[0].buffer, "bidarena/photos");
     }
-    if (req.files?.idProof?.[0]) {
-      data.idProof = await uploadToCloudinary(req.files.idProof[0].buffer, "bidarena/idproofs");
-    }
+  
     const player = await Player.findByIdAndUpdate(req.params.id, data, {
       new: true,
       runValidators: true,

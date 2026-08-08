@@ -11,7 +11,7 @@ const playerSchema = new mongoose.Schema(
     photo: { type: String, default: "" },
     mobile: { type: String, required: true },
     email: { type: String, required: true, lowercase: true },
-    dob: { type: Date, required: true },
+
     role: {
       type: String,
       enum: ["Batsman", "Bowler", "All-Rounder", "Wicket Keeper"],
@@ -19,15 +19,7 @@ const playerSchema = new mongoose.Schema(
     },
     battingStyle: { type: String, default: "" },
     bowlingStyle: { type: String, default: "" },
-    district: { type: String, required: true },
-    state: { type: String, required: true },
-    experience: { type: Number, default: 0 },
-    previousTeams: { type: String, default: "" },
-    matchesPlayed: { type: Number, default: 0 },
-    runs: { type: Number, default: 0 },
-    wickets: { type: Number, default: 0 },
-    basePrice: { type: Number, required: true, default: 100000 },
-    idProof: { type: String, default: "" },
+    
 
     status: {
       type: String,
