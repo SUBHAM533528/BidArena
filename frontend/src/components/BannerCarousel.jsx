@@ -1,110 +1,122 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
+import { Link } from "react-router-dom";
 
-/**
- * Full-bleed banner carousel for the landing page hero.
- * Sits directly under the transparent navbar (rendered behind it).
- * Banners are managed from the admin panel (Banner Slides).
- */
-export default function BannerCarousel({ banners = [], autoPlayMs = 5000 }) {
-  const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const timerRef = useRef(null);
-  const count = banners.length;
+export default function BannerCarousel({ banners = [] }) {
+  const [current, setCurrent] = useState(0);
+  const [animating, setAnimating] = useState(false);
+  const [direction, setDirection] = useState("next"); // "next" | "prev"
 
-  const goTo = useCallback((i) => {
-    if (count === 0) return;
-    setIndex(((i % count) + count) % count);
-  }, [count]);
+  const go = useCallback((idx, dir = "next") => {
+    if (animating || idx === current) return;
+    setDirection(dir);
+    setAnimating(true);
+    setTimeout(() => {
+      setCurrent(idx);
+      setAnimating(false);
+    }, 400);
+  }, [animating, current]);
 
-  const next = useCallback(() => goTo(index + 1), [goTo, index]);
-  const prev = useCallback(() => goTo(index - 1), [goTo, index]);
+  const next = () => go((current + 1) % banners.length, "next");
+  const prev = () => go((current - 1 + banners.length) % banners.length, "prev");
 
+  // Auto-advance every 5 seconds
   useEffect(() => {
-    if (count <= 1 || paused) return;
-    timerRef.current = setInterval(() => setIndex(i => (i + 1) % count), autoPlayMs);
-    return () => clearInterval(timerRef.current);
-  }, [count, paused, autoPlayMs]);
+    if (banners.length <= 1) return;
+    const id = setInterval(next, 5000);
+    return () => clearInterval(id);
+  }, [current, banners.length, animating]);
 
-  // Keep index in range if the banner list changes
-  useEffect(() => { if (index >= count) setIndex(0); }, [count, index]);
+  if (!banners.length) return null;
 
-  if (count === 0) return null;
+  const b = banners[current];
+
+  // Slide animation classes
+  const slideClass = animating
+    ? direction === "next"
+      ? "translate-x-full opacity-0"
+      : "-translate-x-full opacity-0"
+    : "translate-x-0 opacity-100";
 
   return (
-    <section
-      className="relative w-full overflow-hidden select-none group"
-      style={{ height: "min(78vh, 640px)" }}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
-      {/* Slides track */}
+    <div className="relative w-full overflow-hidden" style={{ height: "100vh", minHeight: 500, maxHeight: 700 }}>
+      {/* Background image */}
       <div
-        className="flex h-full transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)]"
-        style={{ transform: `translateX(-${index * 100}%)` }}
-      >
-        {banners.map((b, i) => {
-          const Wrapper = b.link ? "a" : "div";
-          const wrapperProps = b.link ? { href: b.link, target: "_blank", rel: "noopener noreferrer" } : {};
-          return (
-            <Wrapper key={b._id || i} {...wrapperProps} className="relative w-full h-full shrink-0 grow-0 basis-full block">
-              <img
-                src={b.image}
-                alt={b.title || `Banner ${i + 1}`}
-                className="w-full h-full object-cover"
-                draggable={false}
-                loading={i === 0 ? "eager" : "lazy"}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30" />
-              {(b.title || b.subtitle) && (
-                <div className="absolute inset-x-0 bottom-0 px-4 sm:px-8 pb-16 sm:pb-20 max-w-7xl mx-auto left-0 right-0">
-                  <div className="max-w-xl animate-fade-up">
-                    {b.title && (
-                      <h2 className="font-display text-3xl sm:text-5xl font-bold text-white leading-tight mb-2 drop-shadow-lg">
-                        {b.title}
-                      </h2>
-                    )}
-                    {b.subtitle && (
-                      <p className="text-sm sm:text-base text-white/85 drop-shadow-md">{b.subtitle}</p>
-                    )}
-                  </div>
-                </div>
-              )}
-            </Wrapper>
-          );
-        })}
-      </div>
+        className={`absolute inset-0 transition-all duration-500 ease-in-out ${slideClass}`}
+        style={{
+          backgroundImage: `url(${b.image})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
 
-      {/* Prev / Next arrows */}
-      {count > 1 && (
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+
+      {/* Content */}
+      {(b.title || b.subtitle || b.link) && (
+        <div className={`absolute inset-0 flex flex-col items-center justify-center px-6 text-center transition-all duration-500 ease-in-out ${slideClass}`}>
+          {b.title && (
+            <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight mb-4 drop-shadow-lg">
+              {b.title}
+            </h1>
+          )}
+          {b.subtitle && (
+            <p className="text-base sm:text-xl text-white/80 max-w-2xl mb-8 drop-shadow">
+              {b.subtitle}
+            </p>
+          )}
+          {b.link && (
+            <Link
+              to={b.link.startsWith("http") ? b.link : b.link}
+              className="px-8 py-3 bg-gold-500 hover:bg-gold-400 text-ink-950 font-bold text-sm rounded-lg transition shadow-lg hover:shadow-xl"
+            >
+              Learn More <i className="fa-solid fa-arrow-right ml-1.5" />
+            </Link>
+          )}
+        </div>
+      )}
+
+      {/* ── Arrows ──────────────────────────── */}
+      {banners.length > 1 && (
         <>
           <button
             onClick={prev}
-            aria-label="Previous banner"
-            className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-black/35 hover:bg-black/55 text-white flex items-center justify-center backdrop-blur-sm border border-white/20 transition-all duration-200 opacity-0 group-hover:opacity-100 focus:opacity-100"
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-10 h-11 w-11 rounded-full bg-black/40 hover:bg-black/70 backdrop-blur-sm border border-white/20 text-white flex items-center justify-center transition-all hover:scale-110"
           >
-            <i className="fa-solid fa-chevron-left text-sm sm:text-base" />
+            <i className="fa-solid fa-chevron-left text-sm" />
           </button>
           <button
             onClick={next}
-            aria-label="Next banner"
-            className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-black/35 hover:bg-black/55 text-white flex items-center justify-center backdrop-blur-sm border border-white/20 transition-all duration-200 opacity-0 group-hover:opacity-100 focus:opacity-100"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-10 h-11 w-11 rounded-full bg-black/40 hover:bg-black/70 backdrop-blur-sm border border-white/20 text-white flex items-center justify-center transition-all hover:scale-110"
           >
-            <i className="fa-solid fa-chevron-right text-sm sm:text-base" />
+            <i className="fa-solid fa-chevron-right text-sm" />
           </button>
-
-          {/* Dots */}
-          <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
-            {banners.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => goTo(i)}
-                aria-label={`Go to banner ${i + 1}`}
-                className={`h-1.5 rounded-full transition-all duration-300 ${i === index ? "w-7 bg-gold-500" : "w-1.5 bg-white/50 hover:bg-white/80"}`}
-              />
-            ))}
-          </div>
         </>
       )}
-    </section>
+
+      {/* ── Dots ─────────────────────────────── */}
+      {banners.length > 1 && (
+        <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-2 z-10">
+          {banners.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => go(i, i > current ? "next" : "prev")}
+              className={`rounded-full transition-all duration-300 ${
+                i === current
+                  ? "bg-gold-500 w-6 h-2.5"
+                  : "bg-white/40 hover:bg-white/70 w-2.5 h-2.5"
+              }`}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* ── Slide counter ─────────────────────── */}
+      {banners.length > 1 && (
+        <div className="absolute bottom-6 right-5 text-white/50 text-xs font-mono z-10">
+          {current + 1} / {banners.length}
+        </div>
+      )}
+    </div>
   );
 }

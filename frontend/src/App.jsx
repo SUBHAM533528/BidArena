@@ -10,11 +10,11 @@ import AdminLayout from "./layouts/AdminLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/admin/Dashboard";
 import TournamentManagement from "./pages/admin/TournamentManagement";
-import BannerManagement from "./pages/admin/BannerManagement";
 import TeamManagement from "./pages/admin/TeamManagement";
 import TeamDetail from "./pages/admin/TeamDetail";
 import PlayerManagement from "./pages/admin/PlayerManagement";
 import AuctionRoom from "./pages/admin/AuctionRoom";
+import BannerManagement from "./pages/admin/BannerManagement";
 import SoldPlayers from "./pages/admin/SoldPlayers";
 import UnsoldPlayers from "./pages/admin/UnsoldPlayers";
 import Reports from "./pages/admin/Reports";
@@ -31,7 +31,7 @@ export default function App() {
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/player-registration" element={<PlayerRegistration />} />
 
-      
+      {/* ── Admin ── */}
       <Route
         path="/admin"
         element={
@@ -41,17 +41,17 @@ export default function App() {
         }
       >
         <Route index element={<Dashboard />} />
-        <Route path="tournaments" element={<TournamentManagement />} />
-        <Route path="banners" element={<BannerManagement />} />
-        <Route path="teams" element={<TeamManagement />} />
-        <Route path="teams/:teamId" element={<TeamDetail />} />
-        <Route path="players" element={<PlayerManagement />} />
-        <Route path="auction" element={<AuctionRoom />} />
-        <Route path="sold" element={<SoldPlayers />} />
-        <Route path="unsold" element={<UnsoldPlayers />} />
-        <Route path="reports" element={<Reports />} />
-        <Route path="settings" element={<Settings />} />
-        <Route path="change-password" element={<ChangePassword />} />
+        <Route path="tournaments"    element={<TournamentManagement />} />
+        <Route path="teams"          element={<TeamManagement />} />
+        <Route path="teams/:teamId"  element={<TeamDetail />} />
+        <Route path="players"        element={<PlayerManagement />} />
+        <Route path="auction"        element={<AuctionRoom />} />
+        <Route path="banners"        element={<BannerManagement />} />
+        <Route path="sold"           element={<SoldPlayers />} />
+        <Route path="unsold"         element={<UnsoldPlayers />} />
+        <Route path="reports"        element={<Reports />} />
+        <Route path="settings"       element={<Settings />} />
+        <Route path="change-password"element={<ChangePassword />} />
       </Route>
     </Routes>
   );
