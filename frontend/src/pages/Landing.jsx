@@ -71,7 +71,7 @@ export default function Landing() {
           <nav className="hidden md:flex items-center gap-1">
             {[
               ["/player-registration", "Player Registration"],
-              ["/owner/register",      "Team Owner Signup"],
+              
             ].map(([to, label]) => (
               <Link key={to} to={to}
                 className={`px-3 py-2 text-sm rounded-lg transition ${
@@ -82,14 +82,7 @@ export default function Landing() {
                 {label}
               </Link>
             ))}
-            <Link to="/owner/login"
-              className={`ml-2 px-4 py-2 text-sm font-semibold rounded-lg border transition ${
-                hasBanners && !scrolled
-                  ? "border-white/30 text-white hover:bg-white/10"
-                  : "dark:border-ink-700 border-ink-300 dark:text-ink-300 text-ink-700 dark:hover:border-gold-500 hover:border-gold-500 dark:hover:text-gold-400 hover:text-gold-600"
-              }`}>
-              Owner Login
-            </Link>
+            
             <div className={`ml-3 pl-3 ${hasBanners && !scrolled ? "border-l border-white/20" : "border-l dark:border-ink-800 border-ink-200"}`}>
               <ThemeToggle />
             </div>
@@ -109,7 +102,7 @@ export default function Landing() {
 
         {nav && (
           <div className="md:hidden dark:bg-ink-950 bg-white border-t dark:border-ink-800 border-ink-200 px-4 py-3 space-y-1 animate-slide-down">
-            {[["/player-registration","Player Registration"],["/owner/register","Team Owner Signup"],["/owner/login","Owner Login"],
+            {[
               ...(t?[[`/watch/${t._id}`,"Watch Live Auction"]]:[])]
               .map(([to, label]) => (
                 <Link key={to} to={to} onClick={() => setNav(false)}
@@ -233,7 +226,7 @@ export default function Landing() {
             <div className="grid sm:grid-cols-3 gap-4">
               {[
                 { to:"/player-registration", icon:"fa-solid fa-baseball-bat-ball", label:"Player Registration", desc:"Register yourself for the auction", color:"text-gold-500" },
-                { to:"/owner/register",      icon:"fa-solid fa-shield-halved",     label:"Team Owner Signup",   desc:"Register and manage your team",  color:"text-jade-500" },
+
                 { to:t?`/watch/${t._id}`:"/", icon:"fa-solid fa-satellite-dish",   label:"Watch Live Auction",  desc:"Live broadcast for your venue",  color:"text-flame-500" },
               ].map(item => (
                 <Link key={item.to} to={item.to}
@@ -333,7 +326,6 @@ export default function Landing() {
             <span className="text-2xs dark:text-ink-600 text-ink-400">© {new Date().getFullYear()}</span>
           </div>
           <div className="flex gap-6 text-sm dark:text-ink-500 text-ink-400">
-            <Link to="/owner/login"         className="hover:text-gold-500 transition">Owner Login</Link>
             <Link to="/player-registration" className="hover:text-gold-500 transition">Player Registration</Link>
             {t && <Link to={`/watch/${t._id}`} className="hover:text-gold-500 transition">Watch Auction</Link>}
           </div>
