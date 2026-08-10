@@ -4,7 +4,7 @@ const multer = require("multer");
 const upload = (folder = "bidarena") => {
   return multer({
     storage: multer.memoryStorage(),
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+    limits: { fileSize: 1 * 1024 * 1024 }, // 1MB
   });
 };
 
