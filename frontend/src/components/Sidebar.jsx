@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { ThemeToggle } from "./UI";
 
 const NAV = [
   { to:"/admin",              icon:"fa-solid fa-grip",              label:"Dashboard"      },
@@ -29,7 +28,6 @@ export default function Sidebar({ onClose }) {
           <p className="text-2xs text-ink-500 uppercase tracking-widest mt-0.5">Admin Panel</p>
         </div>
         <div className="flex items-center gap-2">
-          <ThemeToggle />
           {onClose && (
             <button onClick={onClose} className="md:hidden p-1 rounded text-ink-500 hover:text-ink-300 transition">
               <i className="fa-solid fa-xmark text-base" />

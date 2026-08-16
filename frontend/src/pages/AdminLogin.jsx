@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Input, Label, Button, Alert, ThemeToggle } from "../components/UI";
+import { Input, Label, Button, Alert } from "../components/UI";
 import SEO from "../components/SEO";
 import StadiumBg from "../components/StadiumBg";
 export default function AdminLogin() {
@@ -17,11 +17,14 @@ export default function AdminLogin() {
     catch (e) { setErr(e.response?.data?.message || "Invalid credentials"); }
     finally { setLoading(false); }
   };
+
+
+
+  
   return (
     <div className="min-h-screen dark:bg-ink-900 bg-ink-50 flex items-center justify-center px-4 transition-colors">
       <SEO title="Admin Login" description="StrikeZone Auctions admin panel." noIndex={true} />
-      <StadiumBg opacity={0.2}/>
-      <div className="absolute top-4 right-4"><ThemeToggle/></div>
+      <StadiumBg opacity={0.85}/>
       <div className="w-full max-w-[380px] animate-fade-up">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gold-500/10 border border-gold-500/20 mb-4">

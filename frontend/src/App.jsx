@@ -1,6 +1,5 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-
 import Landing from "./pages/Landing";
 import AdminLogin from "./pages/AdminLogin";
 import PlayerRegistration from "./pages/PlayerRegistration";

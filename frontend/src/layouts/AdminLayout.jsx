@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
-import { ThemeToggle } from "../components/UI";
-
 export default function AdminLayout() {
   const [open, setOpen] = useState(false);
   return (
@@ -21,7 +19,6 @@ export default function AdminLayout() {
             </button>
             <span className="font-display text-sm font-semibold text-gold-500">StrikeZone</span>
           </div>
-          <ThemeToggle />
         </div>
         <main className="flex-1 p-4 sm:p-6 lg:p-8 animate-fade-up">
           <Outlet />

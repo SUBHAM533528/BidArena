@@ -6,18 +6,7 @@ const SITE_URL     = "https://yourdomain.com";   // ← change to your actual do
 const DEFAULT_IMG  = `${SITE_URL}/og-default.png`;
 const TWITTER_HANDLE = "@StrikeZoneAuctions";
 
-/**
- * Drop <SEO /> inside any page to set title, description, OG & Twitter tags.
- *
- * Props:
- *   title       – page title (shown in browser tab & Google)
- *   description – meta description (shown in Google snippets, ~155 chars ideal)
- *   image       – OG image URL (defaults to site-wide OG image)
- *   url         – canonical URL (defaults to SITE_URL)
- *   type        – OG type: "website" | "article" (default: "website")
- *   noIndex     – set true for admin/private pages to block Google indexing
- *   jsonLd      – structured data object (JSON-LD)
- */
+
 export default function SEO({
   title,
   description,

@@ -20,7 +20,8 @@ export default function BannerCarousel({ banners = [] }) {
       <div className="relative w-full overflow-hidden" style={{ height: "100vh", minHeight: 500, maxHeight: 700 }}>
         <div className="absolute inset-0"
           style={{ backgroundImage:`url(${b.image})`, backgroundSize:"cover", backgroundPosition:"center" }}/>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70"/>
+        <div className="absolute inset-0 bg-gradient-to-b from-ink-950/70 via-ink-900/40 to-ink-950/85"/>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(245,158,11,0.12),transparent_55%)]"/>
         {(b.title||b.subtitle||b.link) && (
           <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
             {b.title    && <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight mb-4 drop-shadow-lg">{b.title}</h1>}
@@ -118,7 +119,8 @@ export default function BannerCarousel({ banners = [] }) {
             <div className="absolute inset-0"
               style={{ backgroundImage:`url(${b.image})`, backgroundSize:"cover", backgroundPosition:"center" }}/>
             {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 to-black/70"/>
+            <div className="absolute inset-0 bg-gradient-to-b from-ink-950/70 via-ink-900/40 to-ink-950/85"/>
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(245,158,11,0.12),transparent_55%)]"/>
             {/* Content */}
             {(b.title||b.subtitle||b.link) && (
               <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">

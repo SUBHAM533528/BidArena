@@ -27,6 +27,7 @@ export default {
         "card-light": "0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05)",
         "card-light-hover":"0 4px 16px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06)",
         "glow-gold":  "0 0 0 3px rgba(245,158,11,0.2)",
+        "glow-gold-lg":"0 0 40px rgba(245,158,11,0.15)",
         "inner-sm":   "inset 0 1px 2px rgba(0,0,0,0.2)",
       },
       animation: {

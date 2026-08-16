@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import api from "../api/axios";
-import { Empty, ThemeToggle } from "../components/UI";
+import { Empty } from "../components/UI";
 import SEO, { buildBreadcrumbSchema } from "../components/SEO";
 import StadiumBg from "../components/StadiumBg";
 
@@ -68,7 +68,6 @@ export default function TeamProfile() {
             Bid<span className="dark:text-ink-500 text-ink-400 font-normal">Arena</span>
           </Link>
           <div className="flex items-center gap-4">
-            <ThemeToggle />
             <Link to="/" className="text-sm dark:text-ink-400 text-ink-500 hover:text-gold-500 transition">
               All Teams
             </Link>
