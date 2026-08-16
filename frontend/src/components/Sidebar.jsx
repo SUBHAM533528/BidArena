@@ -22,14 +22,14 @@ export default function Sidebar({ onClose }) {
   return (
     <aside className="sidebar w-64 h-screen flex flex-col border-r">
       {/* Brand */}
-      <div className="px-6 py-5 border-b border-ink-800 dark:border-ink-800 flex items-center justify-between shrink-0">
+      <div className="px-6 py-5 border-b border-ink-200 dark:border-ink-800 flex items-center justify-between shrink-0">
         <div>
           <span className="font-display text-xl font-semibold text-gold-500 tracking-wide">BidArena</span>
           <p className="text-2xs text-ink-500 uppercase tracking-widest mt-0.5">Admin Panel</p>
         </div>
         <div className="flex items-center gap-2">
           {onClose && (
-            <button onClick={onClose} className="md:hidden p-1 rounded text-ink-500 hover:text-ink-300 transition">
+            <button onClick={onClose} className="md:hidden p-1 rounded dark:text-ink-500 text-ink-400 dark:hover:text-ink-300 hover:text-ink-700 transition">
               <i className="fa-solid fa-xmark text-base" />
             </button>
           )}
@@ -48,7 +48,7 @@ export default function Sidebar({ onClose }) {
       </nav>
 
       {/* User footer */}
-      <div className="px-3 py-4 border-t border-ink-800 dark:border-ink-800 shrink-0 space-y-0.5">
+      <div className="px-3 py-4 border-t border-ink-200 dark:border-ink-800 shrink-0 space-y-0.5">
         <div className="px-3 py-2 mb-1">
           <p className="text-sm font-medium dark:text-ink-200 text-ink-700 truncate">{user?.name}</p>
           <p className="text-2xs dark:text-ink-500 text-ink-400 truncate">{user?.email}</p>

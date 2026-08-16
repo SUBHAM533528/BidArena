@@ -26,10 +26,10 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-stadium-950 bg-stadium-glow flex items-center justify-center px-4">
+    <div className="min-h-screen bg-ink-50 flex items-center justify-center px-4">
       <Card className="w-full max-w-sm">
-        <p className="font-display text-2xl text-floodlight-400 mb-1">StrikeZone</p>
-        <p className="text-slate-400 text-sm mb-6">Sign in to your account</p>
+        <p className="font-display text-2xl font-bold text-ink-900 mb-1">BidArena</p>
+        <p className="text-ink-500 text-sm mb-6">Sign in to your account</p>
         <form onSubmit={submit} className="space-y-4">
           <div>
             <Label>Email</Label>
@@ -39,16 +39,16 @@ export default function Login() {
             <Label>Password</Label>
             <Input type="password" required value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
           </div>
-          {error && <p className="text-crimson-400 text-sm">{error}</p>}
+          {error && <p className="text-flame-600 text-sm">{error}</p>}
           <Button type="submit" className="w-full" disabled={loading}>
             {loading ? "Signing in..." : "Login"}
           </Button>
         </form>
-        <p className="text-sm text-slate-500 mt-5 text-center">
-          New here? <Link to="/register" className="text-floodlight-400">Create an account</Link>
+        <p className="text-sm text-ink-500 mt-5 text-center">
+          New here? <Link to="/register" className="text-gold-600 font-medium">Create an account</Link>
         </p>
-        <p className="text-xs text-slate-600 mt-2 text-center">
-          <Link to="/" className="hover:text-slate-400">← Back to home</Link>
+        <p className="text-xs text-ink-400 mt-2 text-center">
+          <Link to="/" className="hover:text-ink-600 transition">← Back to home</Link>
         </p>
       </Card>
     </div>

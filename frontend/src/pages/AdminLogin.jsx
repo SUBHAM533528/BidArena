@@ -33,7 +33,7 @@ export default function AdminLogin() {
           <h1 className="font-display text-3xl font-bold dark:text-white text-ink-900">Admin Login</h1>
           <p className="text-sm dark:text-ink-500 text-ink-400 mt-1">BidArena Control Center</p>
         </div>
-        <div className="dark:bg-ink-850 bg-white rounded-2xl border dark:border-ink-700 border-ink-200 shadow-card-dark p-6">
+        <div className="dark:bg-ink-850 bg-white rounded-2xl border dark:border-ink-700 border-ink-200 shadow-card-light dark:shadow-card-dark p-6">
           <form onSubmit={submit} className="space-y-4">
             <div><Label>Email Address</Label><Input type="email" required autoFocus placeholder="Enter Your Mail" value={f.email} onChange={e=>setF({...f,email:e.target.value})}/></div>
             <div><Label>Password</Label>

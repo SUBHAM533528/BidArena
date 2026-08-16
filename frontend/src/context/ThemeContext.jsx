@@ -1,14 +1,18 @@
 import React, { createContext, useContext, useEffect } from "react";
 
-const ThemeContext = createContext({ dark: true });
+const ThemeContext = createContext({ dark: false });
 
 export function ThemeProvider({ children }) {
   useEffect(() => {
-    document.documentElement.classList.add("dark");
+    // App now ships with a single, clean light theme — make sure no
+    // leftover "dark" class (e.g. from localStorage/previous session)
+    // is ever applied to <html>.
+    document.documentElement.classList.remove("dark");
+    localStorage.removeItem("theme");
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ dark: true }}>
+    <ThemeContext.Provider value={{ dark: false }}>
       {children}
     </ThemeContext.Provider>
   );

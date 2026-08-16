@@ -53,7 +53,7 @@ export default function SoldPlayers() {
           <Empty icon="fa-solid fa-circle-check" title="No players sold yet" body="Sold players will appear here once bidding starts." />
         </div>
       ) : (
-        <div className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 overflow-hidden shadow-card-dark">
+        <div className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 overflow-hidden shadow-card-light dark:shadow-card-dark">
           <div className="overflow-x-auto">
             <table className="data-table">
               <thead>

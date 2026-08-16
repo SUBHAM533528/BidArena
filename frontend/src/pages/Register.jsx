@@ -27,10 +27,10 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-stadium-950 bg-stadium-glow flex items-center justify-center px-4 py-10">
+    <div className="min-h-screen bg-ink-50 flex items-center justify-center px-4 py-10">
       <Card className="w-full max-w-sm">
-        <p className="font-display text-2xl text-floodlight-400 mb-1">Team Owner Registration</p>
-        <p className="text-slate-400 text-sm mb-6">
+        <p className="font-display text-2xl font-bold text-ink-900 mb-1">Team Owner Registration</p>
+        <p className="text-ink-500 text-sm mb-6">
           Create a Team Owner account to manage your squad and watch the live auction.
         </p>
         <form onSubmit={submit} className="space-y-4">
@@ -50,14 +50,14 @@ export default function Register() {
             <Label>Password</Label>
             <Input type="password" required minLength={6} value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
           </div>
-          {error && <p className="text-crimson-400 text-sm">{error}</p>}
+          {error && <p className="text-flame-600 text-sm">{error}</p>}
 
         </form>
-        <p className="text-sm text-slate-500 mt-5 text-center">
-          Already have an account? <Link to="/login" className="text-floodlight-400">Login</Link>
+        <p className="text-sm text-ink-500 mt-5 text-center">
+          Already have an account? <Link to="/login" className="text-gold-600 font-medium">Login</Link>
         </p>
-        <p className="text-xs text-slate-600 mt-2 text-center">
-          Want to play in the tournament instead? <Link to="/player-registration" className="text-floodlight-400">Register as a Player</Link>
+        <p className="text-xs text-ink-400 mt-2 text-center">
+          Want to play in the tournament instead? <Link to="/player-registration" className="text-gold-600 font-medium">Register as a Player</Link>
         </p>
       </Card>
     </div>

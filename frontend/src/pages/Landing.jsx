@@ -44,7 +44,7 @@ export default function Landing() {
   const navSolid = scrolled || nav || !hasBanners;
 
   return (
-    <div className="relative min-h-screen text-ink-100 font-body overflow-x-hidden">
+    <div className="relative min-h-screen text-ink-800 font-body overflow-x-hidden">
       <StadiumBg opacity={hasBanners ? 0.55 : 0.85} showPhoto={!hasBanners} />
 
       <SEO
@@ -56,8 +56,8 @@ export default function Landing() {
       {/* ── NAV ─────────────────────────────────────────────── */}
       <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
         navSolid
-          ? "bg-ink-950/80 backdrop-blur-xl border-b border-gold-500/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
-          : "bg-transparent"
+          ? "bg-white/85 backdrop-blur-xl border-b border-ink-200 shadow-[0_4px_20px_rgba(15,23,42,0.06)]"
+          : "bg-white/40 backdrop-blur-md"
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-3 shrink-0 group">
@@ -66,10 +66,8 @@ export default function Landing() {
                 <img src={t.logo} className="h-full w-full object-cover" alt="logo" />
               </div>
             )}
-            <span className={`font-display text-xl font-semibold tracking-wide transition-colors ${
-              navSolid ? "gold-gradient-text" : "text-white drop-shadow-lg"
-            }`}>
-              BidArena<span className={`font-normal ${navSolid ? "text-ink-400" : "text-white/70"}`}> Auctions</span>
+            <span className="font-display text-xl font-semibold tracking-wide transition-colors gold-gradient-text">
+              BidArena<span className="font-normal text-ink-500"> Auctions</span>
             </span>
           </Link>
 
@@ -78,11 +76,7 @@ export default function Landing() {
               ["/player-registration", "Player Registration"],
             ].map(([to, label]) => (
               <Link key={to} to={to}
-                className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
-                  navSolid
-                    ? "text-ink-300 hover:text-gold-400 hover:bg-gold-500/10"
-                    : "text-white/85 hover:text-white hover:bg-white/10 backdrop-blur-sm"
-                }`}>
+                className="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 text-ink-600 hover:text-gold-600 hover:bg-gold-500/10">
                 {label}
               </Link>
             ))}
@@ -90,22 +84,22 @@ export default function Landing() {
 
           <div className="flex items-center gap-2 md:hidden">
             <button
-              className={`p-2 rounded-lg transition ${navSolid ? "text-ink-300 hover:bg-ink-800" : "text-white hover:bg-white/10"}`}
+              className="p-2 rounded-lg transition text-ink-600 hover:bg-ink-100"
               onClick={() => setNav(!nav)}>
-              <div className={`w-5 h-px mb-1.5 transition-all ${navSolid ? "bg-ink-300" : "bg-white"} ${nav ? "rotate-45 translate-y-2" : ""}`} />
-              <div className={`w-5 h-px mb-1.5 transition-all ${navSolid ? "bg-ink-300" : "bg-white"} ${nav ? "opacity-0" : ""}`} />
-              <div className={`w-5 h-px transition-all ${navSolid ? "bg-ink-300" : "bg-white"} ${nav ? "-rotate-45 -translate-y-2" : ""}`} />
+              <div className={`w-5 h-px mb-1.5 transition-all bg-ink-500 ${nav ? "rotate-45 translate-y-2" : ""}`} />
+              <div className={`w-5 h-px mb-1.5 transition-all bg-ink-500 ${nav ? "opacity-0" : ""}`} />
+              <div className={`w-5 h-px transition-all bg-ink-500 ${nav ? "-rotate-45 -translate-y-2" : ""}`} />
             </button>
           </div>
         </div>
 
         {nav && (
-          <div className="md:hidden glass-panel border-t border-gold-500/10 px-4 py-3 space-y-1 animate-slide-down">
+          <div className="md:hidden glass-panel border-t border-ink-200 px-4 py-3 space-y-1 animate-slide-down">
             {[
               ...(t?[[`/watch/${t._id}`,"Watch Live Auction"]]:[])]
               .map(([to, label]) => (
                 <Link key={to} to={to} onClick={() => setNav(false)}
-                  className="block px-3 py-2.5 text-sm rounded-lg text-ink-200 hover:bg-gold-500/10 hover:text-gold-400 transition">
+                  className="block px-3 py-2.5 text-sm rounded-lg text-ink-700 hover:bg-gold-500/10 hover:text-gold-600 transition">
                   {to.startsWith("/watch") && <i className="fa-solid fa-satellite-dish mr-2 text-flame-500" />}
                   {label}
                 </Link>
@@ -118,7 +112,7 @@ export default function Landing() {
       {hasBanners && (
         <div className="w-full relative">
           <BannerCarousel banners={banners} />
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-ink-950 to-transparent pointer-events-none z-10" />
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none z-10" />
         </div>
       )}
 
@@ -135,17 +129,17 @@ export default function Landing() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold-400 opacity-60" />
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-gold-500" />
                   </span>
-                  <span className="text-2xs font-semibold uppercase tracking-widest text-gold-400">Live Auction Platform</span>
+                  <span className="text-2xs font-semibold uppercase tracking-widest text-gold-600">Live Auction Platform</span>
                 </div>
-                <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[0.92] tracking-tight text-white mb-6 drop-shadow-lg">
+                <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[0.92] tracking-tight text-ink-900 mb-6">
                   {t?.name || "Cricket\nAuction\nSystem"}
                 </h1>
-                <p className="text-base text-ink-300 leading-relaxed max-w-md mb-8">
+                <p className="text-base text-ink-600 leading-relaxed max-w-md mb-8">
                   {t?.description || "IPL-style bidding platform — create tournaments, register teams, run live auctions with real-time purse tracking."}
                 </p>
                 {tStart && tStart > now && (
                   <div className="mb-8 p-5 rounded-2xl glass-panel">
-                    <p className="eyebrow mb-3 flex items-center gap-1.5 text-gold-400">
+                    <p className="eyebrow mb-3 flex items-center gap-1.5 text-gold-600">
                       <i className="fa-solid fa-trophy text-gold-500" /> Tournament starts in
                     </p>
                     <CountdownTimer target={t.startDate} />
@@ -155,7 +149,7 @@ export default function Landing() {
                   <div className="mb-8 p-5 rounded-2xl border border-jade-500/25 bg-jade-500/10 backdrop-blur-md">
                     <div className="flex items-center gap-2 mb-3">
                       <span className="w-2 h-2 rounded-full bg-jade-400 animate-pulse" />
-                      <p className="eyebrow text-jade-400">Registration open — closes in</p>
+                      <p className="eyebrow text-jade-600">Registration open — closes in</p>
                     </div>
                     <CountdownTimer target={t.registrationEndDate} />
                     <Link to="/player-registration"
@@ -166,16 +160,16 @@ export default function Landing() {
                 )}
                 <div className="flex flex-wrap gap-3">
                   <Link to="/owner/register"
-                    className="px-6 py-3 bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-300 text-ink-950 font-bold text-sm rounded-xl transition shadow-lg shadow-gold-500/25 hover:shadow-gold-500/40 hover:-translate-y-0.5">
+                    className="px-6 py-3 bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-300 text-white font-bold text-sm rounded-xl transition shadow-lg shadow-gold-500/25 hover:shadow-gold-500/40 hover:-translate-y-0.5">
                     Register Your Team
                   </Link>
                   <Link to="/player-registration"
-                    className="px-6 py-3 glass-panel glass-panel-hover text-ink-100 font-semibold text-sm rounded-xl transition hover:-translate-y-0.5">
+                    className="px-6 py-3 glass-panel glass-panel-hover text-ink-800 font-semibold text-sm rounded-xl transition hover:-translate-y-0.5">
                     Player Registration
                   </Link>
                   {t && (
                     <Link to={`/watch/${t._id}`}
-                      className="px-6 py-3 border border-flame-500/50 text-flame-400 hover:bg-flame-500/10 font-semibold text-sm rounded-xl transition flex items-center gap-2 hover:-translate-y-0.5">
+                      className="px-6 py-3 border border-flame-500/50 text-flame-600 hover:bg-flame-500/10 font-semibold text-sm rounded-xl transition flex items-center gap-2 hover:-translate-y-0.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-flame-500 animate-pulse" />Watch Live
                     </Link>
                   )}
@@ -185,10 +179,10 @@ export default function Landing() {
               {t ? (
                 <div className="glass-panel glass-panel-hover rounded-2xl overflow-hidden animate-fade-up">
                   <div className="px-6 py-5 border-b border-gold-500/10 bg-gradient-to-r from-gold-500/10 to-transparent">
-                    <p className="eyebrow mb-1 text-gold-400">Tournament Details</p>
-                    <p className="font-display text-xl font-semibold text-white">{t.name}</p>
+                    <p className="eyebrow mb-1 text-gold-600">Tournament Details</p>
+                    <p className="font-display text-xl font-semibold text-ink-900">{t.name}</p>
                   </div>
-                  <div className="divide-y divide-ink-800/80">
+                  <div className="divide-y divide-ink-200">
                     {[
                       ["fa-solid fa-location-dot", "Venue",       t.venue || "TBA"],
                       ["fa-regular fa-calendar",   "Start",       t.startDate ? new Date(t.startDate).toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"}) : "TBA"],
@@ -196,11 +190,11 @@ export default function Landing() {
                       ["fa-solid fa-shield-halved","Max Teams",   `${t.maxTeams} teams`],
                       ["fa-solid fa-baseball-bat-ball","Max Players", `${t.maxPlayers} players`],
                     ].map(([icon, l, v]) => (
-                      <div key={l} className="flex justify-between items-center px-6 py-3.5 hover:bg-white/[0.02] transition">
+                      <div key={l} className="flex justify-between items-center px-6 py-3.5 hover:bg-ink-50 transition">
                         <span className="text-sm text-ink-400 flex items-center gap-2">
                           <i className={`${icon} text-gold-500/80 w-4 text-center`} />{l}
                         </span>
-                        <span className="text-sm font-medium text-ink-100">{v}</span>
+                        <span className="text-sm font-medium text-ink-800">{v}</span>
                       </div>
                     ))}
                     <div className="flex justify-between items-center px-6 py-3.5">
@@ -230,19 +224,19 @@ export default function Landing() {
           <section className="max-w-7xl mx-auto px-4 sm:px-8 py-12 -mt-4 relative z-20">
             <div className="grid sm:grid-cols-2 gap-5">
               {[
-                { to:"/player-registration", icon:"fa-solid fa-baseball-bat-ball", label:"Player Registration", desc:"Register yourself for the auction", accent:"from-gold-500/20 to-transparent", iconColor:"text-gold-400" },
-                { to:t?`/watch/${t._id}`:"/", icon:"fa-solid fa-satellite-dish", label:"Watch Live Auction", desc:"Live broadcast for your venue", accent:"from-flame-500/20 to-transparent", iconColor:"text-flame-400" },
+                { to:"/player-registration", icon:"fa-solid fa-baseball-bat-ball", label:"Player Registration", desc:"Register yourself for the auction", accent:"from-gold-500/20 to-transparent", iconColor:"text-gold-600" },
+                { to:t?`/watch/${t._id}`:"/", icon:"fa-solid fa-satellite-dish", label:"Watch Live Auction", desc:"Live broadcast for your venue", accent:"from-flame-500/20 to-transparent", iconColor:"text-flame-600" },
               ].map(item => (
                 <Link key={item.to} to={item.to}
                   className="group relative overflow-hidden rounded-2xl glass-panel glass-panel-hover p-6 transition-all duration-300 hover:-translate-y-1">
                   <div className={`absolute inset-0 bg-gradient-to-br ${item.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
                   <div className="relative">
-                    <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-ink-900/60 border border-white/10 mb-4 ${item.iconColor}`}>
+                    <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gold-500/10 border border-gold-500/15 mb-4 ${item.iconColor}`}>
                       <i className={`${item.icon} text-xl`} />
                     </div>
-                    <p className="font-bold text-base text-white group-hover:text-gold-400 transition">{item.label}</p>
+                    <p className="font-bold text-base text-ink-900 group-hover:text-gold-600 transition">{item.label}</p>
                     <p className="text-xs text-ink-400 mt-1">{item.desc}</p>
-                    <span className="inline-flex items-center gap-1.5 mt-4 text-2xs font-semibold uppercase tracking-wider text-gold-500/70 group-hover:text-gold-400 transition">
+                    <span className="inline-flex items-center gap-1.5 mt-4 text-2xs font-semibold uppercase tracking-wider text-gold-500/70 group-hover:text-gold-600 transition">
                       Get started <i className="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform" />
                     </span>
                   </div>
@@ -261,27 +255,27 @@ export default function Landing() {
                       </div>
                     )}
                     <div>
-                      <p className="eyebrow mb-0.5 text-gold-400">Active Tournament</p>
-                      <p className="font-display text-xl font-bold text-white">{t.name}</p>
+                      <p className="eyebrow mb-0.5 text-gold-600">Active Tournament</p>
+                      <p className="font-display text-xl font-bold text-ink-900">{t.name}</p>
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-4 text-sm items-center">
-                    <span className="text-ink-300">
+                    <span className="text-ink-600">
                       <i className="fa-solid fa-location-dot mr-1.5 text-gold-500/80" />{t.venue || "TBA"}
                     </span>
                     <span className={`badge ${t.registrationOpen ? "badge-green" : "badge-red"}`}>
                       Registration {t.registrationOpen ? "Open" : "Closed"}
                     </span>
                     {t && (
-                      <Link to={`/watch/${t._id}`} className="text-flame-400 font-semibold flex items-center gap-1.5 hover:text-flame-300 transition">
+                      <Link to={`/watch/${t._id}`} className="text-flame-600 font-semibold flex items-center gap-1.5 hover:text-flame-500 transition">
                         <span className="w-1.5 h-1.5 rounded-full bg-flame-500 animate-pulse" />Watch Live
                       </Link>
                     )}
                   </div>
                 </div>
                 {regOpen && (
-                  <div className="relative mt-5 pt-5 border-t border-ink-800/80">
-                    <p className="eyebrow mb-2 text-jade-400">Registration closes in</p>
+                  <div className="relative mt-5 pt-5 border-t border-ink-200">
+                    <p className="eyebrow mb-2 text-jade-600">Registration closes in</p>
                     <CountdownTimer target={t.registrationEndDate} />
                   </div>
                 )}
@@ -296,8 +290,8 @@ export default function Landing() {
             <div className="max-w-7xl mx-auto px-4 sm:px-8 py-16">
               <div className="flex items-end justify-between mb-10">
                 <div>
-                  <p className="eyebrow mb-2 text-gold-400">Participating</p>
-                  <h2 className="font-display text-3xl sm:text-4xl font-semibold text-white">Teams</h2>
+                  <p className="eyebrow mb-2 text-gold-600">Participating</p>
+                  <h2 className="font-display text-3xl sm:text-4xl font-semibold text-ink-900">Teams</h2>
                 </div>
                 <span className="text-sm text-ink-400 px-3 py-1 rounded-full glass-panel">{teams.length} registered</span>
               </div>
@@ -308,27 +302,27 @@ export default function Landing() {
                     <Link key={tm._id} to={`/team/${tm._id}`}
                       className="group glass-panel glass-panel-hover rounded-2xl p-4 transition-all duration-300 hover:-translate-y-1">
                       <div className="flex items-center gap-3 mb-4">
-                        <div className="h-11 w-11 rounded-xl bg-ink-900/80 overflow-hidden flex items-center justify-center shrink-0 border border-gold-500/20 group-hover:border-gold-500/40 transition">
+                        <div className="h-11 w-11 rounded-xl bg-gold-500/10 overflow-hidden flex items-center justify-center shrink-0 border border-gold-500/20 group-hover:border-gold-500/40 transition">
                           {tm.logo
                             ? <img src={tm.logo} className="h-full w-full object-cover" alt={tm.name} />
                             : <i className="fa-solid fa-shield-halved text-lg text-gold-500/50" />}
                         </div>
                         <div className="min-w-0">
-                          <p className="text-sm font-bold text-white truncate group-hover:text-gold-400 transition">{tm.name}</p>
+                          <p className="text-sm font-bold text-ink-900 truncate group-hover:text-gold-600 transition">{tm.name}</p>
                           <p className="text-2xs text-ink-500 truncate">{tm.ownerName}</p>
                         </div>
                       </div>
                       <div>
                         <div className="flex justify-between text-2xs mb-1.5">
                           <span className="text-ink-500">Purse left</span>
-                          <span className="font-mono font-semibold text-jade-400">₹{(tm.remainingPurse||tm.initialPurse)?.toLocaleString()}</span>
+                          <span className="font-mono font-semibold text-jade-600">₹{(tm.remainingPurse||tm.initialPurse)?.toLocaleString()}</span>
                         </div>
                         <div className="purse-track">
                           <div className={`h-full rounded-full transition-all ${pct<25?"bg-flame-500":"bg-jade-500"}`} style={{width:`${pct}%`}}/>
                         </div>
                         <div className="flex justify-between text-2xs mt-1.5 text-ink-500">
                           <span>{tm.squad?.length||0}/{tm.maxPlayers} players</span>
-                          <span className="group-hover:text-gold-400 transition flex items-center gap-1">
+                          <span className="group-hover:text-gold-600 transition flex items-center gap-1">
                             View squad <i className="fa-solid fa-arrow-right text-2xs" />
                           </span>
                         </div>
@@ -343,7 +337,7 @@ export default function Landing() {
       </div>
 
       {/* ── FOOTER ────────────────────────────────────────────── */}
-      <footer className="relative border-t border-gold-500/10 bg-ink-950/90 backdrop-blur-md">
+      <footer className="relative border-t border-gold-500/10 bg-white/90 backdrop-blur-md">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold-500/40 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -351,8 +345,8 @@ export default function Landing() {
             <span className="text-2xs text-ink-500">© {new Date().getFullYear()}</span>
           </div>
           <div className="flex gap-6 text-sm text-ink-400">
-            <Link to="/player-registration" className="hover:text-gold-400 transition">Player Registration</Link>
-            {t && <Link to={`/watch/${t._id}`} className="hover:text-gold-400 transition">Watch Auction</Link>}
+            <Link to="/player-registration" className="hover:text-gold-600 transition">Player Registration</Link>
+            {t && <Link to={`/watch/${t._id}`} className="hover:text-gold-600 transition">Watch Auction</Link>}
           </div>
         </div>
       </footer>

@@ -78,7 +78,7 @@ export default function TeamProfile() {
       <div className="max-w-5xl mx-auto px-4 sm:px-8 py-10">
 
         {/* ── TEAM HERO ────────────────────────── */}
-        <div className="dark:bg-ink-850 bg-white rounded-2xl border dark:border-ink-700 border-ink-200 shadow-card-dark overflow-hidden mb-8">
+        <div className="dark:bg-ink-850 bg-white rounded-2xl border dark:border-ink-700 border-ink-200 shadow-card-light dark:shadow-card-dark overflow-hidden mb-8">
           {/* Gold top accent bar */}
           <div className="h-1.5 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600" />
 

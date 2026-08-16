@@ -145,7 +145,7 @@ export default function BannerManagement() {
                   #{idx + 1}
                 </span>
                 {/* Status badge */}
-                <span className={`absolute top-2 right-2 text-2xs font-bold px-2 py-1 rounded ${b.isActive ? "bg-jade-600 text-white" : "bg-ink-700 text-ink-400"}`}>
+                <span className={`absolute top-2 right-2 text-2xs font-bold px-2 py-1 rounded ${b.isActive ? "bg-jade-600 text-white" : "dark:bg-ink-700 bg-ink-300 dark:text-ink-400 text-ink-600"}`}>
                   {b.isActive ? "Active" : "Inactive"}
                 </span>
               </div>

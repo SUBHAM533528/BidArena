@@ -60,7 +60,7 @@ export default function TeamManagement() {
 
       {/* Add/Edit form */}
       {showForm && (
-        <div className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 p-6 mb-6 shadow-card-dark">
+        <div className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 p-6 mb-6 shadow-card-light dark:shadow-card-dark">
           <h2 className="font-display text-lg font-semibold dark:text-ink-100 text-ink-900 mb-5">
             {editId ? "Edit Team" : "Add New Team"}
           </h2>
@@ -100,7 +100,7 @@ export default function TeamManagement() {
             const spent = (t.initialPurse || 0) - (t.remainingPurse || 0);
             const pct   = Math.max(0, Math.min(100, (t.remainingPurse / t.initialPurse) * 100));
             return (
-              <div key={t._id} className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 p-5 hover:border-gold-500/40 transition shadow-card-light dark:shadow-card-dark">
+              <div key={t._id} className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 p-5 hover:border-gold-500/40 transition shadow-card-light dark:shadow-card-light dark:shadow-card-dark">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="h-12 w-12 rounded-xl dark:bg-ink-700 bg-ink-100 border dark:border-ink-600 border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
                     {t.logo ? <img src={t.logo} className="h-full w-full object-cover" alt={t.name} /> : <i className="fa-solid fa-shield-halved text-base opacity-60" />}

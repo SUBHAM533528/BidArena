@@ -91,15 +91,15 @@ export default function PlayerRegistration() {
 
   if (tournament && !tournament.registrationOpen) {
     return (
-      <div className="min-h-screen bg-stadium-950 flex items-center justify-center px-4 relative">
+      <div className="min-h-screen bg-ink-50 flex items-center justify-center px-4 relative">
       <StadiumBg />
         <Card className="max-w-md text-center">
           <p className="text-6xl mb-4">🏏🚫</p>
-          <h1 className="font-display text-2xl text-floodlight-400 mb-2">
+          <h1 className="font-display text-2xl text-gold-600 mb-2">
             {tournament.closedMessage || "Player Registration is Currently Closed"}
           </h1>
-          <p className="text-slate-400 text-sm mb-4">Registrations will reopen as per the schedule.</p>
-          <p className="text-slate-500 text-xs">{tournament.contactDetails}</p>
+          <p className="text-ink-500 text-sm mb-4">Registrations will reopen as per the schedule.</p>
+          <p className="text-ink-400 text-xs">{tournament.contactDetails}</p>
         </Card>
       </div>
     );
@@ -107,25 +107,25 @@ export default function PlayerRegistration() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-stadium-950 flex items-center justify-center px-4 relative">
+      <div className="min-h-screen bg-ink-50 flex items-center justify-center px-4 relative">
       <StadiumBg />
         <Card className="max-w-md text-center">
           <p className="text-6xl mb-4">✅</p>
-          <h1 className="font-display text-2xl text-pitch-400 mb-2">Registration Submitted!</h1>
-          <p className="text-slate-400 text-sm">Your profile is pending admin review. You'll be contacted once approved for the auction.</p>
+          <h1 className="font-display text-2xl text-jade-600 mb-2">Registration Submitted!</h1>
+          <p className="text-ink-500 text-sm">Your profile is pending admin review. You'll be contacted once approved for the auction.</p>
         </Card>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-stadium-950 px-4 py-8 md:py-12 relative">
+    <div className="min-h-screen bg-ink-50 px-4 py-8 md:py-12 relative">
       <StadiumBg />
       <Card className="max-w-2xl mx-auto">
         <div className="flex items-start justify-between mb-6">
           <div>
-            <h1 className="font-display text-2xl text-floodlight-400">Player Registration</h1>
-            <p className="text-slate-400 text-sm mt-1">{tournament?.name}</p>
+            <h1 className="font-display text-2xl font-bold text-ink-900">Player Registration</h1>
+            <p className="text-ink-500 text-sm mt-1">{tournament?.name}</p>
           </div>
           {tournaments.length > 1 && (
             <Select value={tournamentId} onChange={(e) => handleTournamentChange(e.target.value)} className="w-48">
@@ -137,7 +137,7 @@ export default function PlayerRegistration() {
         <form onSubmit={submit} className="grid sm:grid-cols-2 gap-4">
           {/* ── Personal Details ── */}
           <div className="sm:col-span-2">
-            <p className="text-xs uppercase tracking-widest text-slate-500 mb-3 border-b border-stadium-700 pb-1">Personal Details</p>
+            <p className="text-xs uppercase tracking-widest text-ink-400 font-semibold mb-3 border-b border-ink-200 pb-1.5">Personal Details</p>
           </div>
           <div className="sm:col-span-2">
             <Label>Full Name *</Label>
@@ -155,7 +155,7 @@ export default function PlayerRegistration() {
 
           {/* ── Cricket Profile ── */}
           <div className="sm:col-span-2 mt-2">
-            <p className="text-xs uppercase tracking-widest text-slate-500 mb-3 border-b border-stadium-700 pb-1">Cricket Profile</p>
+            <p className="text-xs uppercase tracking-widest text-ink-400 font-semibold mb-3 border-b border-ink-200 pb-1.5">Cricket Profile</p>
           </div>
 
           <div>
@@ -200,21 +200,21 @@ export default function PlayerRegistration() {
 
           {/* Wicket Keeper gloves note */}
           {form.role === "Wicket Keeper" && (
-            <div className="glass rounded-lg px-3 py-2 text-xs text-floodlight-400">
+            <div className="bg-gold-500/10 border border-gold-500/20 rounded-lg px-3 py-2 text-xs text-gold-700">
               Wicket Keeper — glove side follows batting hand automatically
             </div>
           )}
 
           {/* ── Uploads ── */}
           <div className="sm:col-span-2 mt-2">
-            <p className="text-xs uppercase tracking-widest text-slate-500 mb-3 border-b border-stadium-700 pb-1">Documents</p>
+            <p className="text-xs uppercase tracking-widest text-ink-400 font-semibold mb-3 border-b border-ink-200 pb-1.5">Documents</p>
           </div>
           <div>
             <Label>Profile Photo</Label>
             <Input type="file" accept="image/*" onChange={(e) => setPhoto(e.target.files[0])} />
           </div>
 
-          {error && <p className="text-crimson-400 text-sm sm:col-span-2">{error}</p>}
+          {error && <p className="text-flame-600 text-sm sm:col-span-2">{error}</p>}
 
           <Button type="submit" className="sm:col-span-2" disabled={loading || !tournamentId}>
             {loading ? "Submitting..." : "Submit Registration"}
