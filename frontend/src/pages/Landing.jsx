@@ -77,7 +77,7 @@ export default function Landing() {
 
           <nav className="hidden md:flex items-center gap-1">
             <Link to="/player-registration"
-              className="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 text-ink-300 hover:text-gold-400 hover:bg-white/5">
+              className="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 text-ink-300 hover:text-gold-400 bg-white/20 hover:bg-white/5">
               Player Registration
             </Link>
             {t && (
@@ -88,12 +88,12 @@ export default function Landing() {
             )}
           </nav>
 
-          <div className="hidden md:block">
+          {/* <div className="hidden md:block">
             <Link to="/owner/register"
               className="px-5 py-2.5 bg-gold-500 hover:bg-gold-400 text-[#1a1206] font-bold text-sm rounded-lg transition shadow-lg shadow-gold-500/20">
               Register Now
             </Link>
-          </div>
+          </div> */}
 
           <div className="flex items-center gap-2 md:hidden">
             <button className="p-2 rounded-lg transition text-ink-300 hover:bg-white/5" onClick={() => setNav(!nav)}>
@@ -133,7 +133,7 @@ export default function Landing() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-8 pt-32 pb-16 md:pb-24 w-full">
-          <h1 className="font-editorial text-5xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight text-green-600 font-bold mb-5 max-w-3xl">
+          <h1 className="font-editorial text-5xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight text-green-600 mb-5 max-w-3xl">
             {t
               ? <>Build Your Dream XI at the<br className="hidden sm:block" /> {t.name}</>
               : <>Build Your Dream XI at the<br className="hidden sm:block" /> Ultimate Cricket Auction</>}
