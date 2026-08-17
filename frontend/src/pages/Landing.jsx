@@ -133,7 +133,7 @@ export default function Landing() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-8 pt-32 pb-16 md:pb-24 w-full">
-          <h1 className="font-editorial text-5xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight text-green-500 mb-5 max-w-3xl">
+          <h1 className="font-editorial text-5xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight text-green-600 font-bold mb-5 max-w-3xl">
             {t
               ? <>Build Your Dream XI at the<br className="hidden sm:block" /> {t.name}</>
               : <>Build Your Dream XI at the<br className="hidden sm:block" /> Ultimate Cricket Auction</>}
