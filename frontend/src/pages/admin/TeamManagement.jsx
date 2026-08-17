@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../../api/axios";
-import { Card, Input, Label, Button, Select, Empty } from "../../components/UI";
+import { Card, Input, Label, Button, Select, Empty, Alert } from "../../components/UI";
 
 const empty = { tournament:"", name:"", ownerName:"", mobile:"", email:"", initialPurse:10000000, maxPlayers:18 };
 
@@ -12,28 +12,38 @@ export default function TeamManagement() {
   const [logo, setLogo]               = useState(null);
   const [editId, setEditId]           = useState(null);
   const [showForm, setShowForm]       = useState(false);
+  const [error, setError]             = useState("");
+  const [saving, setSaving]           = useState(false);
 
   useEffect(() => {
     api.get("/tournaments").then(r => {
       setTournaments(r.data);
       const first = r.data[0];
       if (first) setForm(f => ({ ...f, tournament: first._id, initialPurse: first.defaultTeamPurse || 10000000 }));
-    });
+    }).catch(err => setError(err.response?.data?.message || "Failed to load tournaments"));
   }, []);
 
-  const load = () => api.get("/teams").then(r => setTeams(r.data));
+  const load = () => api.get("/teams").then(r => setTeams(r.data))
+    .catch(err => setError(err.response?.data?.message || "Failed to load teams"));
   useEffect(() => { load(); }, []);
 
   const submit = async (e) => {
     e.preventDefault();
-    const fd = new FormData();
-    Object.entries(form).forEach(([k, v]) => fd.append(k, v));
-    if (logo) fd.append("logo", logo);
-    const opts = { headers: { "Content-Type": "multipart/form-data" } };
-    if (editId) await api.put(`/teams/${editId}`, fd, opts);
-    else        await api.post("/teams", fd, opts);
-    setForm({ ...empty, tournament: form.tournament }); setLogo(null); setEditId(null); setShowForm(false);
-    load();
+    setError(""); setSaving(true);
+    try {
+      const fd = new FormData();
+      Object.entries(form).forEach(([k, v]) => fd.append(k, v));
+      if (logo) fd.append("logo", logo);
+      const opts = { headers: { "Content-Type": "multipart/form-data" } };
+      if (editId) await api.put(`/teams/${editId}`, fd, opts);
+      else        await api.post("/teams", fd, opts);
+      setForm({ ...empty, tournament: form.tournament }); setLogo(null); setEditId(null); setShowForm(false);
+      load();
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to save team");
+    } finally {
+      setSaving(false);
+    }
   };
 
   const edit = t => {
@@ -43,7 +53,8 @@ export default function TeamManagement() {
 
   const remove = async id => {
     if (!confirm("Delete this team?")) return;
-    await api.delete(`/teams/${id}`); load();
+    try { await api.delete(`/teams/${id}`); load(); }
+    catch (err) { alert(err.response?.data?.message || "Delete failed"); }
   };
 
   return (
@@ -58,9 +69,11 @@ export default function TeamManagement() {
         </Button>
       </div>
 
+      {error && <div className="mb-6"><Alert type="error">{error}</Alert></div>}
+
       {/* Add/Edit form */}
       {showForm && (
-        <div className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 p-6 mb-6 shadow-card-light dark:shadow-card-dark">
+        <div className="dark:bg-white/[0.03] bg-white rounded-xl border dark:border-white/[0.08] border-ink-200 p-6 mb-6 shadow-card-light dark:shadow-card-dark">
           <h2 className="font-display text-lg font-semibold dark:text-ink-100 text-ink-900 mb-5">
             {editId ? "Edit Team" : "Add New Team"}
           </h2>
@@ -83,7 +96,7 @@ export default function TeamManagement() {
             <div><Label>Initial Purse (₹)</Label><Input type="number" min="0" required value={form.initialPurse} onChange={e=>setForm({...form,initialPurse:e.target.value})}/></div>
             <div><Label>Max Players</Label><Input type="number" min="1" required value={form.maxPlayers} onChange={e=>setForm({...form,maxPlayers:e.target.value})}/></div>
             <div className="sm:col-span-2 pt-2">
-              <Button type="submit">{editId ? "Update Team" : "Add Team"}</Button>
+              <Button type="submit" disabled={saving}>{saving ? "Saving…" : (editId ? "Update Team" : "Add Team")}</Button>
             </div>
           </form>
         </div>
@@ -91,7 +104,7 @@ export default function TeamManagement() {
 
       {/* Team grid */}
       {teams.length === 0 ? (
-        <div className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 p-10">
+        <div className="dark:bg-white/[0.03] bg-white rounded-xl border dark:border-white/[0.08] border-ink-200 p-10">
           <Empty icon="fa-solid fa-shield-halved" title="No teams yet" body="Add your first team using the button above." />
         </div>
       ) : (
@@ -100,9 +113,9 @@ export default function TeamManagement() {
             const spent = (t.initialPurse || 0) - (t.remainingPurse || 0);
             const pct   = Math.max(0, Math.min(100, (t.remainingPurse / t.initialPurse) * 100));
             return (
-              <div key={t._id} className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 p-5 hover:border-gold-500/40 transition shadow-card-light dark:shadow-card-light dark:shadow-card-dark">
+              <div key={t._id} className="dark:bg-white/[0.03] bg-white rounded-xl border dark:border-white/[0.08] border-ink-200 p-5 hover:border-gold-500/40 transition shadow-card-light dark:shadow-card-light dark:shadow-card-dark">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="h-12 w-12 rounded-xl dark:bg-ink-700 bg-ink-100 border dark:border-ink-600 border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
+                  <div className="h-12 w-12 rounded-xl dark:bg-white/[0.08] bg-ink-100 border dark:border-white/[0.1] border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
                     {t.logo ? <img src={t.logo} className="h-full w-full object-cover" alt={t.name} /> : <i className="fa-solid fa-shield-halved text-base opacity-60" />}
                   </div>
                   <div className="min-w-0">
@@ -127,7 +140,7 @@ export default function TeamManagement() {
 
                 <div className="flex gap-2 flex-wrap">
                   <Link to={`/admin/teams/${t._id}`}
-                    className="flex-1 py-2 text-xs font-semibold text-center rounded-lg dark:bg-ink-700 bg-ink-100 dark:text-ink-300 text-ink-600 hover:bg-gold-500/10 hover:text-gold-500 border dark:border-ink-600 border-ink-200 transition">
+                    className="flex-1 py-2 text-xs font-semibold text-center rounded-lg dark:bg-white/[0.08] bg-ink-100 dark:text-ink-300 text-ink-600 hover:bg-gold-500/10 hover:text-gold-500 border dark:border-white/[0.1] border-ink-200 transition">
                     👥 View Squad
                   </Link>
                   <Button variant="ghost" size="sm" onClick={() => edit(t)}>Edit</Button>

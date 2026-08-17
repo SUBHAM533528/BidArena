@@ -49,11 +49,11 @@ export default function SoldPlayers() {
       </div>
 
       {players.length === 0 ? (
-        <div className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 p-10">
+        <div className="dark:bg-white/[0.03] bg-white rounded-xl border dark:border-white/[0.08] border-ink-200 p-10">
           <Empty icon="fa-solid fa-circle-check" title="No players sold yet" body="Sold players will appear here once bidding starts." />
         </div>
       ) : (
-        <div className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 overflow-hidden shadow-card-light dark:shadow-card-dark">
+        <div className="dark:bg-white/[0.03] bg-white rounded-xl border dark:border-white/[0.08] border-ink-200 overflow-hidden shadow-card-light dark:shadow-card-dark">
           <div className="overflow-x-auto">
             <table className="data-table">
               <thead>
@@ -77,7 +77,7 @@ export default function SoldPlayers() {
                         <td className="dark:text-ink-600 text-ink-400 font-mono text-xs">{i + 1}</td>
                         <td>
                           <div className="flex items-center gap-3">
-                            <div className="h-9 w-9 rounded-lg dark:bg-ink-700 bg-ink-100 overflow-hidden flex items-center justify-center border dark:border-ink-600 border-ink-200 shrink-0">
+                            <div className="h-9 w-9 rounded-lg dark:bg-white/[0.08] bg-ink-100 overflow-hidden flex items-center justify-center border dark:border-white/[0.1] border-ink-200 shrink-0">
                               {p.photo ? <img src={p.photo} className="h-full w-full object-cover" /> : <i className="fa-solid fa-baseball-bat-ball text-xl opacity-40" />}
                             </div>
                             <span className="font-semibold dark:text-ink-100 text-ink-900">{p.fullName}</span>
@@ -100,7 +100,7 @@ export default function SoldPlayers() {
                           {p.soldTo ? (
                             <Link to={`/admin/teams/${p.soldTo._id}`}
                               className="flex items-center gap-2 group">
-                              <div className="h-6 w-6 rounded dark:bg-ink-700 bg-ink-100 overflow-hidden flex items-center justify-center border dark:border-ink-600 border-ink-200 shrink-0">
+                              <div className="h-6 w-6 rounded dark:bg-white/[0.08] bg-ink-100 overflow-hidden flex items-center justify-center border dark:border-white/[0.1] border-ink-200 shrink-0">
                                 {p.soldTo.logo ? <img src={p.soldTo.logo} className="h-full w-full object-cover" /> : <i className="fa-solid fa-shield-halved text-base opacity-60" />}
                               </div>
                               <span className="text-sm font-medium dark:text-ink-300 text-ink-600 group-hover:text-gold-500 transition truncate">{p.soldTo.name}</span>
@@ -113,7 +113,7 @@ export default function SoldPlayers() {
               </tbody>
             </table>
           </div>
-          <div className="px-4 py-3 border-t dark:border-ink-800 border-ink-100 flex justify-between items-center dark:bg-ink-900/40 bg-ink-50">
+          <div className="px-4 py-3 border-t dark:border-white/[0.06] border-ink-100 flex justify-between items-center dark:bg-ink-900/40 bg-ink-50">
             <span className="text-xs dark:text-ink-500 text-ink-400">{players.length} players sold</span>
             <span className="font-mono font-bold text-gold-500">Total: ₹{total.toLocaleString()}</span>
           </div>

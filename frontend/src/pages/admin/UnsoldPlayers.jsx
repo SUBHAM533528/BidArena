@@ -43,7 +43,7 @@ export default function UnsoldPlayers() {
           {players.map(p => (
             <div key={p._id} className="card p-4">
               <div className="flex items-center gap-3 mb-3">
-                <div className="h-12 w-12 rounded-xl dark:bg-ink-800 bg-ink-100 border dark:border-ink-700 border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
+                <div className="h-12 w-12 rounded-xl dark:bg-white/[0.05] bg-ink-100 border dark:border-white/[0.08] border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
                   {p.photo ? <img src={p.photo} className="h-full w-full object-cover"/> : <i className="fa-solid fa-baseball-bat-ball text-xl opacity-40" />}
                 </div>
                 <div className="min-w-0">

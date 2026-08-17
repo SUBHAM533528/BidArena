@@ -10,11 +10,12 @@ export default {
         ink: {
           50:"#f8fafc", 100:"#f0f4f8", 200:"#e2e8f0", 300:"#cbd5e1",
           400:"#94a3b8", 500:"#64748b", 600:"#475569", 700:"#334155",
-          800:"#1e293b", 850:"#172033", 900:"#0f1624", 950:"#090e18",
+          800:"#161c17", 850:"#12160f", 900:"#0d100d", 950:"#0a0d0a",
         },
       },
       fontFamily: {
         display: ["'Oswald'","sans-serif"],
+        editorial: ["'Playfair Display'","serif"],
         body:    ["'Inter'","sans-serif"],
         mono:    ["'JetBrains Mono'","monospace"],
       },

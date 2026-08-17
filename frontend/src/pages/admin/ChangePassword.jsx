@@ -43,8 +43,8 @@ export default function ChangePassword() {
 
       <div className="max-w-lg">
         <div className="card p-6">
-          <div className="flex items-center gap-4 mb-6 pb-5 border-b dark:border-ink-800 border-ink-100">
-            <div className="h-12 w-12 rounded-xl dark:bg-ink-800 bg-ink-100 border dark:border-ink-700 border-ink-200 flex items-center justify-center text-xl">icon</div>
+          <div className="flex items-center gap-4 mb-6 pb-5 border-b dark:border-white/[0.06] border-ink-100">
+            <div className="h-12 w-12 rounded-xl dark:bg-white/[0.05] bg-ink-100 border dark:border-white/[0.08] border-ink-200 flex items-center justify-center text-xl">icon</div>
             <div>
               <p className="font-semibold dark:text-ink-200 text-ink-800">Admin Password</p>
               <p className="text-xs dark:text-ink-500 text-ink-400 mt-0.5">Choose a strong password. There is no "forgot password" option.</p>
@@ -88,7 +88,7 @@ export default function ChangePassword() {
               <div className="card-inset rounded-xl p-4 space-y-2">
                 {rules.map(r => (
                   <div key={r.label} className="flex items-center gap-2.5">
-                    <div className={`h-4 w-4 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${r.ok ? "bg-jade-500 text-white" : "dark:bg-ink-700 bg-ink-200 dark:text-ink-600 text-ink-400"}`}>
+                    <div className={`h-4 w-4 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${r.ok ? "bg-jade-500 text-white" : "dark:bg-white/[0.08] bg-ink-200 dark:text-ink-600 text-ink-400"}`}>
                       {r.ok ? <i className="fa-solid fa-check text-2xs" /> : ""}
                     </div>
                     <span className={`text-xs transition-colors ${r.ok ? "dark:text-jade-400 text-jade-600" : "dark:text-ink-500 text-ink-400"}`}>{r.label}</span>

@@ -9,8 +9,8 @@ export function Button({ children, variant="primary", size="md", className="", .
   const sizes = { xs:"px-2.5 py-1.5 text-2xs", sm:"px-3 py-2 text-xs", md:"px-4 py-2.5 text-sm", lg:"px-6 py-3 text-sm" };
   const variants = {
     primary:"bg-gold-500 hover:bg-gold-400 active:bg-gold-600 text-ink-950 shadow-sm hover:shadow-md",
-    ghost:"bg-transparent border dark:border-ink-700 border-ink-300 dark:text-ink-300 text-ink-600 dark:hover:bg-ink-800 hover:bg-ink-100",
-    outline:"bg-transparent border dark:border-ink-700 border-ink-300 dark:text-ink-400 text-ink-500 hover:border-gold-500 hover:text-gold-500",
+    ghost:"bg-transparent border dark:border-white/[0.08] border-ink-300 dark:text-ink-300 text-ink-600 dark:hover:bg-white/[0.05] hover:bg-ink-100",
+    outline:"bg-transparent border dark:border-white/[0.08] border-ink-300 dark:text-ink-400 text-ink-500 hover:border-gold-500 hover:text-gold-500",
     danger:"bg-flame-600 hover:bg-flame-500 text-white shadow-sm",
     jade:"bg-jade-600 hover:bg-jade-500 text-white shadow-sm",
     soft:"bg-gold-500/10 hover:bg-gold-500/20 text-gold-500 border border-gold-500/20",
@@ -74,7 +74,7 @@ export function ThemeToggle() {
   return (
     <button onClick={toggle} title={dark ? "Switch to light mode" : "Switch to dark mode"}
       className="relative h-7 w-14 rounded-full transition-colors duration-300 focus:outline-none shrink-0"
-      style={{ background: dark ? "#1e293b" : "#cbd5e1" }}>
+      style={{ background: dark ? "#161c17" : "#cbd5e1" }}>
       <span className="absolute top-1 h-5 w-5 rounded-full shadow-md transition-transform duration-300 flex items-center justify-center"
         style={{ left:"4px", transform: dark ? "translateX(28px)" : "translateX(0)", background: dark ? "#f59e0b" : "#ffffff" }}>
         <i className={`fa-solid ${dark ? "fa-moon" : "fa-sun"} text-[10px] ${dark ? "text-ink-900" : "text-gold-500"}`} />
@@ -86,7 +86,7 @@ export function ThemeToggle() {
 export function Empty({ icon="fa-solid fa-inbox", title, body }) {
   return (
     <div className="flex flex-col items-center justify-center py-14 text-center">
-      <div className="h-14 w-14 rounded-2xl dark:bg-ink-800 bg-ink-100 flex items-center justify-center mb-4">
+      <div className="h-14 w-14 rounded-2xl dark:bg-white/[0.05] bg-ink-100 flex items-center justify-center mb-4">
         <i className={`${icon} text-xl dark:text-ink-600 text-ink-400`} />
       </div>
       <p className="font-semibold dark:text-ink-300 text-ink-600">{title}</p>
@@ -112,7 +112,7 @@ export function Alert({ children, type="error" }) {
 export function SectionTitle({ children, sub }) {
   return (
     <div className="mb-6">
-      <h1 className="font-display text-3xl font-semibold dark:text-ink-50 text-ink-900">{children}</h1>
+      <h1 className="font-editorial text-3xl font-bold dark:text-white text-ink-900">{children}</h1>
       {sub && <p className="text-sm dark:text-ink-500 text-ink-400 mt-1">{sub}</p>}
     </div>
   );

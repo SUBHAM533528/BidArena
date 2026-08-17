@@ -12,8 +12,8 @@ import TournamentManagement from "./pages/admin/TournamentManagement";
 import TeamManagement from "./pages/admin/TeamManagement";
 import TeamDetail from "./pages/admin/TeamDetail";
 import PlayerManagement from "./pages/admin/PlayerManagement";
+import AuctionOverview from "./pages/admin/AuctionOverview";
 import AuctionRoom from "./pages/admin/AuctionRoom";
-import BannerManagement from "./pages/admin/BannerManagement";
 import SoldPlayers from "./pages/admin/SoldPlayers";
 import UnsoldPlayers from "./pages/admin/UnsoldPlayers";
 import Reports from "./pages/admin/Reports";
@@ -44,8 +44,8 @@ export default function App() {
         <Route path="teams"          element={<TeamManagement />} />
         <Route path="teams/:teamId"  element={<TeamDetail />} />
         <Route path="players"        element={<PlayerManagement />} />
-        <Route path="auction"        element={<AuctionRoom />} />
-        <Route path="banners"        element={<BannerManagement />} />
+        <Route path="auction"        element={<AuctionOverview />} />
+        <Route path="auction/:tournamentId" element={<AuctionRoom />} />
         <Route path="sold"           element={<SoldPlayers />} />
         <Route path="unsold"         element={<UnsoldPlayers />} />
         <Route path="reports"        element={<Reports />} />

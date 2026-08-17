@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import api from "../../api/axios";
 import { getSocket } from "../../socket/socket";
 import { Button, Select, Input, Label, Badge } from "../../components/UI";
 
 export default function AuctionRoom() {
+  const { tournamentId } = useParams();
+  const navigate = useNavigate();
   const [tournaments, setTournaments] = useState([]);
-  const [tid, setTid]     = useState("");
+  const [tid, setTid]     = useState(tournamentId || "");
   const [teams, setTeams] = useState([]);
   const [state, setState] = useState(null);
   const [pool, setPool]   = useState(0);
@@ -20,12 +23,20 @@ export default function AuctionRoom() {
   useEffect(()=>{
     api.get("/tournaments").then(r=>{
       setTournaments(r.data);
+      if (tournamentId) return; // URL already tells us which auction to open
       const a = r.data.find(t=>t.isActive)||r.data[0];
       if(a){ setTid(a._id); setInc(a.bidIncrements?.[1]||1000); }
     });
   },[]);
 
+  // Keep local `tid` in sync with the URL — every tournament's auction is
+  // fully isolated (own socket room + own server-side timer keyed by
+  // tournamentId), so switching here never touches any other tournament's
+  // live auction, even if it's running concurrently elsewhere.
+  useEffect(() => { if (tournamentId) setTid(tournamentId); }, [tournamentId]);
+
   const t = tournaments.find(x=>x._id===tid);
+  useEffect(() => { if (t?.bidIncrements?.[1]) setInc(t.bidIncrements[1]); }, [t?._id]);
 
   const refresh = ()=>{
     api.get(`/teams?tournament=${tid}`).then(r=>setTeams(r.data));
@@ -68,7 +79,11 @@ export default function AuctionRoom() {
       {/* Page header */}
       <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <div>
-          <p className="eyebrow mb-1">Live</p>
+          <div className="flex items-center gap-2 mb-1">
+            <Link to="/admin/auction" className="eyebrow hover:text-gold-500 transition">Live Auctions</Link>
+            <span className="dark:text-ink-700 text-ink-300 text-xs">/</span>
+            <span className="eyebrow">{t?.name || "…"}</span>
+          </div>
           <div className="flex items-center gap-3">
             <h1 className="font-display text-3xl dark:text-white text-ink-900">Auction Room</h1>
             {t && (
@@ -76,16 +91,21 @@ export default function AuctionRoom() {
                 {t.auctionMode==="serial"?"Serial":"Random"}
               </Badge>
             )}
+            {state?.status==="running" && (
+              <span className="badge-green flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-jade-400 animate-pulse" />Live
+              </span>
+            )}
           </div>
         </div>
         <div className="flex gap-2 items-center">
           {tournaments.length>0 && (
-            <Select value={tid} onChange={e=>setTid(e.target.value)} className="w-auto text-xs">
+            <Select value={tid} onChange={e=>navigate(`/admin/auction/${e.target.value}`)} className="w-auto text-xs">
               {tournaments.map(t=><option key={t._id} value={t._id}>{t.name}</option>)}
             </Select>
           )}
           <button onClick={()=>window.open(`/watch/${tid}`,"_blank")}
-            className="px-3 py-1.5 text-xs border dark:border-ink-600 border-ink-300 hover:border-gold-500 dark:text-ink-400 text-ink-500 hover:text-gold-600 rounded transition">
+            className="px-3 py-1.5 text-xs border dark:border-white/[0.1] border-ink-300 hover:border-gold-500 dark:text-ink-400 text-ink-500 hover:text-gold-600 rounded transition">
             TV Display
           </button>
         </div>
@@ -143,7 +163,7 @@ export default function AuctionRoom() {
             ) : (
               <div className="p-6 flex flex-col sm:flex-row gap-6 items-start">
                 {/* Photo */}
-                <div className="h-32 w-32 rounded-lg dark:bg-ink-700 bg-ink-100 overflow-hidden flex items-center justify-center shrink-0">
+                <div className="h-32 w-32 rounded-lg dark:bg-white/[0.08] bg-ink-100 overflow-hidden flex items-center justify-center shrink-0">
                   {player.photo
                     ? <img src={player.photo} className="h-full w-full object-cover" alt={player.fullName}/>
                     : <i className="fa-solid fa-baseball-bat-ball text-xl opacity-40" />}
@@ -176,7 +196,7 @@ export default function AuctionRoom() {
                     <div className={`h-16 w-16 rounded-full border-2 flex items-center justify-center font-mono text-xl font-bold transition-colors ${
                       secs<=10 && state?.status==="running"
                         ? "border-flame-500 text-flame-400 ring-danger"
-                        : "dark:border-ink-600 border-ink-300 dark:text-ink-400 text-ink-500"
+                        : "dark:border-white/[0.1] border-ink-300 dark:text-ink-400 text-ink-500"
                     }`}>
                       {secs>0 ? secs : "—"}
                     </div>
@@ -215,13 +235,13 @@ export default function AuctionRoom() {
                 Update price only (no team)
               </Button>
 
-              <div className="mt-4 pt-4 border-t dark:border-ink-700 border-ink-200">
+              <div className="mt-4 pt-4 border-t dark:border-white/[0.08] border-ink-200">
                 <Label>Quick-bid increment</Label>
                 <div className="flex flex-wrap gap-2 mt-2 items-center">
                   <Input type="number" value={inc} onChange={e=>setInc(e.target.value)} className="w-28 text-xs"/>
                   {presets.map(p=>(
                     <button key={p} onClick={()=>setInc(p)}
-                      className={`px-2.5 py-1 rounded text-xs border transition ${+inc===p?"border-gold-500 text-gold-600 bg-gold-500/10":"dark:border-ink-600 border-ink-300 dark:text-ink-500 text-ink-400 hover:border-ink-400"}`}>
+                      className={`px-2.5 py-1 rounded text-xs border transition ${+inc===p?"border-gold-500 text-gold-600 bg-gold-500/10":"dark:border-white/[0.1] border-ink-300 dark:text-ink-500 text-ink-400 hover:border-ink-400"}`}>
                       +{p.toLocaleString()}
                     </button>
                   ))}
@@ -242,7 +262,7 @@ export default function AuctionRoom() {
               <div key={tm._id} className={`card p-3 ${isLeading?"border-gold-500/50":""}`}
                 style={{borderColor: isLeading?"#f2b70566":undefined, borderWidth: isLeading?"1px":undefined}}>
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="h-7 w-7 rounded dark:bg-ink-700 bg-ink-100 overflow-hidden flex items-center justify-center shrink-0">
+                  <div className="h-7 w-7 rounded dark:bg-white/[0.08] bg-ink-100 overflow-hidden flex items-center justify-center shrink-0">
                     {tm.logo?<img src={tm.logo} className="h-full w-full object-cover"/>:<i className="fa-solid fa-shield-halved text-base opacity-60" />}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -254,7 +274,7 @@ export default function AuctionRoom() {
                     +{Number(inc).toLocaleString()}
                   </Button>
                 </div>
-                <div className="h-1 dark:bg-ink-700 bg-ink-200 rounded-full overflow-hidden">
+                <div className="h-1 dark:bg-white/[0.08] bg-ink-200 rounded-full overflow-hidden">
                   <div className={`h-full rounded-full ${pct<20?"bg-flame-500":"bg-jade-600"}`} style={{width:`${pct}%`}}/>
                 </div>
                 <p className="text-[10px] dark:text-ink-600 text-ink-400 mt-1">{tm.squad.length}/{tm.maxPlayers} players</p>

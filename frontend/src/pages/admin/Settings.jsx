@@ -63,7 +63,7 @@ export default function Settings() {
             <p className="text-sm dark:text-ink-500 text-ink-400">Toggle the public player registration form on or off.</p>
           </div>
           <button onClick={toggleReg}
-            className={`relative h-7 w-14 rounded-full transition-colors duration-300 shrink-0 ${form.registrationOpen ? "bg-jade-600" : "dark:bg-ink-700 bg-ink-300"}`}>
+            className={`relative h-7 w-14 rounded-full transition-colors duration-300 shrink-0 ${form.registrationOpen ? "bg-jade-600" : "dark:bg-white/[0.08] bg-ink-300"}`}>
             <span className={`absolute top-1 h-5 w-5 rounded-full bg-white shadow-md transition-transform duration-300 ${form.registrationOpen ? "translate-x-1" : "-translate-x-6"}`}/>
           </button>
         </div>
@@ -83,7 +83,7 @@ export default function Settings() {
                 <button type="button" key={val} onClick={()=>setForm({...form,auctionMode:val})}
                   className={`p-3 rounded-xl border text-left transition-all ${form.auctionMode===val
                     ? "border-gold-500 bg-gold-500/8 dark:bg-gold-500/10"
-                    : "dark:border-ink-700 border-ink-200 dark:hover:border-ink-600 hover:border-ink-300"}`}>
+                    : "dark:border-white/[0.08] border-ink-200 dark:hover:border-white/[0.1] hover:border-ink-300"}`}>
                   <p className={`text-sm font-bold mb-0.5 ${form.auctionMode===val?"text-gold-500":"dark:text-ink-200 text-ink-700"}`}>{title}</p>
                   <p className="text-2xs dark:text-ink-500 text-ink-400">{desc}</p>
                 </button>
@@ -112,7 +112,7 @@ export default function Settings() {
             <p className="text-sm dark:text-ink-500 text-ink-400">Update your login credentials.</p>
           </div>
           <Link to="/admin/change-password"
-            className="px-4 py-2 text-sm font-semibold border dark:border-ink-700 border-ink-300 dark:text-ink-300 text-ink-600 rounded-lg hover:border-gold-500 hover:text-gold-500 transition">
+            className="px-4 py-2 text-sm font-semibold border dark:border-white/[0.08] border-ink-300 dark:text-ink-300 text-ink-600 rounded-lg hover:border-gold-500 hover:text-gold-500 transition">
             Change Password
           </Link>
         </div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -45,17 +45,9 @@
       integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
       crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- ── Inline theme script: runs before React mounts (prevents flash) ── -->
+    <!-- Theme is fixed to light app-wide; Landing page uses its own explicit dark hero styling. -->
     <script>
-      (function() {
-        try {
-          var saved = localStorage.getItem('theme');
-          if (saved === 'light') document.documentElement.classList.remove('dark');
-          else document.documentElement.classList.add('dark');
-        } catch(e) {
-          document.documentElement.classList.add('dark');
-        }
-      })();
+      try { localStorage.removeItem('theme'); document.documentElement.classList.remove('dark'); } catch(e) {}
     </script>
   </head>
   <body>

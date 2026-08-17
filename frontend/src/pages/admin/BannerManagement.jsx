@@ -83,7 +83,7 @@ export default function BannerManagement() {
               <Input type="file" accept="image/*" onChange={handleFile} required={!editId} />
               {preview && (
                 <img src={preview} alt="preview"
-                  className="mt-3 h-40 w-full object-cover rounded-xl border dark:border-ink-700 border-ink-200" />
+                  className="mt-3 h-40 w-full object-cover rounded-xl border dark:border-white/[0.08] border-ink-200" />
               )}
             </div>
             <div>
@@ -109,7 +109,7 @@ export default function BannerManagement() {
             <div className="sm:col-span-2 flex items-center gap-3">
               <label className="flex items-center gap-2 cursor-pointer select-none">
                 <div onClick={() => setForm({...form, isActive: !form.isActive})}
-                  className={`relative h-6 w-11 rounded-full transition-colors ${form.isActive ? "bg-jade-600" : "dark:bg-ink-700 bg-ink-300"}`}>
+                  className={`relative h-6 w-11 rounded-full transition-colors ${form.isActive ? "bg-jade-600" : "dark:bg-white/[0.08] bg-ink-300"}`}>
                   <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${form.isActive ? "translate-x-5" : "translate-x-0.5"}`} />
                 </div>
                 <span className="text-sm dark:text-ink-300 text-ink-600">{form.isActive ? "Active (visible on site)" : "Inactive (hidden)"}</span>
@@ -136,7 +136,7 @@ export default function BannerManagement() {
           {banners.map((b, idx) => (
             <div key={b._id} className={`card overflow-hidden group ${!b.isActive ? "opacity-60" : ""}`}>
               {/* Image */}
-              <div className="relative h-44 dark:bg-ink-800 bg-ink-100 overflow-hidden">
+              <div className="relative h-44 dark:bg-white/[0.05] bg-ink-100 overflow-hidden">
                 {b.image
                   ? <img src={b.image} alt={b.title} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300" />
                   : <div className="h-full flex items-center justify-center"><i className="fa-solid fa-image text-3xl dark:text-ink-600 text-ink-300" /></div>}
@@ -145,7 +145,7 @@ export default function BannerManagement() {
                   #{idx + 1}
                 </span>
                 {/* Status badge */}
-                <span className={`absolute top-2 right-2 text-2xs font-bold px-2 py-1 rounded ${b.isActive ? "bg-jade-600 text-white" : "dark:bg-ink-700 bg-ink-300 dark:text-ink-400 text-ink-600"}`}>
+                <span className={`absolute top-2 right-2 text-2xs font-bold px-2 py-1 rounded ${b.isActive ? "bg-jade-600 text-white" : "dark:bg-white/[0.08] bg-ink-300 dark:text-ink-400 text-ink-600"}`}>
                   {b.isActive ? "Active" : "Inactive"}
                 </span>
               </div>

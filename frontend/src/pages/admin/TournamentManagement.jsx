@@ -82,7 +82,7 @@ export default function TournamentManagement() {
             <div key={t._id} className="card p-5">
               <div className="flex items-start justify-between gap-3 mb-3">
                 <div className="flex items-center gap-3">
-                  {t.logo && <img src={t.logo} className="h-10 w-10 rounded-lg object-cover border dark:border-ink-700 border-ink-200" alt={t.name}/>}
+                  {t.logo && <img src={t.logo} className="h-10 w-10 rounded-lg object-cover border dark:border-white/[0.08] border-ink-200" alt={t.name}/>}
                   <div>
                     <p className="font-bold dark:text-ink-100 text-ink-900">{t.name}</p>
                     <p className="text-xs dark:text-ink-500 text-ink-400">{t.venue}</p>

@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
 import api from "../../api/axios";
-import { Button, Select, Input, Empty } from "../../components/UI";
+import { Button, Select, Input, Empty, Alert } from "../../components/UI";
 
 export default function PlayerManagement() {
   const [players, setPlayers] = useState([]);
   const [filters, setFilters] = useState({ status:"", role:"", search:"" });
+  const [error, setError] = useState("");
 
   const load = () => {
     const p = new URLSearchParams();
     Object.entries(filters).forEach(([k,v]) => v && p.append(k,v));
-    api.get(`/players?${p}`).then(r => setPlayers(r.data));
+    setError("");
+    api.get(`/players?${p}`).then(r => setPlayers(r.data))
+      .catch(err => setError(err.response?.data?.message || "Failed to load players"));
   };
   useEffect(() => { load(); }, [filters]);
 
-  const setStatus   = async (id, status)   => { await api.patch(`/players/${id}/status`, { status }); load(); };
-  const setEligible = async (id, eligible) => { await api.patch(`/players/${id}/auction-eligible`, { eligible }); load(); };
-  const remove      = async id             => { if(!confirm("Delete player?")) return; await api.delete(`/players/${id}`); load(); };
+  const setStatus   = async (id, status)   => { try { await api.patch(`/players/${id}/status`, { status }); load(); } catch(err){ alert(err.response?.data?.message || "Action failed"); } };
+  const setEligible = async (id, eligible) => { try { await api.patch(`/players/${id}/auction-eligible`, { eligible }); load(); } catch(err){ alert(err.response?.data?.message || "Action failed"); } };
+  const remove      = async id             => { if(!confirm("Delete player?")) return; try { await api.delete(`/players/${id}`); load(); } catch(err){ alert(err.response?.data?.message || "Delete failed"); } };
 
   const ROLE_BADGE   = { Batsman:"badge-gold", Bowler:"badge-green", "All-Rounder":"badge-red", "Wicket Keeper":"badge-slate" };
   const STATUS_BADGE = { Pending:"badge-gold", Approved:"badge-green", Rejected:"badge-red" };
@@ -29,6 +32,8 @@ export default function PlayerManagement() {
         </div>
         <span className="text-sm dark:text-ink-500 text-ink-400 mt-3">{players.length} found</span>
       </div>
+
+      {error && <div className="mb-6"><Alert type="error">{error}</Alert></div>}
 
       {/* Filters */}
       <div className="card p-4 mb-6">
@@ -57,7 +62,7 @@ export default function PlayerManagement() {
             <div key={p._id} className="card p-4">
               {/* Header row */}
               <div className="flex items-start gap-3 mb-3">
-                <div className="h-14 w-14 rounded-xl dark:bg-ink-800 bg-ink-100 border dark:border-ink-700 border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
+                <div className="h-14 w-14 rounded-xl dark:bg-white/[0.05] bg-ink-100 border dark:border-white/[0.08] border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
                   {p.photo
                     ? <img src={p.photo} className="h-full w-full object-cover" alt={p.fullName}/>
                     : <i className="fa-solid fa-baseball-bat-ball text-xl opacity-40" />}

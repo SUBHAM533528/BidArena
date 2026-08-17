@@ -10,7 +10,7 @@ const PDF_REPORTS = [
     title:    "All Registered Players",
     desc:     "Every player who registered — name, role, district, base price, approval status.",
     filename: "all_registered_players.pdf",
-    accent:   "dark:border-ink-700 border-ink-200 hover:border-gold-500/50",
+    accent:   "dark:border-white/[0.08] border-ink-200 hover:border-gold-500/50",
     badge:    "badge-gold",
   },
   {
@@ -19,7 +19,7 @@ const PDF_REPORTS = [
     title:    "Sold Players Report",
     desc:     "All sold players ranked by final price, with team, profit over base price, and totals.",
     filename: "sold_players.pdf",
-    accent:   "dark:border-ink-700 border-ink-200 hover:border-jade-500/50",
+    accent:   "dark:border-white/[0.08] border-ink-200 hover:border-jade-500/50",
     badge:    "badge-green",
   },
   {
@@ -28,7 +28,7 @@ const PDF_REPORTS = [
     title:    "Unsold Players Report",
     desc:     "Players who went through auction but remained unsold — by role and base price.",
     filename: "unsold_players.pdf",
-    accent:   "dark:border-ink-700 border-ink-200 hover:border-flame-500/50",
+    accent:   "dark:border-white/[0.08] border-ink-200 hover:border-flame-500/50",
     badge:    "badge-red",
   },
   {
@@ -37,7 +37,7 @@ const PDF_REPORTS = [
     title:    "All Teams Combined",
     desc:     "Cover page + one full squad page per team. Share with organisers, sponsors, or media.",
     filename: "all_teams_squads.pdf",
-    accent:   "dark:border-ink-700 border-ink-200 hover:border-gold-500/50",
+    accent:   "dark:border-white/[0.08] border-ink-200 hover:border-gold-500/50",
     badge:    "badge-gold",
   },
 ];
@@ -125,9 +125,9 @@ export default function Reports() {
         <div className="grid sm:grid-cols-2 gap-4">
           {PDF_REPORTS.map(r => (
             <div key={r.key}
-              className={`dark:bg-ink-850 bg-white rounded-xl border transition-all duration-200 p-5 ${r.accent} shadow-card-light dark:shadow-card-dark`}>
+              className={`dark:bg-white/[0.03] bg-white rounded-xl border transition-all duration-200 p-5 ${r.accent} shadow-card-light dark:shadow-card-dark`}>
               <div className="flex items-start gap-4">
-                <div className="h-11 w-11 rounded-xl dark:bg-ink-800 bg-ink-100 flex items-center justify-center text-2xl shrink-0">
+                <div className="h-11 w-11 rounded-xl dark:bg-white/[0.05] bg-ink-100 flex items-center justify-center text-2xl shrink-0">
                   <i className={r.icon} />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -159,15 +159,15 @@ export default function Reports() {
         </div>
 
         {teams.length === 0 ? (
-          <div className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 p-8">
+          <div className="dark:bg-white/[0.03] bg-white rounded-xl border dark:border-white/[0.08] border-ink-200 p-8">
             <Empty icon="fa-solid fa-shield-halved" title="No teams yet" body="Add teams in Team Management first." />
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {teams.map(tm => (
               <div key={tm._id}
-                className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 p-4 text-center hover:border-gold-500/50 transition shadow-card-light dark:shadow-card-dark">
-                <div className="h-12 w-12 rounded-xl dark:bg-ink-700 bg-ink-100 mx-auto mb-3 overflow-hidden flex items-center justify-center border dark:border-ink-600 border-ink-200">
+                className="dark:bg-white/[0.03] bg-white rounded-xl border dark:border-white/[0.08] border-ink-200 p-4 text-center hover:border-gold-500/50 transition shadow-card-light dark:shadow-card-dark">
+                <div className="h-12 w-12 rounded-xl dark:bg-white/[0.08] bg-ink-100 mx-auto mb-3 overflow-hidden flex items-center justify-center border dark:border-white/[0.1] border-ink-200">
                   {tm.logo
                     ? <img src={tm.logo} className="h-full w-full object-cover" alt={tm.name} />
                     : <i className="fa-solid fa-shield-halved text-base opacity-60" />}
@@ -178,12 +178,12 @@ export default function Reports() {
                   <button
                     onClick={() => dlTeamPDF(tm)}
                     disabled={downloading === tm._id}
-                    className="flex-1 py-1.5 text-2xs font-semibold rounded-lg dark:bg-ink-700 bg-ink-100 dark:text-ink-300 text-ink-600 hover:bg-gold-500/10 hover:text-gold-500 border dark:border-ink-600 border-ink-200 transition disabled:opacity-40"
+                    className="flex-1 py-1.5 text-2xs font-semibold rounded-lg dark:bg-white/[0.08] bg-ink-100 dark:text-ink-300 text-ink-600 hover:bg-gold-500/10 hover:text-gold-500 border dark:border-white/[0.1] border-ink-200 transition disabled:opacity-40"
                   >
                     {downloading === tm._id ? "Loading…" : "PDF"}
                   </button>
                   <Link to={`/admin/teams/${tm._id}`}
-                    className="flex-1 py-1.5 text-2xs font-semibold rounded-lg dark:bg-ink-700 bg-ink-100 dark:text-ink-300 text-ink-600 hover:bg-gold-500/10 hover:text-gold-500 border dark:border-ink-600 border-ink-200 transition text-center">
+                    className="flex-1 py-1.5 text-2xs font-semibold rounded-lg dark:bg-white/[0.08] bg-ink-100 dark:text-ink-300 text-ink-600 hover:bg-gold-500/10 hover:text-gold-500 border dark:border-white/[0.1] border-ink-200 transition text-center">
                     View
                   </Link>
                 </div>
@@ -199,7 +199,7 @@ export default function Reports() {
           <h2 className="font-display text-xl font-semibold dark:text-ink-200 text-ink-700">Recent Bid Logs</h2>
           <span className="text-xs dark:text-ink-500 text-ink-400">{bids.length} bids</span>
         </div>
-        <div className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 overflow-hidden shadow-card-light dark:shadow-card-dark">
+        <div className="dark:bg-white/[0.03] bg-white rounded-xl border dark:border-white/[0.08] border-ink-200 overflow-hidden shadow-card-light dark:shadow-card-dark">
           {bids.length === 0 ? (
             <div className="p-8">
               <Empty icon="fa-solid fa-gavel" title="No bids recorded yet" body="Bid logs appear here once the auction starts." />

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import api from "../../api/axios";
-import { Button, Empty } from "../../components/UI";
+import { Button, Empty, Alert } from "../../components/UI";
 
 const ROLE_BADGE = {
   Batsman: "badge-gold", Bowler: "badge-green",
@@ -12,10 +12,14 @@ export default function TeamDetail() {
   const { teamId } = useParams();
   const [team, setTeam] = useState(null);
   const [downloading, setDownloading] = useState(false);
+  const [error, setError] = useState("");
 
-  useEffect(() => {
-    api.get(`/teams/${teamId}`).then(r => setTeam(r.data));
-  }, [teamId]);
+  const load = () => {
+    setError("");
+    api.get(`/teams/${teamId}`).then(r => setTeam(r.data))
+      .catch(err => setError(err.response?.data?.message || "Failed to load team"));
+  };
+  useEffect(load, [teamId]);
 
   const downloadPDF = async () => {
   setDownloading(true);
@@ -25,14 +29,26 @@ export default function TeamDetail() {
       `https://bidarena-backend-su27.onrender.com/api/reports/pdf/team/${teamId}`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
+    if (!res.ok) throw new Error("Failed to generate PDF");
     const blob = await res.blob();
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
     a.download = `${team?.name?.replace(/\s+/g, "_")}_squad.pdf`;
     a.click();
     URL.revokeObjectURL(a.href);
+  } catch (err) {
+    alert(err.message || "Failed to download PDF");
   } finally { setDownloading(false); }
 };
+
+  if (error) return (
+    <div className="max-w-lg">
+      <Alert type="error">{error}</Alert>
+      <Button variant="ghost" size="sm" className="mt-3" onClick={load}>
+        <i className="fa-solid fa-rotate-right" /> Retry
+      </Button>
+    </div>
+  );
 
   if (!team) return (
     <div className="flex items-center justify-center h-48">
@@ -62,7 +78,7 @@ export default function TeamDetail() {
       {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-4 mb-8">
         <div className="flex items-center gap-4">
-          <div className="h-14 w-14 rounded-xl dark:bg-ink-700 bg-ink-100 border dark:border-ink-600 border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
+          <div className="h-14 w-14 rounded-xl dark:bg-white/[0.08] bg-ink-100 border dark:border-white/[0.1] border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
             {team.logo ? <img src={team.logo} className="h-full w-full object-cover" alt={team.name} /> : <i className="fa-solid fa-shield-halved text-base opacity-60" />}
           </div>
           <div>
@@ -75,7 +91,7 @@ export default function TeamDetail() {
             {downloading ? "Generating…" : "⬇ Download Squad PDF"}
           </Button>
           <Link to={`/team/${teamId}`} target="_blank"
-            className="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm font-semibold border dark:border-ink-700 border-ink-300 dark:text-ink-300 text-ink-700 rounded-lg hover:border-gold-500 hover:text-gold-500 transition">
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm font-semibold border dark:border-white/[0.08] border-ink-300 dark:text-ink-300 text-ink-700 rounded-lg hover:border-gold-500 hover:text-gold-500 transition">
             🌐 Public Page ↗
           </Link>
         </div>
@@ -97,14 +113,14 @@ export default function TeamDetail() {
       </div>
 
       {/* Purse bar */}
-      <div className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 p-5 mb-6">
+      <div className="dark:bg-white/[0.03] bg-white rounded-xl border dark:border-white/[0.08] border-ink-200 p-5 mb-6">
         <div className="flex justify-between text-sm mb-3">
           <span className="dark:text-ink-400 text-ink-500 font-medium">Purse Utilisation</span>
           <span className="font-mono dark:text-ink-300 text-ink-600">
             ₹{spent.toLocaleString()} spent of ₹{team.initialPurse?.toLocaleString()}
           </span>
         </div>
-        <div className="h-3 dark:bg-ink-800 bg-ink-100 rounded-full overflow-hidden">
+        <div className="h-3 dark:bg-white/[0.05] bg-ink-100 rounded-full overflow-hidden">
           <div className={`h-full rounded-full transition-all duration-700 ${
             (100-pct) > 80 ? "bg-flame-500" : (100-pct) > 50 ? "bg-gold-500" : "bg-jade-500"
           }`} style={{ width: `${100 - pct}%` }} />
@@ -117,7 +133,7 @@ export default function TeamDetail() {
 
       {/* Squad table by role */}
       {(team.squad?.length || 0) === 0 ? (
-        <div className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 p-10">
+        <div className="dark:bg-white/[0.03] bg-white rounded-xl border dark:border-white/[0.08] border-ink-200 p-10">
           <Empty icon="fa-solid fa-baseball-bat-ball" title="No players purchased yet" />
         </div>
       ) : (
@@ -127,7 +143,7 @@ export default function TeamDetail() {
               <h2 className="font-display text-xl font-semibold dark:text-ink-100 text-ink-800">{role}s</h2>
               <span className={ROLE_BADGE[role]}>{players.length}</span>
             </div>
-            <div className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 overflow-hidden shadow-card-light dark:shadow-card-dark">
+            <div className="dark:bg-white/[0.03] bg-white rounded-xl border dark:border-white/[0.08] border-ink-200 overflow-hidden shadow-card-light dark:shadow-card-dark">
               <div className="overflow-x-auto">
                 <table className="data-table">
                   <thead>
@@ -150,7 +166,7 @@ export default function TeamDetail() {
                           <td className="dark:text-ink-500 text-ink-400 font-mono text-xs">{i + 1}</td>
                           <td>
                             <div className="flex items-center gap-3">
-                              <div className="h-8 w-8 rounded-lg dark:bg-ink-700 bg-ink-100 overflow-hidden flex items-center justify-center border dark:border-ink-600 border-ink-200 shrink-0">
+                              <div className="h-8 w-8 rounded-lg dark:bg-white/[0.08] bg-ink-100 overflow-hidden flex items-center justify-center border dark:border-white/[0.1] border-ink-200 shrink-0">
                                 {p.photo ? <img src={p.photo} className="h-full w-full object-cover" /> : <i className="fa-solid fa-baseball-bat-ball text-xl opacity-40" />}
                               </div>
                               <span className="font-semibold dark:text-ink-100 text-ink-900">{p.fullName}</span>
@@ -173,7 +189,7 @@ export default function TeamDetail() {
                 </table>
               </div>
               {/* Total row */}
-              <div className="px-4 py-3 border-t dark:border-ink-800 border-ink-100 flex justify-end gap-8 dark:bg-ink-900/40 bg-ink-50">
+              <div className="px-4 py-3 border-t dark:border-white/[0.06] border-ink-100 flex justify-end gap-8 dark:bg-ink-900/40 bg-ink-50">
                 <span className="text-sm dark:text-ink-500 text-ink-400">Role total:</span>
                 <span className="font-mono font-bold text-gold-500">
                   ₹{players.reduce((s, p) => s + (p.soldPrice || 0), 0).toLocaleString()}

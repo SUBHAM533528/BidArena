@@ -1,6 +1,8 @@
 const express = require("express");
 const AuctionState = require("../models/AuctionState");
 const Player = require("../models/Player");
+const Team = require("../models/Team");
+const Tournament = require("../models/Tournament");
 const { protect } = require("../middleware/auth");
 const router = express.Router();
 
@@ -28,6 +30,59 @@ router.get("/pool/:tournamentId", protect, async (req, res) => {
     auctionStatus: { $in: ["Not Started"] },
   });
   res.json(pool);
+});
+
+// ── Multi-auction control-center overview ──────────────────────────────
+// Every tournament runs its own isolated AuctionState + socket room
+// (auction:<tournamentId>) and its own in-memory countdown timer keyed
+// by tournamentId, so any number of tournaments can be auctioned live
+// at the same time from different devices/venues without interfering
+// with one another. This endpoint gives admins a single glance at every
+// tournament's live status so they can jump straight into whichever
+// auction room they need, instead of hunting through a dropdown.
+router.get("/overview", protect, async (req, res) => {
+  try {
+    const tournaments = await Tournament.find().sort({ createdAt: -1 });
+
+    const overview = await Promise.all(
+      tournaments.map(async (t) => {
+        const [state, teamCount, poolCount, soldCount] = await Promise.all([
+          AuctionState.findOne({ tournament: t._id })
+            .populate("currentPlayer", "fullName")
+            .populate("currentBidTeam", "name logo"),
+          Team.countDocuments({ tournament: t._id }),
+          Player.countDocuments({
+            tournament: t._id,
+            status: "Approved",
+            auctionEligible: true,
+            auctionStatus: "Not Started",
+          }),
+          Player.countDocuments({ tournament: t._id, auctionStatus: "Sold" }),
+        ]);
+
+        return {
+          tournament: {
+            _id: t._id,
+            name: t.name,
+            logo: t.logo,
+            venue: t.venue,
+            isActive: t.isActive,
+          },
+          status: state?.status || "idle",
+          currentPlayer: state?.currentPlayer?.fullName || null,
+          currentBidAmount: state?.currentBidAmount || 0,
+          currentBidTeam: state?.currentBidTeam?.name || null,
+          teamCount,
+          poolCount,
+          soldCount,
+        };
+      })
+    );
+
+    res.json(overview);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 module.exports = router;

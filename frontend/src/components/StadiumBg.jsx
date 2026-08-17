@@ -1,7 +1,26 @@
 /**
  * Layered stadium atmosphere — photo + soft light gradient + subtle SVG depth.
+ * Pass `dark` for the dark editorial variant (used by the admin login gate).
  */
-export default function StadiumBg({ opacity = 1, showPhoto = true }) {
+export default function StadiumBg({ opacity = 1, showPhoto = true, dark = false }) {
+  if (dark) {
+    return (
+      <div className="fixed inset-0 -z-10 pointer-events-none select-none overflow-hidden" style={{ opacity }}>
+        {showPhoto && (
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 opacity-30"
+            style={{
+              backgroundImage:
+                "url('https://images.unsplash.com/photo-1531415077968-de08abad10ab?auto=format&fit=crop&w=1920&q=80')",
+            }}
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-[#0a0d0a]/85 to-[#0a0d0a]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,rgba(245,158,11,0.08),transparent)]" />
+      </div>
+    );
+  }
+
   return (
     <div className="fixed inset-0 -z-10 pointer-events-none select-none overflow-hidden" style={{ opacity }}>
       {showPhoto && (
