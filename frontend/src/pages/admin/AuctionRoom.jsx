@@ -142,8 +142,8 @@ export default function AuctionRoom() {
               <div className="absolute inset-0 z-10 dark:bg-ink-900/90 bg-white/90 flex items-center justify-center">
                 <div className={`animate-stamp border-2 px-12 py-6 rounded font-display text-5xl tracking-wider ${
                   flash.type==="sold"
-                    ? "border-jade-500 text-jade-400"
-                    : "border-flame-500 text-flame-400"
+                    ? "border-jade-600 text-jade-600"
+                    : "border-flame-600 text-flame-600"
                 }`}>
                   {flash.type==="sold" ? "SOLD" : "UNSOLD"}
                   {flash.type==="sold" && (
@@ -187,7 +187,7 @@ export default function AuctionRoom() {
                   <div className="flex items-center gap-6">
                     <div>
                       <p className="eyebrow">{state?.currentBidTeam?"Current Bid":"Opening Price"}</p>
-                      <p className="font-mono text-3xl font-bold text-gold-400 mt-0.5">₹{curAmt.toLocaleString()}</p>
+                      <p className="font-mono text-3xl font-bold text-gold-600 mt-0.5">₹{curAmt.toLocaleString()}</p>
                       {state?.currentBidTeam && (
                         <p className="text-xs text-jade-600 mt-0.5">{state.currentBidTeam.name}</p>
                       )}
@@ -195,7 +195,7 @@ export default function AuctionRoom() {
                     {/* Countdown */}
                     <div className={`h-16 w-16 rounded-full border-2 flex items-center justify-center font-mono text-xl font-bold transition-colors ${
                       secs<=10 && state?.status==="running"
-                        ? "border-flame-500 text-flame-400 ring-danger"
+                        ? "border-flame-600 text-flame-600 ring-danger"
                         : "dark:border-white/[0.1] border-ink-300 dark:text-ink-400 text-ink-500"
                     }`}>
                       {secs>0 ? secs : "—"}

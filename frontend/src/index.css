@@ -56,97 +56,69 @@
 
 @layer components {
 
-  /* ══ SURFACES ═══════════════════════════════════════════ */
+  /* ══ SURFACES (admin panel) ═══════════════════════════════
+     Admin always renders on a white page background; cards get
+     a colourful left accent + soft tinted fill so nothing reads
+     as flat white-on-white. */
 
   .card {
     @apply rounded-2xl border transition-all duration-200;
-  }
-  html.dark .card {
-    background: rgba(255,255,255,0.025);
-    border-color: rgba(255,255,255,0.08);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
-  }
-  html:not(.dark) .card {
     background: #ffffff;
-    border-color: #e2e8f0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    border-color: #e5e0d5;
+    border-left: 3px solid #f59e0b;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04);
   }
-  html.dark .card:hover  { background: rgba(255,255,255,0.04); box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
-  html:not(.dark) .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .card:hover { box-shadow: 0 6px 20px rgba(15,23,42,0.08); border-color: #d6cfbe; }
 
   .card-inset {
     @apply rounded-lg border;
+    background: #fdf7e9;
+    border-color: #f2e6c4;
   }
-  html.dark .card-inset  { background: #0d100d; border-color: rgba(255,255,255,0.06); }
-  html:not(.dark) .card-inset { background: #f8fafc; border-color: #e2e8f0; }
 
   /* ══ STAT CARD ═══════════════════════════════════════════ */
 
   .stat-card {
     @apply rounded-2xl border p-5 transition-all duration-200;
-  }
-  html.dark .stat-card {
-    background: rgba(255,255,255,0.025);
-    border-color: rgba(255,255,255,0.07);
-  }
-  html:not(.dark) .stat-card {
     background: #ffffff;
-    border-color: #e2e8f0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    border-color: #e5e0d5;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.06);
   }
+  .stat-card:hover { box-shadow: 0 6px 18px rgba(15,23,42,0.08); }
 
-  /* ══ SIDEBAR ═════════════════════════════════════════════ */
+  /* ══ SIDEBAR (always the dark navy brand rail) ════════════ */
 
   .sidebar {
     @apply border-r;
+    background: #0a0d15;
+    border-color: rgba(255,255,255,0.07);
   }
-  html.dark .sidebar  { background: #0a0d0a; border-color: rgba(255,255,255,0.06); }
-  html:not(.dark) .sidebar { background: #ffffff; border-color: #e2e8f0; }
 
   /* ══ NAV LINK ════════════════════════════════════════════ */
 
   .nav-link {
     @apply flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 w-full;
+    color: #94a3b8;
   }
-  html.dark .nav-link       { color: #94a3b8; }
-  html.dark .nav-link:hover { color: #f1f5f9; background: rgba(255,255,255,0.05); }
-  html:not(.dark) .nav-link       { color: #475569; }
-  html:not(.dark) .nav-link:hover { color: #0f172a; background: #f1f5f9; }
+  .nav-link:hover { color: #f1f5f9; background: rgba(255,255,255,0.06); }
 
-  html.dark .nav-link.active {
+  .nav-link.active {
     color: #1a1206;
     background: #f59e0b;
     border: 1px solid #f59e0b;
-    box-shadow: 0 2px 10px rgba(245,158,11,0.25);
-  }
-  html:not(.dark) .nav-link.active {
-    color: #1a1206;
-    background: #f59e0b;
-    border: 1px solid #f59e0b;
+    box-shadow: 0 2px 10px rgba(245,158,11,0.3);
   }
 
   /* ══ FORM INPUT ══════════════════════════════════════════ */
 
   .form-input {
     @apply w-full rounded-lg px-3 py-2.5 text-sm border outline-none transition-all duration-150;
-  }
-  html.dark .form-input {
-    background: rgba(255,255,255,0.03);
-    border-color: rgba(255,255,255,0.09);
-    color: #e2e8f0;
-  }
-  html.dark .form-input::placeholder { color: #475569; }
-  html.dark .form-input:focus {
-    border-color: #f59e0b;
-    box-shadow: 0 0 0 3px rgba(245,158,11,0.15);
-  }
-  html:not(.dark) .form-input {
     background: #ffffff;
     border-color: #cbd5e1;
     color: #0f172a;
   }
-  html:not(.dark) .form-input::placeholder { color: #94a3b8; }
-  html:not(.dark) .form-input:focus {
+  .form-input::placeholder { color: #94a3b8; }
+  .form-input:focus {
     border-color: #f59e0b;
     box-shadow: 0 0 0 3px rgba(245,158,11,0.12);
   }
@@ -155,26 +127,20 @@
 
   .data-table { @apply w-full text-sm; }
 
-  .data-table thead tr { border-bottom: 1px solid; }
-  html.dark  .data-table thead tr { border-color: rgba(255,255,255,0.08); }
-  html:not(.dark) .data-table thead tr { border-color: #e2e8f0; }
+  .data-table thead tr { border-bottom: 2px solid #f2e6c4; }
 
   .data-table th {
     @apply py-3 px-4 text-left font-semibold;
     font-size: 10px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+    color: #b45309;
   }
-  html.dark  .data-table th { color: #64748b; }
-  html:not(.dark) .data-table th { color: #64748b; }
 
-  .data-table td { @apply py-3 px-4; }
+  .data-table td { @apply py-3 px-4; color: #1e293b; }
 
-  .data-table tbody tr { border-bottom: 1px solid; transition: background 100ms; }
-  html.dark  .data-table tbody tr { border-color: rgba(255,255,255,0.06); }
-  html:not(.dark) .data-table tbody tr { border-color: #f1f5f9; }
-  html.dark  .data-table tbody tr:hover { background: rgba(255,255,255,0.025); }
-  html:not(.dark) .data-table tbody tr:hover { background: #f8fafc; }
+  .data-table tbody tr { border-bottom: 1px solid #f1f5f9; transition: background 100ms; }
+  .data-table tbody tr:hover { background: #fdf7e9; }
 
   /* ══ BADGES ══════════════════════════════════════════════ */
 
@@ -184,9 +150,9 @@
     letter-spacing: 0.06em;
     text-transform: uppercase;
   }
-  .badge-gold  { @apply badge; background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.25); }
-  .badge-green { @apply badge; background: rgba(34,197,94,0.12);  color: #4ade80; border: 1px solid rgba(34,197,94,0.25);  }
-  .badge-red   { @apply badge; background: rgba(239,68,68,0.12);  color: #f87171; border: 1px solid rgba(239,68,68,0.25);  }
+  .badge-gold  { @apply badge; background: rgba(245,158,11,0.14); color: #b45309; border: 1px solid rgba(245,158,11,0.3); }
+  .badge-green { @apply badge; background: rgba(34,197,94,0.14);  color: #15803d; border: 1px solid rgba(34,197,94,0.3);  }
+  .badge-red   { @apply badge; background: rgba(239,68,68,0.14);  color: #b91c1c; border: 1px solid rgba(239,68,68,0.3);  }
   html.dark  .badge-slate { @apply badge; background: rgba(255,255,255,0.06); color: #94a3b8; border: 1px solid rgba(255,255,255,0.09); }
   html:not(.dark) .badge-slate { @apply badge; background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
 
@@ -200,17 +166,14 @@
   .eyebrow {
     display: block;
     font-size: 10px;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
+    color: #b45309;
   }
-  html.dark  .eyebrow { color: #64748b; }
-  html:not(.dark) .eyebrow { color: #64748b; }
 
   /* ══ DIVIDER ═════════════════════════════════════════════ */
-  .divider { @apply border-t; }
-  html.dark  .divider { border-color: rgba(255,255,255,0.06); }
-  html:not(.dark) .divider { border-color: #e2e8f0; }
+  .divider { @apply border-t; border-color: #eee7d4; }
 
 }
 

@@ -10,7 +10,12 @@ const STATUS_META = {
   idle:    { label: "Not started", dot: "dark:bg-white/[0.12] bg-ink-300", badge: "badge-slate" },
 };
 
-
+// Every tournament runs its own isolated auction (own socket room, own
+// timer, own AuctionState document) so any number of them can be live
+// at the same time — e.g. 3 different venues auctioning simultaneously —
+// without one affecting another. This page is the control-center view:
+// a single glance at every tournament's live auction status, so you can
+// jump straight into whichever one needs attention.
 export default function AuctionOverview() {
   const [rows, setRows] = useState(null);
   const [error, setError] = useState("");
@@ -24,7 +29,7 @@ export default function AuctionOverview() {
 
   useEffect(() => {
     load();
-    const id = setInterval(load, 8000); 
+    const id = setInterval(load, 8000); // light polling so live status stays fresh across all rooms
     return () => clearInterval(id);
   }, []);
 

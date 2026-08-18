@@ -79,23 +79,22 @@ function Topbar({ onMenu }) {
 export default function AdminLayout() {
   const [open, setOpen] = useState(false);
   return (
-    // Admin panel uses the same dark editorial theme as the public site.
-    // Every dark: utility class already built throughout these pages
-    // activates here — only the public site (outside this layout) stays light.
-    <div className="dark flex min-h-screen dark:bg-[#0a0d0a] bg-ink-50">
+    // Admin panel renders on a white page background — only the Sidebar
+    // is deliberately dark (its own hardcoded navy styling).
+    <div className="flex min-h-screen bg-ink-50">
       {open && <div className="fixed inset-0 z-20 bg-black/60 md:hidden" onClick={() => setOpen(false)} />}
       <div className={`fixed md:sticky md:top-0 md:h-screen z-30 transition-transform duration-200 ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
         <Sidebar onClose={() => setOpen(false)} />
       </div>
       <div className="flex-1 flex flex-col min-w-0">
-        <div className="md:hidden h-12 px-4 flex items-center justify-between dark:bg-ink-950 bg-white border-b dark:border-white/[0.06] border-ink-200 sticky top-0 z-10">
+        <div className="md:hidden h-12 px-4 flex items-center justify-between bg-white border-b border-ink-200 sticky top-0 z-10">
           <div className="flex items-center gap-3">
-            <button onClick={() => setOpen(true)} className="p-1.5 rounded-lg dark:hover:bg-white/[0.05] hover:bg-ink-100 transition">
-              <div className="w-4 h-px dark:bg-ink-400 bg-ink-600 mb-1.5" />
-              <div className="w-4 h-px dark:bg-ink-400 bg-ink-600 mb-1.5" />
-              <div className="w-4 h-px dark:bg-ink-400 bg-ink-600" />
+            <button onClick={() => setOpen(true)} className="p-1.5 rounded-lg hover:bg-ink-100 transition">
+              <div className="w-4 h-px bg-ink-600 mb-1.5" />
+              <div className="w-4 h-px bg-ink-600 mb-1.5" />
+              <div className="w-4 h-px bg-ink-600" />
             </button>
-            <span className="font-display text-sm font-semibold text-gold-500">BidArena</span>
+            <span className="font-display text-sm font-semibold text-gold-600">BidArena</span>
           </div>
         </div>
         <Topbar />

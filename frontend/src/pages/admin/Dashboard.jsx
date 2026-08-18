@@ -138,7 +138,7 @@ export default function Dashboard() {
         {/* Left: charts */}
         <div className="lg:col-span-2 space-y-4">
           <div className="grid md:grid-cols-2 gap-4">
-            <div className="dark:bg-white/[0.03] bg-white rounded-2xl border dark:border-white/[0.08] border-ink-200 p-5">
+            <div className="card p-5 border-l-4 border-l-gold-500">
               <p className="eyebrow mb-5">Team Spending</p>
               {spendData.every(d => d.spent === 0)
                 ? <Empty icon="fa-solid fa-sack-dollar" title="No bids placed yet" />
@@ -154,7 +154,7 @@ export default function Dashboard() {
                   </ResponsiveContainer>
                 )}
             </div>
-            <div className="dark:bg-white/[0.03] bg-white rounded-2xl border dark:border-white/[0.08] border-ink-200 p-5">
+            <div className="card p-5 border-l-4 border-l-jade-500">
               <p className="eyebrow mb-5">Sold by Role</p>
               {roleData.length === 0
                 ? <Empty icon="fa-solid fa-bullseye" title="No players sold yet" />
@@ -190,7 +190,7 @@ export default function Dashboard() {
 
         {/* Right: Player Queue + Recent Sold */}
         <div className="space-y-4">
-          <div className="dark:bg-white/[0.03] bg-white rounded-2xl border dark:border-white/[0.08] border-ink-200 p-5">
+          <div className="card p-5 border-l-4 border-l-sky-500">
             <div className="flex items-center justify-between mb-4">
               <p className="eyebrow">Player Queue</p>
               <Link to="/admin/players" className="text-2xs text-gold-500 hover:text-gold-400 transition font-semibold">View all</Link>
@@ -215,7 +215,7 @@ export default function Dashboard() {
               )}
           </div>
 
-          <div className="dark:bg-white/[0.03] bg-white rounded-2xl border dark:border-white/[0.08] border-ink-200 p-5">
+          <div className="card p-5 border-l-4 border-l-flame-500">
             <div className="flex items-center justify-between mb-4">
               <p className="eyebrow">Recent Sold</p>
               <Link to="/admin/sold" className="text-2xs text-gold-500 hover:text-gold-400 transition font-semibold">View all</Link>
