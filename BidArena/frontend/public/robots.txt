@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Allow: /team/
+Allow: /player-registration
+Allow: /owner/login
+Allow: /owner/register
+Allow: /watch/
+Disallow: /admin/
+Disallow: /admin
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://yourdomain.com/sitemap.xml
