@@ -1,28 +1,29 @@
 import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import api from "../../api/axios";
 import { Button, Select, Input, Empty, Alert } from "../../components/UI";
 
-export default function PlayerManagement() {
-  const [players, setPlayers] = useState([]);
-  const [tournaments, setTournaments] = useState([]);
-  const [filters, setFilters] = useState({ tournament:"", status:"", role:"", search:"" });
-  const [error, setError] = useState("");
+export default function PlayersByTournament() {
+  const { tournamentId } = useParams();
+  const [tournament, setTournament] = useState(null);
+  const [players, setPlayers]       = useState([]);
+  const [filters, setFilters]       = useState({ status:"", role:"", search:"" });
+  const [error, setError]           = useState("");
 
   useEffect(() => {
-    api.get("/tournaments").then(r => {
-      setTournaments(r.data);
-      if (r.data[0]) setFilters(f => ({ ...f, tournament: r.data[0]._id }));
-    }).catch(() => {});
-  }, []);
+    setError("");
+    api.get(`/tournaments/${tournamentId}`).then(r => setTournament(r.data))
+      .catch(err => setError(err.response?.data?.message || "Failed to load tournament"));
+  }, [tournamentId]);
 
   const load = () => {
-    const p = new URLSearchParams();
+    const p = new URLSearchParams({ tournament: tournamentId });
     Object.entries(filters).forEach(([k,v]) => v && p.append(k,v));
     setError("");
     api.get(`/players?${p}`).then(r => setPlayers(r.data))
       .catch(err => setError(err.response?.data?.message || "Failed to load players"));
   };
-  useEffect(() => { if (filters.tournament) load(); }, [filters]);
+  useEffect(load, [tournamentId, filters]);
 
   const setStatus   = async (id, status)   => { try { await api.patch(`/players/${id}/status`, { status }); load(); } catch(err){ alert(err.response?.data?.message || "Action failed"); } };
   const setEligible = async (id, eligible) => { try { await api.patch(`/players/${id}/auction-eligible`, { eligible }); load(); } catch(err){ alert(err.response?.data?.message || "Action failed"); } };
@@ -33,24 +34,32 @@ export default function PlayerManagement() {
 
   return (
     <div>
-      <div className="flex items-start justify-between mb-8">
-        <div>
-          <p className="eyebrow mb-1.5">Manage</p>
-          <h1 className="font-display text-3xl font-bold dark:text-white text-ink-900">Players</h1>
+      <Link to="/admin/players" className="inline-flex items-center gap-1.5 text-xs font-semibold dark:text-ink-500 text-ink-400 hover:text-gold-600 transition mb-4">
+        <i className="fa-solid fa-arrow-left text-2xs" /> All Tournaments
+      </Link>
+
+      <div className="flex items-start justify-between mb-8 gap-4">
+        <div className="flex items-center gap-3 min-w-0">
+          {tournament?.logo && (
+            <div className="h-11 w-11 rounded-xl dark:bg-white/[0.08] bg-ink-100 border dark:border-white/[0.1] border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
+              <img src={tournament.logo} className="h-full w-full object-cover" alt={tournament.name} />
+            </div>
+          )}
+          <div className="min-w-0">
+            <p className="eyebrow mb-1">Players</p>
+            <h1 className="font-display text-3xl font-bold dark:text-white text-ink-900 truncate">
+              {tournament ? tournament.name : "Loading…"}
+            </h1>
+          </div>
         </div>
-        <span className="text-sm dark:text-ink-500 text-ink-400 mt-3">{players.length} found</span>
+        <span className="text-sm dark:text-ink-500 text-ink-400 mt-3 shrink-0">{players.length} found</span>
       </div>
 
       {error && <div className="mb-6"><Alert type="error">{error}</Alert></div>}
 
       {/* Filters */}
       <div className="card p-4 mb-6">
-        <div className="grid sm:grid-cols-4 gap-3">
-          {tournaments.length > 0 && (
-            <Select value={filters.tournament} onChange={e=>setFilters({...filters,tournament:e.target.value})}>
-              {tournaments.map(t => <option key={t._id} value={t._id}>{t.name}</option>)}
-            </Select>
-          )}
+        <div className="grid sm:grid-cols-3 gap-3">
           <Input placeholder="Search by name…" value={filters.search}
             onChange={e=>setFilters({...filters,search:e.target.value})}/>
           <Select value={filters.status} onChange={e=>setFilters({...filters,status:e.target.value})}>
@@ -67,7 +76,7 @@ export default function PlayerManagement() {
 
       {players.length === 0 ? (
         <div className="card p-10">
-          <Empty icon="fa-solid fa-users" title="No players found" body="Try adjusting your filters."/>
+          <Empty icon="fa-solid fa-users" title="No players found" body="Try adjusting your filters, or wait for registrations to come in."/>
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">

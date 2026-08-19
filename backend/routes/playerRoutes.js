@@ -1,5 +1,6 @@
 const express = require("express");
 const ctrl = require("../controllers/playerController");
+const ah = require("../middleware/asyncHandler");
 const { protect, authorize } = require("../middleware/auth");
 const upload = require("../middleware/upload");
 const router = express.Router();
@@ -9,13 +10,13 @@ const playerUpload = upload("players").fields([
   { name: "idProof", maxCount: 1 },
 ]);
 
-router.post("/register", playerUpload, ctrl.registerPlayer);
-router.get("/", protect, ctrl.getPlayers);
-router.get("/:id", protect, ctrl.getPlayer);
-router.put("/:id", protect, authorize("super_admin"), playerUpload, ctrl.updatePlayer);
-router.delete("/:id", protect, authorize("super_admin"), ctrl.deletePlayer);
-router.patch("/:id/status", protect, authorize("super_admin"), ctrl.setStatus);
-router.patch("/:id/auction-eligible", protect, authorize("super_admin"), ctrl.setAuctionEligible);
-router.patch("/:id/reset-auction-status", protect, authorize("super_admin"), ctrl.resetAuctionStatus);
+router.post("/register", playerUpload, ah(ctrl.registerPlayer));
+router.get("/", protect, ah(ctrl.getPlayers));
+router.get("/:id", protect, ah(ctrl.getPlayer));
+router.put("/:id", protect, authorize("super_admin"), playerUpload, ah(ctrl.updatePlayer));
+router.delete("/:id", protect, authorize("super_admin"), ah(ctrl.deletePlayer));
+router.patch("/:id/status", protect, authorize("super_admin"), ah(ctrl.setStatus));
+router.patch("/:id/auction-eligible", protect, authorize("super_admin"), ah(ctrl.setAuctionEligible));
+router.patch("/:id/reset-auction-status", protect, authorize("super_admin"), ah(ctrl.resetAuctionStatus));
 
 module.exports = router;

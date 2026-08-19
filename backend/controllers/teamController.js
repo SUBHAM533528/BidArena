@@ -1,9 +1,10 @@
 const Team = require("../models/Team");
+const uploadToCloudinary = require("../utils/cloudinary");
 
 exports.createTeam = async (req, res) => {
   try {
     const data = { ...req.body };
-    if (req.file) data.logo = `/uploads/teams/${req.file.filename}`;
+    if (req.file) data.logo = await uploadToCloudinary(req.file.buffer, "bidarena/teams");
     data.remainingPurse = data.initialPurse;
     const team = await Team.create(data);
     res.status(201).json(team);
@@ -30,7 +31,7 @@ exports.getTeam = async (req, res) => {
 exports.updateTeam = async (req, res) => {
   try {
     const data = { ...req.body };
-    if (req.file) data.logo = `/uploads/teams/${req.file.filename}`;
+    if (req.file) data.logo = await uploadToCloudinary(req.file.buffer, "bidarena/teams");
     const team = await Team.findByIdAndUpdate(req.params.id, data, {
       new: true,
       runValidators: true,

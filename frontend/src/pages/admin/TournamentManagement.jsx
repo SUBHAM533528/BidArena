@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from "../../api/axios";
 import { Input, Label, Button, Select, Empty } from "../../components/UI";
 
-const empty = { name:"", description:"", venue:"", startDate:"", endDate:"", registrationStartDate:"", registrationEndDate:"", maxTeams:8, maxPlayers:200 };
+const empty = { name:"", description:"", venue:"", startDate:"", endDate:"", registrationStartDate:"", registrationEndDate:"", maxTeams:8, maxPlayers:200, defaultBasePrice:300, defaultTeamPurse:10000 };
 
 export default function TournamentManagement() {
   const [tournaments, setTournaments] = useState([]);
@@ -33,7 +33,8 @@ export default function TournamentManagement() {
       startDate:t.startDate?.slice(0,10)||"", endDate:t.endDate?.slice(0,10)||"",
       registrationStartDate:t.registrationStartDate?.slice(0,10)||"",
       registrationEndDate:t.registrationEndDate?.slice(0,10)||"",
-      maxTeams:t.maxTeams, maxPlayers:t.maxPlayers });
+      maxTeams:t.maxTeams, maxPlayers:t.maxPlayers,
+      defaultBasePrice:t.defaultBasePrice ?? 300, defaultTeamPurse:t.defaultTeamPurse ?? 10000 });
     setEditId(t._id); setShowForm(true);
   };
 
@@ -65,6 +66,8 @@ export default function TournamentManagement() {
             <div><Label>Registration End</Label><Input type="date" required value={form.registrationEndDate} onChange={e=>setForm({...form,registrationEndDate:e.target.value})}/></div>
             <div><Label>Max Teams</Label><Input type="number" min="2" value={form.maxTeams} onChange={e=>setForm({...form,maxTeams:e.target.value})}/></div>
             <div><Label>Max Players</Label><Input type="number" min="2" value={form.maxPlayers} onChange={e=>setForm({...form,maxPlayers:e.target.value})}/></div>
+            <div><Label>Default Player Base Price (₹)</Label><Input type="number" min="0" required value={form.defaultBasePrice} onChange={e=>setForm({...form,defaultBasePrice:e.target.value})}/></div>
+            <div><Label>Default Team Purse (₹)</Label><Input type="number" min="0" required value={form.defaultTeamPurse} onChange={e=>setForm({...form,defaultTeamPurse:e.target.value})}/></div>
             <div className="sm:col-span-2 flex items-center gap-3 pt-2">
               <Button type="submit">{editId ? "Update Tournament" : "Create Tournament"}</Button>
               {msg && <span className="text-jade-500 text-sm font-medium">{msg}</span>}
@@ -99,6 +102,8 @@ export default function TournamentManagement() {
                 <span>End: {t.endDate ? new Date(t.endDate).toLocaleDateString() : "—"}</span>
                 <span>Teams: {t.maxTeams}</span>
                 <span>Players: {t.maxPlayers}</span>
+                <span>Base Price: ₹{(t.defaultBasePrice ?? 0).toLocaleString()}</span>
+                <span>Team Purse: ₹{(t.defaultTeamPurse ?? 0).toLocaleString()}</span>
               </div>
               <div className="flex flex-wrap gap-2">
                 <Button variant="ghost" size="sm" onClick={() => edit(t)}>Edit</Button>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { Card, Input, Label, Select, Button } from "../components/UI";
 import StadiumBg from "../components/StadiumBg";
@@ -27,6 +28,7 @@ const initialForm = {
 };
 
 export default function PlayerRegistration() {
+  const navigate = useNavigate();
   const [tournaments, setTournaments] = useState([]);
   const [tournamentId, setTournamentId] = useState("");
   const [form, setForm] = useState(initialForm);
@@ -121,14 +123,22 @@ export default function PlayerRegistration() {
   return (
     <div className="min-h-screen bg-ink-50 px-4 py-8 md:py-12 relative">
       <StadiumBg />
-      <Card className="max-w-2xl mx-auto">
+      <Card className="max-w-2xl mx-auto relative">
+        <button
+          type="button"
+          onClick={() => navigate("/")}
+          aria-label="Close registration form"
+          className="absolute top-4 right-4 h-9 w-9 rounded-full flex items-center justify-center text-ink-400 hover:text-flame-600 hover:bg-flame-500/10 transition"
+        >
+          <i className="fa-solid fa-xmark text-lg" />
+        </button>
         <div className="flex items-start justify-between mb-6">
           <div>
             <h1 className="font-display text-2xl font-bold text-ink-900">Player Registration</h1>
             <p className="text-ink-500 text-sm mt-1">{tournament?.name}</p>
           </div>
           {tournaments.length > 1 && (
-            <Select value={tournamentId} onChange={(e) => handleTournamentChange(e.target.value)} className="w-48">
+            <Select value={tournamentId} onChange={(e) => handleTournamentChange(e.target.value)} className="w-48 mr-10">
               {tournaments.map((t) => <option key={t._id} value={t._id}>{t.name}</option>)}
             </Select>
           )}

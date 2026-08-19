@@ -19,9 +19,18 @@ const auctionRoutes = require("./routes/auctionRoutes");
 const reportRoutes = require("./routes/reportRoutes");
 const bannerRoutes = require("./routes/bannerRoutes");
 
-connectDB();
 connectDB().then(() => {
   seedAdmin();
+});
+
+// A single bad/slow DB operation inside a route handler must not take down
+// the whole process — log it and keep serving other requests instead of
+// letting Node's default unhandled-rejection behaviour kill the server.
+process.on("unhandledRejection", (err) => {
+  console.error("Unhandled rejection (server kept running):", err?.message || err);
+});
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught exception (server kept running):", err?.message || err);
 });
 
 const app = express();

@@ -70,7 +70,7 @@ export default function TeamDetail() {
     <div>
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm mb-6">
-        <Link to="/admin/teams" className="dark:text-ink-500 text-ink-400 hover:text-gold-500 transition">Teams</Link>
+        <Link to={team.tournament ? `/admin/teams/tournament/${team.tournament}` : "/admin/teams"} className="dark:text-ink-500 text-ink-400 hover:text-gold-500 transition">Teams</Link>
         <span className="dark:text-ink-700 text-ink-300">/</span>
         <span className="dark:text-ink-200 text-ink-700 font-medium">{team.name}</span>
       </div>

@@ -10,8 +10,10 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/admin/Dashboard";
 import TournamentManagement from "./pages/admin/TournamentManagement";
 import TeamManagement from "./pages/admin/TeamManagement";
+import TeamsByTournament from "./pages/admin/TeamsByTournament";
 import TeamDetail from "./pages/admin/TeamDetail";
 import PlayerManagement from "./pages/admin/PlayerManagement";
+import PlayersByTournament from "./pages/admin/PlayersByTournament";
 import AuctionOverview from "./pages/admin/AuctionOverview";
 import AuctionRoom from "./pages/admin/AuctionRoom";
 import SoldPlayers from "./pages/admin/SoldPlayers";
@@ -42,8 +44,10 @@ export default function App() {
         <Route index element={<Dashboard />} />
         <Route path="tournaments"    element={<TournamentManagement />} />
         <Route path="teams"          element={<TeamManagement />} />
+        <Route path="teams/tournament/:tournamentId" element={<TeamsByTournament />} />
         <Route path="teams/:teamId"  element={<TeamDetail />} />
         <Route path="players"        element={<PlayerManagement />} />
+        <Route path="players/tournament/:tournamentId" element={<PlayersByTournament />} />
         <Route path="auction"        element={<AuctionOverview />} />
         <Route path="auction/:tournamentId" element={<AuctionRoom />} />
         <Route path="sold"           element={<SoldPlayers />} />
