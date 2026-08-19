@@ -7,6 +7,10 @@ node_modules/
 .env.local
 .env.production
 .env.development
+.npmrc
+README.md
+start.bat
+TODO.md
 
 dist/
 build/
