@@ -114,19 +114,19 @@ export default function TeamsByTournament() {
           <Empty icon="fa-solid fa-shield-halved" title="No teams yet" body="Add the first team using the button above." />
         </div>
       ) : (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid sm:grid-cols-2 gap-5">
           {teams.map(t => {
             const spent = (t.initialPurse || 0) - (t.remainingPurse || 0);
             const pct   = Math.max(0, Math.min(100, (t.remainingPurse / t.initialPurse) * 100));
             return (
-              <div key={t._id} className="card p-5">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="h-12 w-12 rounded-xl dark:bg-white/[0.08] bg-ink-100 border dark:border-white/[0.1] border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
-                    {t.logo ? <img src={t.logo} className="h-full w-full object-cover" alt={t.name} /> : <i className="fa-solid fa-shield-halved text-base opacity-60" />}
+              <div key={t._id} className="card p-6">
+                <div className="flex items-center gap-4 mb-5">
+                  <div className="h-20 w-20 rounded-2xl dark:bg-white/[0.06] bg-ink-50 border dark:border-white/[0.1] border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
+                    {t.logo ? <img src={t.logo} className="h-full w-full object-contain p-1.5" alt={t.name} /> : <i className="fa-solid fa-shield-halved text-2xl opacity-30" />}
                   </div>
                   <div className="min-w-0">
-                    <p className="font-bold dark:text-ink-100 text-ink-900 truncate">{t.name}</p>
-                    <p className="text-xs dark:text-ink-500 text-ink-400">{t.ownerName}</p>
+                    <p className="font-display font-bold text-lg dark:text-ink-100 text-ink-900 truncate">{t.name}</p>
+                    <p className="text-sm dark:text-ink-500 text-ink-400 truncate">{t.ownerName}</p>
                   </div>
                 </div>
 

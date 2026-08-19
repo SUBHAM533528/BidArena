@@ -52,8 +52,7 @@ export default function TournamentManagement() {
       </div>
 
       {showForm && (
-        <div className="rounded-xl border p-6 mb-6 html-dark-bg" style={{ background:"var(--surface)", borderColor:"var(--border)" }}>
-          <div className="card p-6 mb-6">
+        <div className="card p-6 mb-6">
           <h2 className="font-display text-lg font-semibold dark:text-ink-100 text-ink-900 mb-5">{editId ? "Edit Tournament" : "New Tournament"}</h2>
           <form onSubmit={submit} className="grid sm:grid-cols-2 gap-4">
             <div className="sm:col-span-2"><Label>Tournament Name</Label><Input required value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/></div>
@@ -73,37 +72,47 @@ export default function TournamentManagement() {
               {msg && <span className="text-jade-500 text-sm font-medium">{msg}</span>}
             </div>
           </form>
-          </div>
         </div>
       )}
 
       {tournaments.length === 0 ? (
         <div className="card p-10"><Empty icon="fa-solid fa-trophy" title="No tournaments yet" body="Create your first tournament above."/></div>
       ) : (
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid lg:grid-cols-2 gap-6">
           {tournaments.map(t => (
-            <div key={t._id} className="card p-5">
-              <div className="flex items-start justify-between gap-3 mb-3">
-                <div className="flex items-center gap-3">
-                  {t.logo && <img src={t.logo} className="h-10 w-10 rounded-lg object-cover border dark:border-white/[0.08] border-ink-200" alt={t.name}/>}
-                  <div>
-                    <p className="font-bold dark:text-ink-100 text-ink-900">{t.name}</p>
-                    <p className="text-xs dark:text-ink-500 text-ink-400">{t.venue}</p>
+            <div key={t._id} className="card p-7">
+              <div className="flex items-start justify-between gap-4 mb-4">
+                <div className="flex items-center gap-4 min-w-0">
+                  <div className="h-20 w-20 rounded-2xl dark:bg-white/[0.06] bg-ink-50 border dark:border-white/[0.1] border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
+                    {t.logo
+                      ? <img src={t.logo} className="h-full w-full object-contain p-1.5" alt={t.name}/>
+                      : <i className="fa-solid fa-trophy text-2xl opacity-30" />}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-display font-bold text-xl dark:text-ink-100 text-ink-900 truncate">{t.name}</p>
+                    <p className="text-sm dark:text-ink-500 text-ink-400 truncate">{t.venue}</p>
                   </div>
                 </div>
-                <div className="flex gap-1.5 shrink-0">
+                <div className="flex flex-col gap-1.5 shrink-0 items-end">
                   <span className={t.isActive ? "badge-green" : "badge-slate"}>{t.isActive ? "Active" : "Inactive"}</span>
                   <span className={t.registrationOpen ? "badge-gold" : "badge-slate"}>{t.registrationOpen ? "Reg Open" : "Reg Closed"}</span>
                 </div>
               </div>
-              {t.description && <p className="text-sm dark:text-ink-500 text-ink-400 mb-3">{t.description}</p>}
-              <div className="grid grid-cols-2 gap-2 text-xs dark:text-ink-500 text-ink-400 mb-4">
-                <span>Start: {t.startDate ? new Date(t.startDate).toLocaleDateString() : "—"}</span>
-                <span>End: {t.endDate ? new Date(t.endDate).toLocaleDateString() : "—"}</span>
-                <span>Teams: {t.maxTeams}</span>
-                <span>Players: {t.maxPlayers}</span>
-                <span>Base Price: ₹{(t.defaultBasePrice ?? 0).toLocaleString()}</span>
-                <span>Team Purse: ₹{(t.defaultTeamPurse ?? 0).toLocaleString()}</span>
+              {t.description && <p className="text-sm dark:text-ink-500 text-ink-400 mb-4">{t.description}</p>}
+              <div className="grid grid-cols-3 gap-3 card-inset rounded-xl p-4 mb-4">
+                {[
+                  ["Start", t.startDate ? new Date(t.startDate).toLocaleDateString() : "—"],
+                  ["End", t.endDate ? new Date(t.endDate).toLocaleDateString() : "—"],
+                  ["Teams", t.maxTeams],
+                  ["Players", t.maxPlayers],
+                  ["Base Price", `₹${(t.defaultBasePrice ?? 0).toLocaleString()}`],
+                  ["Team Purse", `₹${(t.defaultTeamPurse ?? 0).toLocaleString()}`],
+                ].map(([l,v]) => (
+                  <div key={l}>
+                    <p className="eyebrow mb-1">{l}</p>
+                    <p className="text-sm font-bold dark:text-ink-200 text-ink-800 truncate">{v}</p>
+                  </div>
+                ))}
               </div>
               <div className="flex flex-wrap gap-2">
                 <Button variant="ghost" size="sm" onClick={() => edit(t)}>Edit</Button>

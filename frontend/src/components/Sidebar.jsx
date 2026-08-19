@@ -26,11 +26,11 @@ export default function Sidebar({ onClose }) {
       {/* Brand */}
       <div className="px-5 py-5 border-b border-white/[0.07] flex items-center justify-between shrink-0">
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="h-9 w-9 rounded-xl bg-gold-500 flex items-center justify-center shrink-0 shadow-glow-gold">
-            <i className="fa-solid fa-gavel text-ink-950 text-sm" />
+          <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center shrink-0 shadow-glow-gold p-1 overflow-hidden">
+            <img src="/logo.png" alt="BidArenaX" className="h-full w-full object-contain" />
           </div>
           <div className="min-w-0">
-            <span className="font-display text-lg font-bold text-gold-400 tracking-wide leading-none block truncate">BidArena</span>
+            <span className="font-display text-lg font-bold text-gold-400 tracking-wide leading-none block truncate">BidArenaX</span>
             <p className="text-[9px] text-ink-400 uppercase tracking-widest mt-1">Admin Panel</p>
           </div>
         </div>

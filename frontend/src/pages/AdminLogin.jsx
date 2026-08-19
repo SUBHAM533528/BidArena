@@ -31,15 +31,15 @@ export default function AdminLogin() {
   
   return (
     <div className="min-h-screen bg-ink-50 flex items-center justify-center px-4 transition-colors">
-      <SEO title="Admin Login" description="BidArena Auctions admin panel." noIndex={true} />
+      <SEO title="Admin Login" description="BidArenaX Auctions admin panel." noIndex={true} />
       <StadiumBg opacity={0.85} />
       <div className="w-full max-w-[380px] animate-fade-up">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gold-500/10 border border-gold-500/20 mb-4">
-            <span className="text-2xl">⚡</span>
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white border border-gold-500/20 mb-4 shadow-sm overflow-hidden p-2">
+            <img src="/logo.png" alt="BidArenaX" className="h-full w-full object-contain" />
           </div>
           <h1 className="font-editorial text-3xl font-bold text-ink-900">Admin Login</h1>
-          <p className="text-sm text-ink-400 mt-1">BidArena Control Center</p>
+          <p className="text-sm text-ink-400 mt-1">BidArenaX Control Center</p>
         </div>
         <div className="card p-6">
           <form onSubmit={submit} className="space-y-4">

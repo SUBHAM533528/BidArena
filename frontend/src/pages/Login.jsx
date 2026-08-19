@@ -28,7 +28,10 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-ink-50 flex items-center justify-center px-4">
       <Card className="w-full max-w-sm">
-        <p className="font-display text-2xl font-bold text-ink-900 mb-1">BidArena</p>
+        <div className="flex items-center gap-2.5 mb-1">
+          <img src="/logo.png" alt="BidArenaX" className="h-8 w-8 object-contain" />
+          <p className="font-display text-2xl font-bold text-ink-900">BidArenaX</p>
+        </div>
         <p className="text-ink-500 text-sm mb-6">Sign in to your account</p>
         <form onSubmit={submit} className="space-y-4">
           <div>

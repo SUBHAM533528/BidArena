@@ -94,7 +94,7 @@ export default function AdminLayout() {
               <div className="w-4 h-px bg-ink-600 mb-1.5" />
               <div className="w-4 h-px bg-ink-600" />
             </button>
-            <span className="font-display text-sm font-semibold text-gold-600">BidArena</span>
+            <span className="font-display text-sm font-semibold text-gold-600">BidArenaX</span>
           </div>
         </div>
         <Topbar />

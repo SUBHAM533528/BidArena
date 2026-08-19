@@ -16,7 +16,7 @@ export default function CountdownTimer({ target, dark = false }) {
           ? "bg-black/40 rounded-lg border border-gold-500/20 px-3.5 py-2.5 text-center min-w-[56px] backdrop-blur-sm"
           : "bg-white rounded-lg border border-ink-200 px-3 py-2 text-center min-w-[52px]"
         }>
-          <p className={`font-mono font-bold leading-none ${dark ? "text-xl text-gold-400" : "text-lg text-gold-500"}`}>{String(v).padStart(2,"0")}</p>
+          <p className={`font-mono font-bold leading-none ${dark ? "text-xl text-red-700" : "text-lg text-gold-500"}`}>{String(v).padStart(2,"0")}</p>
           <p className={`text-2xs mt-1 uppercase tracking-widest ${dark ? "text-ink-400" : "text-ink-400"}`}>{l}</p>
         </div>
       ))}

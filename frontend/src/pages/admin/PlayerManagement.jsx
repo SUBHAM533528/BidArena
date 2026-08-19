@@ -36,29 +36,29 @@ export default function PlayerManagement() {
       )}
 
       {!tournaments ? (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[...Array(3)].map((_, i) => <div key={i} className="card h-44 shimmer" />)}
+        <div className="grid sm:grid-cols-2 gap-5">
+          {[...Array(2)].map((_, i) => <div key={i} className="card h-52 shimmer" />)}
         </div>
       ) : tournaments.length === 0 ? (
         <div className="card p-10">
           <Empty icon="fa-solid fa-trophy" title="No tournaments yet" body="Create a tournament first, then come back here to review its players." />
         </div>
       ) : (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid sm:grid-cols-2 gap-5">
           {tournaments.map(t => {
             const tPlayers = players.filter(p => p.tournament === t._id);
             const pending  = tPlayers.filter(p => p.status === "Pending").length;
             const pool     = tPlayers.filter(p => p.auctionEligible).length;
             return (
               <Link key={t._id} to={`/admin/players/tournament/${t._id}`}
-                className="card p-5 hover:border-gold-500/40 hover:-translate-y-0.5 transition-all block">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="h-12 w-12 rounded-xl dark:bg-white/[0.08] bg-ink-100 border dark:border-white/[0.1] border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
-                    {t.logo ? <img src={t.logo} className="h-full w-full object-cover" alt={t.name} /> : <i className="fa-solid fa-trophy text-base opacity-60" />}
+                className="card p-6 hover:border-gold-500/40 hover:-translate-y-0.5 transition-all block">
+                <div className="flex items-center gap-4 mb-5">
+                  <div className="h-20 w-20 rounded-2xl dark:bg-white/[0.06] bg-ink-50 border dark:border-white/[0.1] border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
+                    {t.logo ? <img src={t.logo} className="h-full w-full object-contain p-1.5" alt={t.name} /> : <i className="fa-solid fa-trophy text-2xl opacity-30" />}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="font-bold dark:text-ink-100 text-ink-900 truncate">{t.name}</p>
-                    <p className="text-xs dark:text-ink-500 text-ink-400 truncate">{t.venue || "Venue TBA"}</p>
+                    <p className="font-display font-bold text-lg dark:text-ink-100 text-ink-900 truncate">{t.name}</p>
+                    <p className="text-sm dark:text-ink-500 text-ink-400 truncate">{t.venue || "Venue TBA"}</p>
                   </div>
                   {pending > 0 && (
                     <span className="badge-gold shrink-0">{pending} Pending</span>

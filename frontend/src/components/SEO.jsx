@@ -1,7 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 
-const SITE_NAME    = "BidArena";
+const SITE_NAME    = "BidArenaX";
 const SITE_URL     = "https://yourdomain.com";   // ← change to your actual domain
 const DEFAULT_IMG  = `${SITE_URL}/og-default.png`;
 const TWITTER_HANDLE = "@StrikeZoneAuctions";
