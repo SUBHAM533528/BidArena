@@ -121,7 +121,7 @@ export default function BroadcastDisplay() {
             </div>
           ) : (
             <>
-              <div className="h-32 w-32 sm:h-44 sm:w-44 rounded-3xl bg-white/[0.04] overflow-hidden flex items-center justify-center border-2 border-jade-500/30 mb-5 shadow-[0_0_40px_rgba(34,197,94,0.15)]">
+              <div className="h-40 w-40 sm:h-56 sm:w-56 rounded-3xl bg-white/[0.04] overflow-hidden flex items-center justify-center border-2 border-jade-500/30 mb-5 shadow-[0_0_50px_rgba(34,197,94,0.2)]">
                 {player.photo ? <img src={player.photo} className="h-full w-full object-cover" alt={player.fullName}/> : <i className="fa-solid fa-baseball-bat-ball text-xl opacity-40" />}
               </div>
               <h1 className="font-display font-extrabold text-3xl sm:text-5xl text-white text-center tracking-tight">{player.fullName}</h1>
@@ -147,9 +147,9 @@ export default function BroadcastDisplay() {
                   {leadId && leadTeam && (
                     <div key={leadId} className="animate-team-slide flex items-center justify-center gap-3 mt-4">
                       {leadTeam.logo && (
-                        <img src={leadTeam.logo} className="h-9 w-9 sm:h-12 sm:w-12 rounded-xl object-cover border border-jade-500/40" />
+                        <img src={leadTeam.logo} className="h-11 w-11 sm:h-16 sm:w-16 rounded-xl object-cover border border-jade-500/40" />
                       )}
-                      <p className="font-display font-bold text-2xl sm:text-4xl text-white tracking-tight">
+                      <p className="font-display font-bold text-3xl sm:text-5xl text-white tracking-tight">
                         {leadTeam.name}
                       </p>
                     </div>

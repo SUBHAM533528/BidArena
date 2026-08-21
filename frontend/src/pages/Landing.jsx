@@ -6,6 +6,7 @@ import SEO, {
   buildSportsEventSchema,
   buildOrganizationSchema,
 } from "../components/SEO";
+import { cldOptimize } from "../utils/cloudinaryOptimize";
 
 const HOW_IT_WORKS = [
   {
@@ -98,7 +99,7 @@ export default function Landing() {
           <Link to="/" className="flex items-center gap-3 shrink-0 group">
             <div className="h-9 w-9 rounded-lg overflow-hidden bg-white/95 ring-2 ring-gold-500/30 group-hover:ring-gold-500/60 transition p-1">
               <img
-                src="/logo.png"
+                src="/logo.webp"
                 className="h-full w-full object-contain"
                 alt="BidArenaX"
               />
@@ -111,7 +112,7 @@ export default function Landing() {
           <nav className="hidden md:flex items-center gap-1">
             <Link
               to="/player-registration"
-              className="px-4 py-2 text-sm font-extrabold rounded-lg transition-all duration-200 text-green-600 bg-white/5"
+              className="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 text-ink-300 hover:text-gold-400 hover:bg-white/5"
             >
               Player Registration
             </Link>
@@ -170,10 +171,9 @@ export default function Landing() {
 
       {/* ── HERO ────────────────────────────────────────────── */}
       <section className="relative min-h-[92vh] flex items-end overflow-hidden">
-        {/* stadium photo + dark scrim */}
         <div
           className="absolute inset-0 bg-cover bg-center scale-105"
-          style={{ backgroundImage: "url('/hero.png')" }}
+          style={{ backgroundImage: "url('/hero.webp')" }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-[#0a0d0a]" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent" />
@@ -198,17 +198,16 @@ export default function Landing() {
           </p>
 
           <div className="flex flex-wrap items-center gap-4 mb-8">
-           
             <Link
               to="/player-registration"
-              className="inline-flex items-center gap-2 px-6 py-3.5 border border-white/70 text-white hover:bg-white/10 font-semibold text-sm rounded-lg transition hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-6 py-3.5 border border-white/20 text-white hover:bg-white/10 font-semibold text-sm rounded-lg transition hover:-translate-y-0.5"
             >
               Player Registration
             </Link>
             {t && (
               <Link
                 to={`/watch/${t._id}`}
-                className="inline-flex items-center gap-2 px-6 py-3.5 border border-flame-600/80 text-red-600 hover:bg-flame-500/10 font-semibold text-sm rounded-lg transition hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 px-6 py-3.5 border border-flame-500/50 text-flame-400 hover:bg-flame-500/10 font-semibold text-sm rounded-lg transition hover:-translate-y-0.5"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-flame-500 animate-pulse" />
                 Watch Live
@@ -305,9 +304,12 @@ export default function Landing() {
             return (
               <>
                 <img
-                  src="/ball.png"
-                  alt="Cricket player batting"
-                  className="w-full h-full object-cover rounded-2xl aspect-[4/3]"
+                  src="bid.png"
+                  alt="Team celebrating on the field"
+                  className="w-full h-full object-cover aspect-[4/3]"
+                  loading="lazy"
+                  width="700"
+                  height="525"
                 />
 
                 <div className="grid gap-5">
@@ -358,9 +360,12 @@ export default function Landing() {
           </div>
           <div className="rounded-2xl overflow-hidden border border-white/[0.08]">
             <img
-              src="/lord.png"
+              src="lord.png"
               alt="Cricket player batting"
               className="w-full h-full object-cover aspect-[4/3]"
+              loading="lazy"
+              width="700"
+              height="525"
             />
           </div>
         </div>
@@ -385,9 +390,10 @@ export default function Landing() {
                   <div className="h-11 w-11 rounded-xl bg-white/[0.06] border border-white/[0.08] overflow-hidden flex items-center justify-center shrink-0">
                     {tt.logo ? (
                       <img
-                        src={tt.logo}
+                        src={cldOptimize(tt.logo, 96)}
                         className="h-full w-full object-cover"
                         alt={tt.name}
+                        loading="lazy"
                       />
                     ) : (
                       <i className="fa-solid fa-trophy text-gold-400" />
@@ -435,9 +441,12 @@ export default function Landing() {
         <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div className="rounded-2xl overflow-hidden border border-white/[0.08] order-2 md:order-1">
             <img
-              src="/dhoni.png"
+              src="dhoni.webp"
               alt="Team celebrating on the field"
               className="w-full h-full object-cover aspect-[4/3]"
+              loading="lazy"
+              width="700"
+              height="525"
             />
           </div>
           <div className="order-1 md:order-2">
@@ -498,9 +507,10 @@ export default function Landing() {
                       <div className="h-11 w-11 rounded-xl bg-gold-500/10 overflow-hidden flex items-center justify-center shrink-0 border border-gold-500/20 group-hover:border-gold-500/40 transition">
                         {tm.logo ? (
                           <img
-                            src={tm.logo}
+                            src={cldOptimize(tm.logo, 88)}
                             className="h-full w-full object-cover"
                             alt={tm.name}
+                            loading="lazy"
                           />
                         ) : (
                           <i className="fa-solid fa-shield-halved text-lg text-gold-500/50" />

@@ -5,7 +5,7 @@ import { Alert, Button, Badge, Empty } from "../../components/UI";
 
 const STATUS_META = {
   running: { label: "Live now",  dot: "bg-jade-500 animate-pulse",  badge: "badge-green" },
-  paused:  { label: "Paused",    dot: "bg-gold-500",                badge: "badge-gold"  },
+  paused:  { label: "Paused",    dot: "bg-jade-500",                badge: "badge-gold"  },
   ended:   { label: "Ended",     dot: "dark:bg-white/[0.12] bg-ink-300", badge: "badge-slate" },
   idle:    { label: "Not started", dot: "dark:bg-white/[0.12] bg-ink-300", badge: "badge-slate" },
 };
@@ -97,7 +97,7 @@ export default function AuctionOverview() {
                       <>
                         <p className="eyebrow mb-1">On the block</p>
                         <p className="text-sm font-semibold dark:text-ink-100 text-ink-900 truncate">{row.currentPlayer}</p>
-                        <p className="font-mono text-lg font-bold text-gold-500 mt-1">
+                        <p className="font-mono text-lg font-bold text-jade-500 mt-1">
                           ₹{row.currentBidAmount.toLocaleString()}
                         </p>
                         {row.currentBidTeam && (

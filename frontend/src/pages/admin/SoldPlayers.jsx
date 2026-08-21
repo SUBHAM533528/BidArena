@@ -38,7 +38,7 @@ export default function SoldPlayers() {
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
         {[
           { label:"Total Sold",    value:players.length,                            accent:"border-l-jade-500" },
-          { label:"Total Value",   value:`₹${total.toLocaleString()}`,              accent:"border-l-gold-500" },
+          { label:"Total Value",   value:`₹${total.toLocaleString()}`,              accent:"border-l-jade-500" },
           { label:"Highest Bid",   value:players[0]?.soldPrice ? `₹${Math.max(...players.map(p=>p.soldPrice||0)).toLocaleString()}` : "—", accent:"border-l-flame-500" },
         ].map(s => (
           <div key={s.label} className={`stat-card border-l-4 ${s.accent}`}>
@@ -74,7 +74,7 @@ export default function SoldPlayers() {
                     const profit = (p.soldPrice || 0) - (p.basePrice || 0);
                     return (
                       <tr key={p._id}>
-                        <td className="dark:text-ink-600 text-ink-400 font-mono text-xs">{i + 1}</td>
+                        <td className="dark:text-ink-400 text-ink-400 font-mono text-xs">{i + 1}</td>
                         <td>
                           <div className="flex items-center gap-3">
                             <div className="h-9 w-9 rounded-lg dark:bg-white/[0.08] bg-ink-100 overflow-hidden flex items-center justify-center border dark:border-white/[0.1] border-ink-200 shrink-0">
@@ -91,8 +91,8 @@ export default function SoldPlayers() {
                             {p.role}
                           </span>
                         </td>
-                        <td className="font-mono dark:text-ink-400 text-ink-500 text-sm">₹{p.basePrice?.toLocaleString()}</td>
-                        <td className="font-mono font-bold text-gold-500">₹{p.soldPrice?.toLocaleString()}</td>
+                        <td className="font-mono dark:text-ink-400 text-ink-400 text-sm">₹{p.basePrice?.toLocaleString()}</td>
+                        <td className="font-mono font-bold text-jade-500">₹{p.soldPrice?.toLocaleString()}</td>
                         <td className={`font-mono font-semibold text-sm ${profit >= 0 ? "text-jade-500" : "text-flame-500"}`}>
                           {profit >= 0 ? "+" : ""}₹{profit.toLocaleString()}
                         </td>
@@ -103,7 +103,7 @@ export default function SoldPlayers() {
                               <div className="h-6 w-6 rounded dark:bg-white/[0.08] bg-ink-100 overflow-hidden flex items-center justify-center border dark:border-white/[0.1] border-ink-200 shrink-0">
                                 {p.soldTo.logo ? <img src={p.soldTo.logo} className="h-full w-full object-cover" /> : <i className="fa-solid fa-shield-halved text-base opacity-60" />}
                               </div>
-                              <span className="text-sm font-medium dark:text-ink-300 text-ink-600 group-hover:text-gold-500 transition truncate">{p.soldTo.name}</span>
+                              <span className="text-sm font-medium dark:text-ink-300 text-ink-400 group-hover:text-jade-500 transition truncate">{p.soldTo.name}</span>
                             </Link>
                           ) : "—"}
                         </td>
@@ -115,7 +115,7 @@ export default function SoldPlayers() {
           </div>
           <div className="px-4 py-3 border-t dark:border-white/[0.06] border-ink-100 flex justify-between items-center dark:bg-ink-900/40 bg-ink-50">
             <span className="text-xs dark:text-ink-500 text-ink-400">{players.length} players sold</span>
-            <span className="font-mono font-bold text-gold-500">Total: ₹{total.toLocaleString()}</span>
+            <span className="font-mono font-bold text-jade-500">Total: ₹{total.toLocaleString()}</span>
           </div>
         </div>
       )}

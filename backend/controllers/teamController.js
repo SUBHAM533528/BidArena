@@ -48,3 +48,12 @@ exports.deleteTeam = async (req, res) => {
   if (!team) return res.status(404).json({ message: "Team not found" });
   res.json({ message: "Team deleted" });
 };
+
+// Bulk delete — requires ?tournament=<id> so a stray call can never wipe
+// every team across every tournament by accident.
+exports.deleteAllTeams = async (req, res) => {
+  const { tournament } = req.query;
+  if (!tournament) return res.status(400).json({ message: "tournament query param is required" });
+  const result = await Team.deleteMany({ tournament });
+  res.json({ message: `${result.deletedCount} team(s) deleted` });
+};

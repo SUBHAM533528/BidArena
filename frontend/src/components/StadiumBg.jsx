@@ -11,7 +11,7 @@ export default function StadiumBg({ opacity = 1, showPhoto = true, dark = false 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 opacity-30"
             style={{
               backgroundImage:
-                "url('https://images.unsplash.com/photo-1531415077968-de08abad10ab?auto=format&fit=crop&w=1920&q=80')",
+                "url('https://images.unsplash.com/photo-1531415077968-de08abad10ab?auto=format&fit=crop&w=1600&q=70')",
             }}
           />
         )}
@@ -29,7 +29,7 @@ export default function StadiumBg({ opacity = 1, showPhoto = true, dark = false 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 opacity-20 animate-[pulse_12s_ease-in-out_infinite_alternate]"
             style={{
               backgroundImage:
-                "url('https://images.unsplash.com/photo-1531415077968-de08abad10ab?auto=format&fit=crop&w=1920&q=80')",
+                "url('https://images.unsplash.com/photo-1531415077968-de08abad10ab?auto=format&fit=crop&w=1600&q=70')",
             }}
           />
         </>

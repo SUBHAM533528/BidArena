@@ -78,9 +78,13 @@ module.exports = function registerAuctionSocket(io) {
 
         if (!player) return socket.emit("error_message", "Player not found");
 
-        const openingPrice = Number(startingPrice) > 0 ? Number(startingPrice) : player.basePrice;
+        // Self-heal players registered before basePrice existed on this
+        // model — fall back to the tournament's configured default.
+        const effectiveBasePrice = player.basePrice || tournament?.defaultBasePrice || 0;
+        const openingPrice = Number(startingPrice) > 0 ? Number(startingPrice) : effectiveBasePrice;
 
         player.auctionStatus = "In Auction";
+        if (!player.basePrice) player.basePrice = effectiveBasePrice;
         if (Number(startingPrice) > 0) player.basePrice = openingPrice;
         await player.save();
 

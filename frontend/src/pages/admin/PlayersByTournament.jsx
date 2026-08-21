@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import api from "../../api/axios";
 import { Button, Select, Input, Empty, Alert } from "../../components/UI";
+import ConfirmDialog from "../../components/ConfirmDialog";
+import useConfirm from "../../hooks/useConfirm";
 
 export default function PlayersByTournament() {
   const { tournamentId } = useParams();
@@ -9,6 +11,8 @@ export default function PlayersByTournament() {
   const [players, setPlayers]       = useState([]);
   const [filters, setFilters]       = useState({ status:"", role:"", search:"" });
   const [error, setError]           = useState("");
+  const [actionId, setActionId]     = useState(null); // player _id currently mid-action, for per-card loading
+  const confirmDialog = useConfirm();
 
   useEffect(() => {
     setError("");
@@ -25,20 +29,49 @@ export default function PlayersByTournament() {
   };
   useEffect(load, [tournamentId, filters]);
 
-  const setStatus   = async (id, status)   => { try { await api.patch(`/players/${id}/status`, { status }); load(); } catch(err){ alert(err.response?.data?.message || "Action failed"); } };
-  const setEligible = async (id, eligible) => { try { await api.patch(`/players/${id}/auction-eligible`, { eligible }); load(); } catch(err){ alert(err.response?.data?.message || "Action failed"); } };
-  const remove      = async id             => { if(!confirm("Delete player?")) return; try { await api.delete(`/players/${id}`); load(); } catch(err){ alert(err.response?.data?.message || "Delete failed"); } };
+  const setStatus = async (id, status) => {
+    setActionId(id);
+    try { await api.patch(`/players/${id}/status`, { status }); load(); }
+    catch(err){ alert(err.response?.data?.message || "Action failed"); }
+    finally { setActionId(null); }
+  };
+  const setEligible = async (id, eligible) => {
+    setActionId(id);
+    try { await api.patch(`/players/${id}/auction-eligible`, { eligible }); load(); }
+    catch(err){ alert(err.response?.data?.message || "Action failed"); }
+    finally { setActionId(null); }
+  };
+
+  const remove = (p) => {
+    confirmDialog.ask({
+      title: "Delete this player?",
+      message: `"${p.fullName}" will be permanently removed from the registration list. This can't be undone.`,
+      confirmLabel: "Delete Player",
+      danger: true,
+      onConfirm: async () => { await api.delete(`/players/${p._id}`); load(); },
+    });
+  };
+
+  const removeAll = () => {
+    confirmDialog.ask({
+      title: `Delete all ${players.length} players?`,
+      message: `Every player registered under "${tournament?.name}" will be permanently removed. This can't be undone.`,
+      confirmLabel: "Delete All Players",
+      danger: true,
+      onConfirm: async () => { await api.delete(`/players?tournament=${tournamentId}`); load(); },
+    });
+  };
 
   const ROLE_BADGE   = { Batsman:"badge-gold", Bowler:"badge-green", "All-Rounder":"badge-red", "Wicket Keeper":"badge-slate" };
   const STATUS_BADGE = { Pending:"badge-gold", Approved:"badge-green", Rejected:"badge-red" };
 
   return (
     <div>
-      <Link to="/admin/players" className="inline-flex items-center gap-1.5 text-xs font-semibold dark:text-ink-500 text-ink-400 hover:text-gold-600 transition mb-4">
+      <Link to="/admin/players" className="inline-flex items-center gap-1.5 text-xs font-semibold dark:text-ink-500 text-ink-400 hover:text-jade-600 transition mb-4">
         <i className="fa-solid fa-arrow-left text-2xs" /> All Tournaments
       </Link>
 
-      <div className="flex items-start justify-between mb-8 gap-4">
+      <div className="flex items-start justify-between mb-8 gap-4 flex-wrap">
         <div className="flex items-center gap-3 min-w-0">
           {tournament?.logo && (
             <div className="h-11 w-11 rounded-xl dark:bg-white/[0.08] bg-ink-100 border dark:border-white/[0.1] border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
@@ -52,7 +85,14 @@ export default function PlayersByTournament() {
             </h1>
           </div>
         </div>
-        <span className="text-sm dark:text-ink-500 text-ink-400 mt-3 shrink-0">{players.length} found</span>
+        <div className="flex items-center gap-3 shrink-0">
+          <span className="text-sm dark:text-ink-500 text-ink-400">{players.length} found</span>
+          {players.length > 0 && (
+            <Button variant="danger" size="sm" onClick={removeAll}>
+              <i className="fa-solid fa-trash-can" /> Delete All
+            </Button>
+          )}
+        </div>
       </div>
 
       {error && <div className="mb-6"><Alert type="error">{error}</Alert></div>}
@@ -112,30 +152,30 @@ export default function PlayersByTournament() {
                 </div>
               </div>
 
-              <p className="text-xs font-mono dark:text-ink-400 text-ink-500 mb-3">
+              <p className="text-xs font-mono dark:text-ink-400 text-ink-400 mb-3">
                 Base Price: ₹{p.basePrice?.toLocaleString()}
               </p>
 
               {/* Actions */}
               <div className="flex flex-wrap gap-1.5">
                 {p.status !== "Approved" && (
-                  <Button variant="jade" size="sm" onClick={()=>setStatus(p._id,"Approved")}>
+                  <Button variant="jade" size="sm" loading={actionId===p._id} onClick={()=>setStatus(p._id,"Approved")}>
                     <i className="fa-solid fa-check" /> Approve
                   </Button>
                 )}
                 {p.status !== "Rejected" && (
-                  <Button variant="danger" size="sm" onClick={()=>setStatus(p._id,"Rejected")}>
+                  <Button variant="danger" size="sm" loading={actionId===p._id} onClick={()=>setStatus(p._id,"Rejected")}>
                     <i className="fa-solid fa-xmark" /> Reject
                   </Button>
                 )}
                 {p.status === "Approved" && (
-                  <Button variant={p.auctionEligible ? "ghost" : "soft"} size="sm"
+                  <Button variant={p.auctionEligible ? "ghost" : "soft-jade"} size="sm" loading={actionId===p._id}
                     onClick={()=>setEligible(p._id, !p.auctionEligible)}>
                     <i className={`fa-solid ${p.auctionEligible ? "fa-minus" : "fa-plus"}`} />
                     {p.auctionEligible ? "Remove from Pool" : "Add to Pool"}
                   </Button>
                 )}
-                <Button variant="ghost" size="sm" onClick={()=>remove(p._id)}>
+                <Button variant="ghost" size="sm" onClick={()=>remove(p)}>
                   <i className="fa-solid fa-trash text-flame-500" />
                 </Button>
               </div>
@@ -143,6 +183,8 @@ export default function PlayersByTournament() {
           ))}
         </div>
       )}
+
+      <ConfirmDialog {...confirmDialog.props} />
     </div>
   );
 }

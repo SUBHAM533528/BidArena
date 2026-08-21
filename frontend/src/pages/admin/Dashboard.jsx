@@ -14,7 +14,7 @@ const TT = ({ contentStyle, ...p }) => (
 /* Bold colour-block stat card, matching the reference dashboard mock */
 function GlowCard({ icon, label, value, sub, tone = "gold" }) {
   const tones = {
-    gold:  "bg-gold-500 text-ink-950",
+    gold:  "bg-jade-400 text-ink-950",
     jade:  "bg-jade-600 text-white",
     flame: "bg-flame-600 text-white",
     dark:  "dark:bg-[#12160f] bg-ink-900 text-white border dark:border-white/[0.08] border-white/[0.08]",
@@ -110,14 +110,14 @@ export default function Dashboard() {
 
       {/* ── Stat cards row ── */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
-        <div className="col-span-2 sm:col-span-1 rounded-2xl p-4 flex flex-col justify-between min-h-[92px] bg-gradient-to-br from-ink-900 to-[#161c17] border border-gold-500/25 text-white shadow-card-hover">
+        <div className="col-span-2 sm:col-span-1 rounded-2xl p-4 flex flex-col justify-between min-h-[92px] bg-gradient-to-br from-ink-900 to-[#161c17] border border-jade-500/25 text-white shadow-card-hover">
           <div className="flex items-start justify-between gap-2">
-            <span className="text-[10px] font-semibold uppercase tracking-widest text-gold-400">{t?.name || "Tournament"}</span>
-            <i className="fa-solid fa-trophy text-sm text-gold-400 opacity-80" />
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-jade-400">{t?.name || "Tournament"}</span>
+            <i className="fa-solid fa-trophy text-sm text-jade-400 opacity-80" />
           </div>
           <div>
             <p className="font-display text-lg font-bold leading-none mt-2 truncate">{t?.name || "—"}</p>
-            <span className={`inline-flex items-center gap-1.5 mt-1.5 text-[10px] font-semibold uppercase tracking-wide ${t?.isActive ? "text-jade-400" : "text-ink-500"}`}>
+            <span className={`inline-flex items-center gap-1.5 mt-1.5 text-[10px] font-semibold uppercase tracking-wide ${t?.isActive ? "text-jade-400" : "text-ink-400"}`}>
               <span className={`w-1.5 h-1.5 rounded-full ${t?.isActive ? "bg-jade-400 animate-pulse" : "bg-ink-500"}`} />
               {t?.isActive ? "Active" : "Inactive"}
             </span>
@@ -138,7 +138,7 @@ export default function Dashboard() {
         {/* Left: charts */}
         <div className="lg:col-span-2 space-y-4">
           <div className="grid md:grid-cols-2 gap-4">
-            <div className="card p-5 border-l-4 border-l-gold-500">
+            <div className="card p-5 border-l-4 border-l-jade-600">
               <p className="eyebrow mb-5">Team Spending</p>
               {spendData.every(d => d.spent === 0)
                 ? <Empty icon="fa-solid fa-sack-dollar" title="No bids placed yet" />
@@ -174,17 +174,17 @@ export default function Dashboard() {
 
           {/* Quick link to the live auction room */}
           <Link to={t ? `/admin/auction/${t._id}` : "/admin/auction"}
-            className="flex items-center justify-between gap-3 rounded-2xl border dark:border-white/[0.08] border-ink-200 dark:bg-white/[0.03] bg-white p-4 hover:border-gold-500/40 transition group">
+            className="flex items-center justify-between gap-3 rounded-2xl border dark:border-white/[0.08] border-ink-200 dark:bg-white/[0.03] bg-white p-4 hover:border-jade-500/40 transition group">
             <div className="flex items-center gap-3 min-w-0">
-              <div className="h-10 w-10 rounded-xl bg-gold-500/15 border border-gold-500/25 flex items-center justify-center shrink-0">
-                <i className="fa-solid fa-gavel text-gold-500" />
+              <div className="h-10 w-10 rounded-xl bg-jade-500/15 border border-jade-500/25 flex items-center justify-center shrink-0">
+                <i className="fa-solid fa-gavel text-jade-500" />
               </div>
               <div className="min-w-0">
                 <p className="text-sm font-semibold dark:text-white text-ink-900">Open Live Auction Room</p>
                 <p className="text-xs dark:text-ink-500 text-ink-400 truncate">Run bidding, manage teams, mark players sold in real time</p>
               </div>
             </div>
-            <i className="fa-solid fa-arrow-right dark:text-ink-500 text-ink-400 group-hover:text-gold-500 group-hover:translate-x-0.5 transition-all shrink-0" />
+            <i className="fa-solid fa-arrow-right dark:text-ink-500 text-ink-400 group-hover:text-jade-500 group-hover:translate-x-0.5 transition-all shrink-0" />
           </Link>
         </div>
 
@@ -193,7 +193,7 @@ export default function Dashboard() {
           <div className="card p-5 border-l-4 border-l-sky-500">
             <div className="flex items-center justify-between mb-4">
               <p className="eyebrow">Player Queue</p>
-              <Link to="/admin/players" className="text-2xs text-gold-500 hover:text-gold-400 transition font-semibold">View all</Link>
+              <Link to="/admin/players" className="text-2xs text-jade-500 hover:text-jade-400 transition font-semibold">View all</Link>
             </div>
             {queue.length === 0
               ? <Empty icon="fa-solid fa-hourglass-half" title="Queue is empty" body="No players waiting for auction." />
@@ -201,7 +201,7 @@ export default function Dashboard() {
                 <div className="space-y-1">
                   {queue.map(p => (
                     <div key={p._id} className="flex items-center gap-3 px-1 py-2 rounded-lg dark:hover:bg-white/[0.04] hover:bg-ink-50 transition">
-                      <div className="h-8 w-8 rounded-full dark:bg-white/[0.06] bg-ink-100 overflow-hidden flex items-center justify-center shrink-0 text-xs font-bold dark:text-ink-300 text-ink-500">
+                      <div className="h-8 w-8 rounded-full dark:bg-white/[0.06] bg-ink-100 overflow-hidden flex items-center justify-center shrink-0 text-xs font-bold dark:text-ink-300 text-ink-400">
                         {p.photo ? <img src={p.photo} className="h-full w-full object-cover" alt={p.fullName} /> : p.fullName?.charAt(0)}
                       </div>
                       <div className="min-w-0 flex-1">
@@ -218,7 +218,7 @@ export default function Dashboard() {
           <div className="card p-5 border-l-4 border-l-flame-500">
             <div className="flex items-center justify-between mb-4">
               <p className="eyebrow">Recent Sold</p>
-              <Link to="/admin/sold" className="text-2xs text-gold-500 hover:text-gold-400 transition font-semibold">View all</Link>
+              <Link to="/admin/sold" className="text-2xs text-jade-500 hover:text-jade-400 transition font-semibold">View all</Link>
             </div>
             {recentSold.length === 0
               ? <Empty icon="fa-solid fa-tags" title="No sales yet" body="Sold players will appear here." />
@@ -226,7 +226,7 @@ export default function Dashboard() {
                 <div className="space-y-1">
                   {recentSold.map(p => (
                     <div key={p._id} className="flex items-center gap-3 px-1 py-2 rounded-lg dark:hover:bg-white/[0.04] hover:bg-ink-50 transition">
-                      <div className="h-8 w-8 rounded-full dark:bg-white/[0.06] bg-ink-100 overflow-hidden flex items-center justify-center shrink-0 text-xs font-bold dark:text-ink-300 text-ink-500">
+                      <div className="h-8 w-8 rounded-full dark:bg-white/[0.06] bg-ink-100 overflow-hidden flex items-center justify-center shrink-0 text-xs font-bold dark:text-ink-300 text-ink-400">
                         {p.photo ? <img src={p.photo} className="h-full w-full object-cover" alt={p.fullName} /> : p.fullName?.charAt(0)}
                       </div>
                       <div className="min-w-0 flex-1">

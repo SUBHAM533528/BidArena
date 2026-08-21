@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import api from "../../api/axios";
 import { Input, Label, Button, Select, Empty } from "../../components/UI";
+import ConfirmDialog from "../../components/ConfirmDialog";
+import useConfirm from "../../hooks/useConfirm";
 
 const empty = { name:"", description:"", venue:"", startDate:"", endDate:"", registrationStartDate:"", registrationEndDate:"", maxTeams:8, maxPlayers:200, defaultBasePrice:300, defaultTeamPurse:10000 };
 
@@ -11,21 +13,29 @@ export default function TournamentManagement() {
   const [editId, setEditId]   = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [msg, setMsg]   = useState("");
+  const [saving, setSaving] = useState(false);
+  const [actionId, setActionId] = useState(null); // tournament _id mid-toggle, for per-card button loading
+  const confirmDialog = useConfirm();
 
   const load = () => api.get("/tournaments").then(r => setTournaments(r.data));
   useEffect(() => { load(); }, []);
 
   const submit = async (e) => {
     e.preventDefault();
-    const fd = new FormData();
-    Object.entries(form).forEach(([k,v]) => fd.append(k, v));
-    if (logo) fd.append("logo", logo);
-    const opts = { headers: { "Content-Type":"multipart/form-data" } };
-    if (editId) await api.put(`/tournaments/${editId}`, fd, opts);
-    else        await api.post("/tournaments", fd, opts);
-    setForm(empty); setLogo(null); setEditId(null); setShowForm(false);
-    setMsg("Saved!"); setTimeout(() => setMsg(""), 2000);
-    load();
+    setSaving(true);
+    try {
+      const fd = new FormData();
+      Object.entries(form).forEach(([k,v]) => fd.append(k, v));
+      if (logo) fd.append("logo", logo);
+      const opts = { headers: { "Content-Type":"multipart/form-data" } };
+      if (editId) await api.put(`/tournaments/${editId}`, fd, opts);
+      else        await api.post("/tournaments", fd, opts);
+      setForm(empty); setLogo(null); setEditId(null); setShowForm(false);
+      setMsg("Saved!"); setTimeout(() => setMsg(""), 2000);
+      load();
+    } finally {
+      setSaving(false);
+    }
   };
 
   const edit = t => {
@@ -38,17 +48,51 @@ export default function TournamentManagement() {
     setEditId(t._id); setShowForm(true);
   };
 
-  const remove = async id => { if(!confirm("Delete tournament?")) return; await api.delete(`/tournaments/${id}`); load(); };
-  const toggleActive = async id => { await api.patch(`/tournaments/${id}/toggle-active`); load(); };
-  const toggleReg    = async id => { await api.patch(`/tournaments/${id}/toggle-registration`); load(); };
+  const toggleActive = async (id) => {
+    setActionId(id);
+    try { await api.patch(`/tournaments/${id}/toggle-active`); load(); }
+    finally { setActionId(null); }
+  };
+  const toggleReg = async (id) => {
+    setActionId(id);
+    try { await api.patch(`/tournaments/${id}/toggle-registration`); load(); }
+    finally { setActionId(null); }
+  };
+
+  const remove = (t) => {
+    confirmDialog.ask({
+      title: "Delete this tournament?",
+      message: `"${t.name}" will be permanently removed. This can't be undone.`,
+      confirmLabel: "Delete Tournament",
+      danger: true,
+      onConfirm: async () => { await api.delete(`/tournaments/${t._id}`); load(); },
+    });
+  };
+
+  const removeAll = () => {
+    confirmDialog.ask({
+      title: `Delete all ${tournaments.length} tournaments?`,
+      message: "This removes every tournament along with all of their teams and players. This is permanent and cannot be undone.",
+      confirmLabel: "Delete Everything",
+      danger: true,
+      onConfirm: async () => { await api.delete("/tournaments", { data: { confirm: "DELETE ALL" } }); load(); },
+    });
+  };
 
   return (
     <div>
-      <div className="flex items-start justify-between mb-8">
+      <div className="flex items-start justify-between mb-8 gap-4 flex-wrap">
         <div><p className="eyebrow mb-1.5">Manage</p><h1 className="font-display text-3xl font-bold dark:text-white text-ink-900">Tournaments</h1></div>
-        <Button onClick={() => { setShowForm(!showForm); setEditId(null); setForm(empty); }}>
-          {showForm ? "Cancel" : "+ New Tournament"}
-        </Button>
+        <div className="flex gap-2 shrink-0">
+          {tournaments.length > 0 && (
+            <Button variant="danger" onClick={removeAll}>
+              <i className="fa-solid fa-trash-can" /> Delete All
+            </Button>
+          )}
+          <Button variant="jade" onClick={() => { setShowForm(!showForm); setEditId(null); setForm(empty); }}>
+            {showForm ? "Cancel" : "+ New Tournament"}
+          </Button>
+        </div>
       </div>
 
       {showForm && (
@@ -68,7 +112,7 @@ export default function TournamentManagement() {
             <div><Label>Default Player Base Price (₹)</Label><Input type="number" min="0" required value={form.defaultBasePrice} onChange={e=>setForm({...form,defaultBasePrice:e.target.value})}/></div>
             <div><Label>Default Team Purse (₹)</Label><Input type="number" min="0" required value={form.defaultTeamPurse} onChange={e=>setForm({...form,defaultTeamPurse:e.target.value})}/></div>
             <div className="sm:col-span-2 flex items-center gap-3 pt-2">
-              <Button type="submit">{editId ? "Update Tournament" : "Create Tournament"}</Button>
+              <Button type="submit" variant="jade" loading={saving}>{editId ? "Update Tournament" : "Create Tournament"}</Button>
               {msg && <span className="text-jade-500 text-sm font-medium">{msg}</span>}
             </div>
           </form>
@@ -115,15 +159,23 @@ export default function TournamentManagement() {
                 ))}
               </div>
               <div className="flex flex-wrap gap-2">
-                <Button variant="ghost" size="sm" onClick={() => edit(t)}>Edit</Button>
-                <Button variant="ghost" size="sm" onClick={() => toggleActive(t._id)}>{t.isActive ? "Deactivate" : "Activate"}</Button>
-                <Button variant="ghost" size="sm" onClick={() => toggleReg(t._id)}>{t.registrationOpen ? "Close Reg" : "Open Reg"}</Button>
-                <Button variant="danger" size="sm" onClick={() => remove(t._id)}>Delete</Button>
+                <Button variant="sky" size="sm" onClick={() => edit(t)}>
+                  <i className="fa-solid fa-pen text-flame-400" /> Edit
+                </Button>
+                <Button variant={t.isActive ? "soft" : "jade"} size="sm" loading={actionId===t._id} onClick={() => toggleActive(t._id)}>
+                  <i className={`fa-solid ${t.isActive ? "fa-pause" : "fa-play"}`} /> {t.isActive ? "Deactivate" : "Activate"}
+                </Button>
+                <Button variant={t.registrationOpen ? "soft" : "soft-jade"} size="sm" loading={actionId===t._id} onClick={() => toggleReg(t._id)}>
+                  {t.registrationOpen ? "Close Reg" : "Open Reg"}
+                </Button>
+                <Button variant="danger" size="sm" onClick={() => remove(t)}>Delete</Button>
               </div>
             </div>
           ))}
         </div>
       )}
+
+      <ConfirmDialog {...confirmDialog.props} />
     </div>
   );
 }

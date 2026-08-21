@@ -1,5 +1,6 @@
 const Tournament = require("../models/Tournament");
 const Player = require("../models/Player");
+const Team = require("../models/Team");
 const uploadToCloudinary = require("../utils/cloudinary");
 
 // Registration has its own end date/time — once it passes, registration
@@ -75,6 +76,21 @@ exports.deleteTournament = async (req, res) => {
   if (!tournament)
     return res.status(404).json({ message: "Tournament not found" });
   res.json({ message: "Tournament deleted" });
+};
+
+// Extremely destructive — wipes every tournament plus every team and
+// player tied to them. Requires an explicit confirmation phrase in the
+// body as a server-side safety net, on top of the confirm dialog in the UI.
+exports.deleteAllTournaments = async (req, res) => {
+  if (req.body?.confirm !== "DELETE ALL") {
+    return res.status(400).json({ message: 'Confirmation phrase "DELETE ALL" required' });
+  }
+  const [tournamentResult] = await Promise.all([
+    Tournament.deleteMany({}),
+    Team.deleteMany({}),
+    Player.deleteMany({}),
+  ]);
+  res.json({ message: `${tournamentResult.deletedCount} tournament(s) deleted, along with all their teams and players` });
 };
 
 exports.toggleActive = async (req, res) => {

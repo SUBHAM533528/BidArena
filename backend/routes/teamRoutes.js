@@ -10,6 +10,7 @@ router.get("/:id", ah(ctrl.getTeam));
 
 router.post("/", protect, authorize("super_admin"), upload("teams").single("logo"), ah(ctrl.createTeam));
 router.put("/:id", protect, authorize("super_admin"), upload("teams").single("logo"), ah(ctrl.updateTeam));
+router.delete("/", protect, authorize("super_admin"), ah(ctrl.deleteAllTeams));
 router.delete("/:id", protect, authorize("super_admin"), ah(ctrl.deleteTeam));
 
 module.exports = router;

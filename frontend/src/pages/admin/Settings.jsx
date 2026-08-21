@@ -67,7 +67,7 @@ export default function Settings() {
             <span className={`absolute top-1 h-5 w-5 rounded-full bg-white shadow-md transition-transform duration-300 ${form.registrationOpen ? "translate-x-1" : "-translate-x-6"}`}/>
           </button>
         </div>
-        <p className={`text-xs mt-3 font-semibold ${form.registrationOpen ? "text-jade-500" : "dark:text-ink-600 text-ink-400"}`}>
+        <p className={`text-xs mt-3 font-semibold ${form.registrationOpen ? "text-jade-500" : "dark:text-ink-400 text-ink-400"}`}>
           Registration is currently {form.registrationOpen ? "OPEN" : "CLOSED"}
         </p>
       </div>
@@ -82,9 +82,9 @@ export default function Settings() {
               {[["random","Random","Players drawn randomly from the pool"],["serial","Serial","Players go up in registration order"]].map(([val,title,desc])=>(
                 <button type="button" key={val} onClick={()=>setForm({...form,auctionMode:val})}
                   className={`p-3 rounded-xl border text-left transition-all ${form.auctionMode===val
-                    ? "border-gold-500 bg-gold-500/8 dark:bg-gold-500/10"
+                    ? "border-jade-500 bg-jade-500/8 dark:bg-jade-500/10"
                     : "dark:border-white/[0.08] border-ink-200 dark:hover:border-white/[0.1] hover:border-ink-300"}`}>
-                  <p className={`text-sm font-bold mb-0.5 ${form.auctionMode===val?"text-gold-500":"dark:text-ink-200 text-ink-700"}`}>{title}</p>
+                  <p className={`text-sm font-bold mb-0.5 ${form.auctionMode===val?"text-jade-500":"dark:text-ink-200 text-ink-700"}`}>{title}</p>
                   <p className="text-2xs dark:text-ink-500 text-ink-400">{desc}</p>
                 </button>
               ))}
@@ -98,7 +98,7 @@ export default function Settings() {
           <div className="sm:col-span-2"><Label>Registration Closed Message</Label><Input value={form.closedMessage} onChange={e=>setForm({...form,closedMessage:e.target.value})}/></div>
           <div className="sm:col-span-2"><Label>Contact Details</Label><Input value={form.contactDetails} onChange={e=>setForm({...form,contactDetails:e.target.value})}/></div>
           <div className="sm:col-span-2 flex items-center gap-3 pt-1">
-            <Button type="submit">Save Settings</Button>
+            <Button type="submit" variant="jade">Save Settings</Button>
             {saved && <span className="text-jade-500 text-sm font-medium animate-fade-up">Saved</span>}
           </div>
         </form>
@@ -112,7 +112,7 @@ export default function Settings() {
             <p className="text-sm dark:text-ink-500 text-ink-400">Update your login credentials.</p>
           </div>
           <Link to="/admin/change-password"
-            className="px-4 py-2 text-sm font-semibold border dark:border-white/[0.08] border-ink-300 dark:text-ink-300 text-ink-600 rounded-lg hover:border-gold-500 hover:text-gold-500 transition">
+            className="px-4 py-2 text-sm font-semibold border dark:border-white/[0.08] border-ink-300 dark:text-ink-300 text-ink-400 rounded-lg hover:border-jade-500 hover:text-jade-500 transition">
             Change Password
           </Link>
         </div>

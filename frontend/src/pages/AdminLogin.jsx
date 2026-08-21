@@ -30,15 +30,15 @@ export default function AdminLogin() {
 
   
   return (
-    <div className="min-h-screen bg-ink-50 flex items-center justify-center px-4 transition-colors">
+    <div className="dark min-h-screen bg-[#0a0d0a] flex items-center justify-center px-4 transition-colors">
       <SEO title="Admin Login" description="BidArenaX Auctions admin panel." noIndex={true} />
       <StadiumBg opacity={0.85} />
       <div className="w-full max-w-[380px] animate-fade-up">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white border border-gold-500/20 mb-4 shadow-sm overflow-hidden p-2">
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white border border-jade-500/20 mb-4 shadow-sm overflow-hidden p-2">
             <img src="/logo.png" alt="BidArenaX" className="h-full w-full object-contain" />
           </div>
-          <h1 className="font-editorial text-3xl font-bold text-ink-900">Admin Login</h1>
+          <h1 className="font-editorial text-3xl font-bold text-white">Admin Login</h1>
           <p className="text-sm text-ink-400 mt-1">BidArenaX Control Center</p>
         </div>
         <div className="card p-6">
@@ -47,15 +47,15 @@ export default function AdminLogin() {
             <div><Label>Password</Label>
               <div className="relative">
                 <Input type={show?"text":"password"} required placeholder="Enter Your Password" value={f.password} onChange={e=>setF({...f,password:e.target.value})} className="pr-16"/>
-                <button type="button" onClick={()=>setShow(!show)} className="absolute right-3 top-1/2 -translate-y-1/2 text-2xs font-semibold text-ink-400 hover:text-gold-600 transition uppercase tracking-wide">{show?"Hide":"Show"}</button>
+                <button type="button" onClick={()=>setShow(!show)} className="absolute right-3 top-1/2 -translate-y-1/2 text-2xs font-semibold text-ink-400 hover:text-jade-400 transition uppercase tracking-wide">{show?"Hide":"Show"}</button>
               </div>
             </div>
             {err && <Alert type="error">{err}</Alert>}
-            <Button type="submit" className="w-full" size="lg" disabled={loading}>{loading?"Signing in…":"Sign in to Admin"}</Button>
+            <Button type="submit" variant="jade" className="w-full" size="lg" disabled={loading}>{loading?"Signing in…":"Sign in to Admin"}</Button>
           </form>
-          <div className="mt-5 pt-5 border-t border-ink-100 text-sm text-center space-y-2">
+          <div className="mt-5 pt-5 border-t border-white/[0.08] text-sm text-center space-y-2">
             <p className="text-ink-400">Not an admin? </p>
-            <Link to="/" className="text-2xs text-ink-400 hover:text-gold-600 transition block">Back to Home</Link>
+            <Link to="/" className="text-2xs text-ink-400 hover:text-jade-400 transition block">Back to Home</Link>
           </div>
         </div>
         

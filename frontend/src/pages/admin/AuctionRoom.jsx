@@ -80,8 +80,8 @@ export default function AuctionRoom() {
       <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <Link to="/admin/auction" className="eyebrow hover:text-gold-500 transition">Live Auctions</Link>
-            <span className="dark:text-ink-700 text-ink-300 text-xs">/</span>
+            <Link to="/admin/auction" className="eyebrow hover:text-jade-500 transition">Live Auctions</Link>
+            <span className="dark:text-ink-700 text-ink-400 text-xs">/</span>
             <span className="eyebrow">{t?.name || "…"}</span>
           </div>
           <div className="flex items-center gap-3">
@@ -105,7 +105,7 @@ export default function AuctionRoom() {
             </Select>
           )}
           <button onClick={()=>window.open(`/watch/${tid}`,"_blank")}
-            className="px-3 py-1.5 text-xs border dark:border-white/[0.1] border-ink-300 hover:border-gold-500 dark:text-ink-400 text-ink-500 hover:text-gold-600 rounded transition">
+            className="px-3 py-1.5 text-xs border dark:border-white/[0.1] border-ink-300 hover:border-jade-500 dark:text-ink-400 text-ink-400 hover:text-jade-600 rounded transition">
             TV Display
           </button>
         </div>
@@ -147,7 +147,7 @@ export default function AuctionRoom() {
                 }`}>
                   {flash.type==="sold" ? "SOLD" : "UNSOLD"}
                   {flash.type==="sold" && (
-                    <p className="text-base font-body mt-2 dark:text-ink-300 text-ink-600 text-center">
+                    <p className="text-base font-body mt-2 dark:text-ink-300 text-ink-400 text-center">
                       {flash.p.team?.name} — ₹{flash.p.amount?.toLocaleString()}
                     </p>
                   )}
@@ -156,7 +156,7 @@ export default function AuctionRoom() {
             )}
 
             {!player ? (
-              <div className="flex flex-col items-center justify-center h-80 dark:text-ink-600 text-ink-400">
+              <div className="flex flex-col items-center justify-center h-80 dark:text-ink-400 text-ink-400">
                 <i className="fa-solid fa-baseball-bat-ball text-4xl opacity-30" />
                 <p className="text-sm">No player in auction. Click "Next Player" to begin.</p>
               </div>
@@ -187,7 +187,7 @@ export default function AuctionRoom() {
                   <div className="flex items-center gap-6">
                     <div>
                       <p className="eyebrow">{state?.currentBidTeam?"Current Bid":"Opening Price"}</p>
-                      <p className="font-mono text-3xl font-bold text-gold-600 mt-0.5">₹{curAmt.toLocaleString()}</p>
+                      <p className="font-mono text-3xl font-bold text-jade-600 mt-0.5">₹{curAmt.toLocaleString()}</p>
                       {state?.currentBidTeam && (
                         <p className="text-xs text-jade-600 mt-0.5">{state.currentBidTeam.name}</p>
                       )}
@@ -196,7 +196,7 @@ export default function AuctionRoom() {
                     <div className={`h-16 w-16 rounded-full border-2 flex items-center justify-center font-mono text-xl font-bold transition-colors ${
                       secs<=10 && state?.status==="running"
                         ? "border-flame-600 text-flame-600 ring-danger"
-                        : "dark:border-white/[0.1] border-ink-300 dark:text-ink-400 text-ink-500"
+                        : "dark:border-white/[0.1] border-ink-300 dark:text-ink-400 text-ink-400"
                     }`}>
                       {secs>0 ? secs : "—"}
                     </div>
@@ -241,7 +241,7 @@ export default function AuctionRoom() {
                   <Input type="number" value={inc} onChange={e=>setInc(e.target.value)} className="w-28 text-xs"/>
                   {presets.map(p=>(
                     <button key={p} onClick={()=>setInc(p)}
-                      className={`px-2.5 py-1 rounded text-xs border transition ${+inc===p?"border-gold-500 text-gold-600 bg-gold-500/10":"dark:border-white/[0.1] border-ink-300 dark:text-ink-500 text-ink-400 hover:border-ink-400"}`}>
+                      className={`px-2.5 py-1 rounded text-xs border transition ${+inc===p?"border-jade-500 text-jade-600 bg-jade-500/10":"dark:border-white/[0.1] border-ink-300 dark:text-ink-500 text-ink-400 hover:border-ink-400"}`}>
                       +{p.toLocaleString()}
                     </button>
                   ))}
@@ -259,7 +259,7 @@ export default function AuctionRoom() {
             const isLeading = String(state?.currentBidTeam?._id)===String(tm._id);
             const pct = Math.max(0,Math.min(100,(tm.remainingPurse/tm.initialPurse)*100));
             return (
-              <div key={tm._id} className={`card p-3 ${isLeading?"border-gold-500/50":""}`}
+              <div key={tm._id} className={`card p-3 ${isLeading?"border-jade-500/50":""}`}
                 style={{borderColor: isLeading?"#f2b70566":undefined, borderWidth: isLeading?"1px":undefined}}>
                 <div className="flex items-center gap-2 mb-2">
                   <div className="h-7 w-7 rounded dark:bg-white/[0.08] bg-ink-100 overflow-hidden flex items-center justify-center shrink-0">
@@ -277,7 +277,7 @@ export default function AuctionRoom() {
                 <div className="h-1 dark:bg-white/[0.08] bg-ink-200 rounded-full overflow-hidden">
                   <div className={`h-full rounded-full ${pct<20?"bg-flame-500":"bg-jade-600"}`} style={{width:`${pct}%`}}/>
                 </div>
-                <p className="text-[10px] dark:text-ink-600 text-ink-400 mt-1">{tm.squad.length}/{tm.maxPlayers} players</p>
+                <p className="text-[10px] dark:text-ink-400 text-ink-400 mt-1">{tm.squad.length}/{tm.maxPlayers} players</p>
               </div>
             );
           })}

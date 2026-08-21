@@ -59,7 +59,7 @@ export default function ChangePassword() {
                 <Input type={show.current?"text":"password"} required placeholder="Your current password"
                   value={form.current} onChange={e=>setForm({...form,current:e.target.value})} className="pr-14"/>
                 <button type="button" onClick={()=>setShow({...show,current:!show.current})}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-2xs font-semibold dark:text-ink-500 text-ink-400 hover:text-gold-500 transition uppercase tracking-wide">
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-2xs font-semibold dark:text-ink-500 text-ink-400 hover:text-jade-500 transition uppercase tracking-wide">
                   {show.current?"Hide":"Show"}
                 </button>
               </div>
@@ -71,7 +71,7 @@ export default function ChangePassword() {
                 <Input type={show.next?"text":"password"} required placeholder="New password"
                   value={form.next} onChange={e=>setForm({...form,next:e.target.value})} className="pr-14"/>
                 <button type="button" onClick={()=>setShow({...show,next:!show.next})}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-2xs font-semibold dark:text-ink-500 text-ink-400 hover:text-gold-500 transition uppercase tracking-wide">
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-2xs font-semibold dark:text-ink-500 text-ink-400 hover:text-jade-500 transition uppercase tracking-wide">
                   {show.next?"Hide":"Show"}
                 </button>
               </div>
@@ -88,7 +88,7 @@ export default function ChangePassword() {
               <div className="card-inset rounded-xl p-4 space-y-2">
                 {rules.map(r => (
                   <div key={r.label} className="flex items-center gap-2.5">
-                    <div className={`h-4 w-4 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${r.ok ? "bg-jade-500 text-white" : "dark:bg-white/[0.08] bg-ink-200 dark:text-ink-600 text-ink-400"}`}>
+                    <div className={`h-4 w-4 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${r.ok ? "bg-jade-500 text-white" : "dark:bg-white/[0.08] bg-ink-200 dark:text-ink-400 text-ink-400"}`}>
                       {r.ok ? <i className="fa-solid fa-check text-2xs" /> : ""}
                     </div>
                     <span className={`text-xs transition-colors ${r.ok ? "dark:text-jade-400 text-jade-600" : "dark:text-ink-500 text-ink-400"}`}>{r.label}</span>
@@ -100,7 +100,7 @@ export default function ChangePassword() {
             {msg.text && <Alert type={msg.ok?"success":"error"}>{msg.text}</Alert>}
 
             <div className="flex gap-3 pt-1">
-              <Button type="submit" disabled={loading || !rules.every(r=>r.ok) || !form.current}>
+              <Button type="submit" variant="jade" disabled={loading || !rules.every(r=>r.ok) || !form.current}>
                 {loading ? "Updating…" : "Update Password"}
               </Button>
               <Button type="button" variant="ghost" onClick={()=>navigate("/admin/settings")}>Cancel</Button>

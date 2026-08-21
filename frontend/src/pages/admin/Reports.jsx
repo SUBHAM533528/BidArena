@@ -10,7 +10,7 @@ const PDF_REPORTS = [
     title:    "All Registered Players",
     desc:     "Every player who registered — name, role, district, base price, approval status.",
     filename: "all_registered_players.pdf",
-    accent:   "dark:border-white/[0.08] border-ink-200 hover:border-gold-500/50",
+    accent:   "dark:border-white/[0.08] border-ink-200 hover:border-jade-500/50",
     badge:    "badge-gold",
   },
   {
@@ -37,7 +37,7 @@ const PDF_REPORTS = [
     title:    "All Teams Combined",
     desc:     "Cover page + one full squad page per team. Share with organisers, sponsors, or media.",
     filename: "all_teams_squads.pdf",
-    accent:   "dark:border-white/[0.08] border-ink-200 hover:border-gold-500/50",
+    accent:   "dark:border-white/[0.08] border-ink-200 hover:border-jade-500/50",
     badge:    "badge-gold",
   },
 ];
@@ -166,7 +166,7 @@ export default function Reports() {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {teams.map(tm => (
               <div key={tm._id}
-                className="dark:bg-white/[0.03] bg-white rounded-xl border dark:border-white/[0.08] border-ink-200 p-4 text-center hover:border-gold-500/50 transition shadow-card-light dark:shadow-card-dark">
+                className="dark:bg-white/[0.03] bg-white rounded-xl border dark:border-white/[0.08] border-ink-200 p-4 text-center hover:border-jade-500/50 transition shadow-card-light dark:shadow-card-dark">
                 <div className="h-12 w-12 rounded-xl dark:bg-white/[0.08] bg-ink-100 mx-auto mb-3 overflow-hidden flex items-center justify-center border dark:border-white/[0.1] border-ink-200">
                   {tm.logo
                     ? <img src={tm.logo} className="h-full w-full object-cover" alt={tm.name} />
@@ -178,12 +178,12 @@ export default function Reports() {
                   <button
                     onClick={() => dlTeamPDF(tm)}
                     disabled={downloading === tm._id}
-                    className="flex-1 py-1.5 text-2xs font-semibold rounded-lg dark:bg-white/[0.08] bg-ink-100 dark:text-ink-300 text-ink-600 hover:bg-gold-500/10 hover:text-gold-500 border dark:border-white/[0.1] border-ink-200 transition disabled:opacity-40"
+                    className="flex-1 py-1.5 text-2xs font-semibold rounded-lg dark:bg-white/[0.08] bg-ink-100 dark:text-ink-300 text-ink-400 hover:bg-jade-500/10 hover:text-jade-500 border dark:border-white/[0.1] border-ink-200 transition disabled:opacity-40"
                   >
                     {downloading === tm._id ? "Loading…" : "PDF"}
                   </button>
                   <Link to={`/admin/teams/${tm._id}`}
-                    className="flex-1 py-1.5 text-2xs font-semibold rounded-lg dark:bg-white/[0.08] bg-ink-100 dark:text-ink-300 text-ink-600 hover:bg-gold-500/10 hover:text-gold-500 border dark:border-white/[0.1] border-ink-200 transition text-center">
+                    className="flex-1 py-1.5 text-2xs font-semibold rounded-lg dark:bg-white/[0.08] bg-ink-100 dark:text-ink-300 text-ink-400 hover:bg-jade-500/10 hover:text-jade-500 border dark:border-white/[0.1] border-ink-200 transition text-center">
                     View
                   </Link>
                 </div>
@@ -219,10 +219,10 @@ export default function Reports() {
                 <tbody>
                   {bids.map((b, i) => (
                     <tr key={b._id}>
-                      <td className="dark:text-ink-600 text-ink-400 font-mono text-xs">{i + 1}</td>
+                      <td className="dark:text-ink-400 text-ink-400 font-mono text-xs">{i + 1}</td>
                       <td className="font-medium dark:text-ink-200 text-ink-700">{b.player?.fullName}</td>
-                      <td className="dark:text-ink-400 text-ink-500">{b.team?.name}</td>
-                      <td className="font-mono font-bold text-gold-500">₹{b.amount?.toLocaleString()}</td>
+                      <td className="dark:text-ink-400 text-ink-400">{b.team?.name}</td>
+                      <td className="font-mono font-bold text-jade-500">₹{b.amount?.toLocaleString()}</td>
                       <td className="dark:text-ink-500 text-ink-400 text-xs">
                         {new Date(b.createdAt).toLocaleTimeString("en-IN", { hour:"2-digit", minute:"2-digit", second:"2-digit" })}
                       </td>

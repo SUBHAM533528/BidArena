@@ -4,6 +4,7 @@ import api from "../api/axios";
 import { Empty } from "../components/UI";
 import SEO, { buildBreadcrumbSchema } from "../components/SEO";
 import StadiumBg from "../components/StadiumBg";
+import { cldOptimize } from "../utils/cloudinaryOptimize";
 
 const ROLE_BADGE = {
   Batsman:        "badge-gold",
@@ -25,20 +26,20 @@ export default function TeamProfile() {
   }, [teamId]);
 
   if (loading) return (
-    <div className="min-h-screen dark:bg-ink-900 bg-ink-50 flex items-center justify-center">
+    <div className="min-h-screen bg-[#0a0d0a] flex items-center justify-center">
       <div className="text-center">
-        <i className="fa-solid fa-baseball-bat-ball text-4xl animate-pulse text-gold-500" />
-        <p className="text-sm dark:text-ink-500 text-ink-400">Loading team…</p>
+        <i className="fa-solid fa-baseball-bat-ball text-4xl animate-pulse text-jade-500" />
+        <p className="text-sm text-ink-500">Loading team…</p>
       </div>
     </div>
   );
 
   if (!team) return (
-    <div className="min-h-screen dark:bg-ink-900 bg-ink-50 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[#0a0d0a] flex items-center justify-center px-4">
       <div className="text-center">
         <div className="text-5xl mb-4">🛡️</div>
-        <p className="dark:text-ink-300 text-ink-600 font-semibold mb-2">Team not found</p>
-        <Link to="/" className="text-sm text-gold-500 hover:text-gold-400">Back to home</Link>
+        <p className="text-ink-300 font-semibold mb-2">Team not found</p>
+        <Link to="/" className="text-sm text-jade-500 hover:text-jade-400">Back to home</Link>
       </div>
     </div>
   );
@@ -58,17 +59,17 @@ export default function TeamProfile() {
   const totalPlayers = team.squad?.length || 0;
 
   return (
-    <div className="min-h-screen dark:bg-ink-900 bg-ink-50 dark:text-ink-100 text-ink-900 transition-colors duration-300">
+    <div className="min-h-screen bg-[#0a0d0a] text-ink-100 transition-colors duration-300">
       <StadiumBg opacity={0.18} />
 
       {/* ── NAV ─────────────────────────────────── */}
-      <header className="sticky top-0 z-30 dark:bg-ink-950/90 bg-white/90 backdrop-blur-md border-b dark:border-ink-800 border-ink-200">
+      <header className="sticky top-0 z-30 bg-[#0a0d0a]/90 backdrop-blur-md border-b border-white/[0.08]">
         <div className="max-w-5xl mx-auto px-4 sm:px-8 h-14 flex items-center justify-between">
-          <Link to="/" className="font-display text-2xl font-bold text-gold-500 tracking-wide">
-            Bid<span className="dark:text-ink-500 text-ink-400 font-normal">Arena</span>
+          <Link to="/" className="font-display text-2xl font-bold text-jade-500 tracking-wide">
+            Bid<span className="text-ink-400 font-normal">ArenaX</span>
           </Link>
           <div className="flex items-center gap-4">
-            <Link to="/" className="text-sm dark:text-ink-400 text-ink-500 hover:text-gold-500 transition">
+            <Link to="/" className="text-sm text-ink-400 hover:text-jade-500 transition">
               All Teams
             </Link>
           </div>
@@ -78,35 +79,35 @@ export default function TeamProfile() {
       <div className="max-w-5xl mx-auto px-4 sm:px-8 py-10">
 
         {/* ── TEAM HERO ────────────────────────── */}
-        <div className="dark:bg-ink-850 bg-white rounded-2xl border dark:border-ink-700 border-ink-200 shadow-card-light dark:shadow-card-dark overflow-hidden mb-8">
-          {/* Gold top accent bar */}
-          <div className="h-1.5 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600" />
+        <div className="bg-white/[0.03] rounded-2xl border border-white/[0.08] shadow-card-dark overflow-hidden mb-8">
+          {/* Green top accent bar */}
+          <div className="h-1.5 bg-gradient-to-r from-jade-600 via-jade-400 to-jade-600" />
 
           <div className="p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row items-start gap-6">
               {/* Logo */}
-              <div className="h-24 w-24 rounded-2xl dark:bg-ink-700 bg-ink-100 border dark:border-ink-600 border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
+              <div className="h-24 w-24 rounded-2xl bg-white/[0.06] border border-white/[0.1] overflow-hidden flex items-center justify-center shrink-0">
                 {team.logo
-                  ? <img src={team.logo} className="h-full w-full object-cover" alt={team.name} />
+                  ? <img src={cldOptimize(team.logo, 120)} className="h-full w-full object-cover" alt={team.name} />
                   : <i className="fa-solid fa-shield-halved text-base opacity-60" />}
               </div>
 
               <div className="flex-1 min-w-0">
-                <p className="eyebrow mb-1">Team Owner: {team.ownerName}</p>
-                <h1 className="font-display text-4xl sm:text-5xl font-bold dark:text-white text-ink-900 mb-5">
+                <p className="text-2xs font-bold uppercase tracking-widest text-jade-400 mb-1">Team Owner: {team.ownerName}</p>
+                <h1 className="font-display text-4xl sm:text-5xl font-bold text-white mb-5">
                   {team.name}
                 </h1>
 
                 {/* Stats row */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
                   {[
-                    { label: "Players Bought",   value: totalPlayers,                       color: "text-gold-500" },
-                    { label: "Max Squad Size",   value: team.maxPlayers,                    color: "dark:text-ink-300 text-ink-700" },
+                    { label: "Players Bought",   value: totalPlayers,                       color: "text-jade-500" },
+                    { label: "Max Squad Size",   value: team.maxPlayers,                    color: "text-ink-200" },
                     { label: "Total Spent",      value: `₹${spent.toLocaleString()}`,       color: "text-flame-500" },
                     { label: "Purse Remaining",  value: `₹${team.remainingPurse?.toLocaleString()}`, color: "text-jade-500" },
                   ].map(s => (
-                    <div key={s.label} className="card-inset rounded-xl p-3">
-                      <p className="eyebrow mb-1.5">{s.label}</p>
+                    <div key={s.label} className="rounded-xl p-3 bg-white/[0.04] border border-white/[0.07]">
+                      <p className="text-2xs font-bold uppercase tracking-widest text-jade-400 mb-1.5">{s.label}</p>
                       <p className={`font-mono font-bold text-lg leading-none ${s.color}`}>{s.value}</p>
                     </div>
                   ))}
@@ -115,8 +116,8 @@ export default function TeamProfile() {
                 {/* Purse bar */}
                 <div>
                   <div className="flex justify-between text-xs mb-2">
-                    <span className="dark:text-ink-500 text-ink-400">Purse used</span>
-                    <span className="font-mono dark:text-ink-400 text-ink-500">
+                    <span className="text-ink-500">Purse used</span>
+                    <span className="font-mono text-ink-400">
                       ₹{spent.toLocaleString()} / ₹{team.initialPurse?.toLocaleString()}
                     </span>
                   </div>
@@ -128,7 +129,7 @@ export default function TeamProfile() {
                       style={{ width: `${100 - pct}%` }}
                     />
                   </div>
-                  <div className="flex justify-between text-2xs mt-1.5 dark:text-ink-600 text-ink-400">
+                  <div className="flex justify-between text-2xs mt-1.5 text-ink-600">
                     <span>{(100 - pct).toFixed(1)}% used</span>
                     <span>{pct.toFixed(1)}% remaining</span>
                   </div>
@@ -140,7 +141,7 @@ export default function TeamProfile() {
 
         {/* ── SQUAD ───────────────────────────── */}
         {totalPlayers === 0 ? (
-          <div className="dark:bg-ink-850 bg-white rounded-2xl border dark:border-ink-700 border-ink-200 p-10">
+          <div className="bg-white/[0.03] rounded-2xl border border-white/[0.08] p-10">
             <Empty icon="fa-solid fa-baseball-bat-ball" title="No players purchased yet"
               body="This team hasn't made any bids yet. Check back once the auction begins." />
           </div>
@@ -149,43 +150,43 @@ export default function TeamProfile() {
             <div key={role} className="mb-10">
               {/* Role header */}
               <div className="flex items-center gap-3 mb-5">
-                <h2 className="font-display text-2xl font-semibold dark:text-ink-100 text-ink-800">{role}s</h2>
+                <h2 className="font-display text-2xl font-semibold text-ink-100">{role}s</h2>
                 <span className={ROLE_BADGE[role]}>{players.length} player{players.length !== 1 ? "s" : ""}</span>
-                <div className="flex-1 h-px dark:bg-ink-800 bg-ink-200" />
+                <div className="flex-1 h-px bg-white/[0.08]" />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {players.map((p, idx) => (
                   <div key={p._id}
-                    className="dark:bg-ink-850 bg-white rounded-xl border dark:border-ink-700 border-ink-200 p-4 flex items-center gap-4 hover:border-gold-500/50 dark:hover:bg-ink-800 hover:bg-ink-50 transition-all duration-200 shadow-card-light dark:shadow-card-dark group">
+                    className="bg-white/[0.03] rounded-xl border border-white/[0.08] p-4 flex items-center gap-4 hover:border-jade-500/50 hover:bg-white/[0.05] transition-all duration-200 shadow-card-dark group">
                     {/* Photo */}
                     <div className="relative shrink-0">
-                      <div className="h-14 w-14 rounded-xl dark:bg-ink-700 bg-ink-100 overflow-hidden flex items-center justify-center border dark:border-ink-600 border-ink-200">
+                      <div className="h-14 w-14 rounded-xl bg-white/[0.06] overflow-hidden flex items-center justify-center border border-white/[0.1]">
                         {p.photo
-                          ? <img src={p.photo} className="h-full w-full object-cover" alt={p.fullName} />
+                          ? <img src={cldOptimize(p.photo, 80)} className="h-full w-full object-cover" alt={p.fullName} loading="lazy" />
                           : <i className="fa-solid fa-baseball-bat-ball text-xl opacity-40" />}
                       </div>
-                      <span className="absolute -top-1.5 -left-1.5 h-5 w-5 rounded-full dark:bg-ink-900 bg-white border dark:border-ink-700 border-ink-200 flex items-center justify-center text-2xs font-bold dark:text-ink-500 text-ink-400">
+                      <span className="absolute -top-1.5 -left-1.5 h-5 w-5 rounded-full bg-[#0a0d0a] border border-white/[0.1] flex items-center justify-center text-2xs font-bold text-ink-500">
                         {idx + 1}
                       </span>
                     </div>
 
                     {/* Info */}
                     <div className="flex-1 min-w-0">
-                      <p className="font-bold text-sm dark:text-ink-100 text-ink-900 truncate group-hover:text-gold-500 transition">
+                      <p className="font-bold text-sm text-ink-100 truncate group-hover:text-jade-400 transition">
                         {p.fullName}
                       </p>
-                      <p className="text-2xs dark:text-ink-500 text-ink-400 truncate mt-0.5">
+                      <p className="text-2xs text-ink-500 truncate mt-0.5">
                         {p.battingStyle || p.bowlingStyle || role}
                       </p>
                       <div className="flex items-center justify-between mt-2">
                         <div>
-                          <p className="eyebrow" style={{ fontSize: "9px" }}>Sold for</p>
-                          <p className="font-mono font-bold text-gold-500">₹{p.soldPrice?.toLocaleString()}</p>
+                          <p className="text-jade-400 font-bold uppercase tracking-widest" style={{ fontSize: "9px" }}>Sold for</p>
+                          <p className="font-mono font-bold text-jade-400">₹{p.soldPrice?.toLocaleString()}</p>
                         </div>
                         <div className="text-right">
-                          <p className="eyebrow" style={{ fontSize: "9px" }}>Base</p>
-                          <p className="font-mono text-xs dark:text-ink-500 text-ink-400">₹{p.basePrice?.toLocaleString()}</p>
+                          <p className="text-jade-400 font-bold uppercase tracking-widest" style={{ fontSize: "9px" }}>Base</p>
+                          <p className="font-mono text-xs text-ink-500">₹{p.basePrice?.toLocaleString()}</p>
                         </div>
                       </div>
                     </div>

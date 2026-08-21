@@ -33,17 +33,35 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest"         href="/site.webmanifest" />
 
+    <!-- ── Preload the landing page's hero image (LCP element) so the
+         browser starts fetching it immediately during HTML parsing
+         instead of discovering it late via the CSS background-image. ── -->
+    <link rel="preload" as="image"
+      href="https://images.unsplash.com/photo-1531415077968-de08abad10ab?auto=format&fit=crop&w=1600&q=70" />
+
     <!-- ── Performance: preconnect to external resources ── -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
 
-    <!-- ── Font Awesome ── -->
+    <!-- ── Fonts + Font Awesome: loaded non-render-blocking.
+         The stylesheet is fetched with low priority (media="print"),
+         then swapped to "all" once loaded, so first paint isn't held up
+         waiting on these — text renders immediately in a fallback font
+         (display=swap on the Google Fonts URL) and icons pop in shortly
+         after instead of blocking the whole page. ── -->
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap"
+      media="print" onload="this.media='all'" />
     <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
       integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-      crossorigin="anonymous" referrerpolicy="no-referrer" />
+      crossorigin="anonymous" referrerpolicy="no-referrer"
+      media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    </noscript>
 
     <!-- Theme is fixed to light app-wide; Landing page uses its own explicit dark hero styling. -->
     <script>

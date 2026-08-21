@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Outlet, useNavigate, Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
+import NotificationBell from "../components/NotificationBell";
 import { useAuth } from "../context/AuthContext";
 
 function Topbar({ onMenu }) {
@@ -23,27 +24,24 @@ function Topbar({ onMenu }) {
 
       <div className="flex-1 max-w-sm">
         <div className="relative">
-          <i className="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-xs dark:text-ink-600 text-ink-400" />
+          <i className="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-xs dark:text-ink-400 text-ink-400" />
           <input
             type="text"
             placeholder="Search teams, players…"
-            className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border outline-none transition-all dark:bg-white/[0.03] bg-ink-50 dark:border-white/[0.08] border-ink-200 dark:text-ink-200 text-ink-700 dark:placeholder:text-ink-600 placeholder:text-ink-400 focus:border-gold-500"
+            className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border outline-none transition-all dark:bg-white/[0.03] bg-ink-50 dark:border-white/[0.08] border-ink-200 dark:text-ink-200 text-ink-700 dark:placeholder:text-ink-400 placeholder:text-ink-400 focus:border-jade-500"
           />
         </div>
       </div>
 
       <div className="flex items-center gap-1.5 shrink-0">
-        <button className="relative h-9 w-9 rounded-lg flex items-center justify-center dark:text-ink-400 text-ink-500 dark:hover:bg-white/[0.05] hover:bg-ink-100 transition" title="Messages">
+        <button className="relative h-9 w-9 rounded-lg flex items-center justify-center dark:text-ink-400 text-ink-400 dark:hover:bg-white/[0.05] hover:bg-ink-100 transition" title="Messages">
           <i className="fa-regular fa-comment-dots text-sm" />
         </button>
-        <button className="relative h-9 w-9 rounded-lg flex items-center justify-center dark:text-ink-400 text-ink-500 dark:hover:bg-white/[0.05] hover:bg-ink-100 transition" title="Notifications">
-          <i className="fa-regular fa-bell text-sm" />
-          <span className="absolute top-1.5 right-1.5 h-1.5 w-1.5 rounded-full bg-flame-500" />
-        </button>
+        <NotificationBell />
 
         <div className="relative ml-2" ref={ref}>
           <button onClick={() => setMenuOpen(o => !o)} className="flex items-center gap-2 pl-2 pr-1 py-1 rounded-lg dark:hover:bg-white/[0.05] hover:bg-ink-100 transition">
-            <div className="h-8 w-8 rounded-full bg-gold-500/15 border border-gold-500/25 flex items-center justify-center text-gold-500 text-xs font-bold shrink-0">
+            <div className="h-8 w-8 rounded-full bg-jade-500/15 border border-jade-500/25 flex items-center justify-center text-jade-500 text-xs font-bold shrink-0">
               {(user?.name || "A").charAt(0).toUpperCase()}
             </div>
             <div className="text-left hidden lg:block">
@@ -56,11 +54,11 @@ function Topbar({ onMenu }) {
           {menuOpen && (
             <div className="absolute right-0 top-full mt-2 w-48 rounded-xl border dark:border-white/[0.08] border-ink-200 dark:bg-[#12160f] bg-white shadow-card-hover overflow-hidden animate-slide-down">
               <Link to="/admin/change-password" onClick={() => setMenuOpen(false)}
-                className="flex items-center gap-2.5 px-4 py-2.5 text-sm dark:text-ink-300 text-ink-600 dark:hover:bg-white/[0.05] hover:bg-ink-50 transition">
+                className="flex items-center gap-2.5 px-4 py-2.5 text-sm dark:text-ink-300 text-ink-400 dark:hover:bg-white/[0.05] hover:bg-ink-50 transition">
                 <i className="fa-solid fa-lock text-xs w-4" /> Change Password
               </Link>
               <Link to="/admin/settings" onClick={() => setMenuOpen(false)}
-                className="flex items-center gap-2.5 px-4 py-2.5 text-sm dark:text-ink-300 text-ink-600 dark:hover:bg-white/[0.05] hover:bg-ink-50 transition">
+                className="flex items-center gap-2.5 px-4 py-2.5 text-sm dark:text-ink-300 text-ink-400 dark:hover:bg-white/[0.05] hover:bg-ink-50 transition">
                 <i className="fa-solid fa-gear text-xs w-4" /> Settings
               </Link>
               <button
@@ -79,22 +77,23 @@ function Topbar({ onMenu }) {
 export default function AdminLayout() {
   const [open, setOpen] = useState(false);
   return (
-    // Admin panel renders on a white page background — only the Sidebar
-    // is deliberately dark (its own hardcoded navy styling).
-    <div className="flex min-h-screen bg-ink-50">
+    // Admin panel is a permanent dark (black + green) theme — the "dark"
+    // ancestor class activates every dark: utility already written
+    // throughout the admin pages.
+    <div className="dark flex min-h-screen bg-[#0a0d0a]">
       {open && <div className="fixed inset-0 z-20 bg-black/60 md:hidden" onClick={() => setOpen(false)} />}
       <div className={`fixed md:sticky md:top-0 md:h-screen z-30 transition-transform duration-200 ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
         <Sidebar onClose={() => setOpen(false)} />
       </div>
       <div className="flex-1 flex flex-col min-w-0">
-        <div className="md:hidden h-12 px-4 flex items-center justify-between bg-white border-b border-ink-200 sticky top-0 z-10">
+        <div className="md:hidden h-12 px-4 flex items-center justify-between bg-[#0a0d0a] border-b border-white/[0.08] sticky top-0 z-10">
           <div className="flex items-center gap-3">
-            <button onClick={() => setOpen(true)} className="p-1.5 rounded-lg hover:bg-ink-100 transition">
-              <div className="w-4 h-px bg-ink-600 mb-1.5" />
-              <div className="w-4 h-px bg-ink-600 mb-1.5" />
-              <div className="w-4 h-px bg-ink-600" />
+            <button onClick={() => setOpen(true)} className="p-1.5 rounded-lg hover:bg-white/[0.06] transition">
+              <div className="w-4 h-px bg-ink-400 mb-1.5" />
+              <div className="w-4 h-px bg-ink-400 mb-1.5" />
+              <div className="w-4 h-px bg-ink-400" />
             </button>
-            <span className="font-display text-sm font-semibold text-gold-600">BidArenaX</span>
+            <span className="font-display text-sm font-semibold text-jade-400">BidArenaX</span>
           </div>
         </div>
         <Topbar />

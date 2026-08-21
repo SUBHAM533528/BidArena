@@ -70,8 +70,8 @@ export default function TeamDetail() {
     <div>
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm mb-6">
-        <Link to={team.tournament ? `/admin/teams/tournament/${team.tournament}` : "/admin/teams"} className="dark:text-ink-500 text-ink-400 hover:text-gold-500 transition">Teams</Link>
-        <span className="dark:text-ink-700 text-ink-300">/</span>
+        <Link to={team.tournament ? `/admin/teams/tournament/${team.tournament}` : "/admin/teams"} className="dark:text-ink-500 text-ink-400 hover:text-jade-500 transition">Teams</Link>
+        <span className="dark:text-ink-700 text-ink-400">/</span>
         <span className="dark:text-ink-200 text-ink-700 font-medium">{team.name}</span>
       </div>
 
@@ -91,7 +91,7 @@ export default function TeamDetail() {
             {downloading ? "Generating…" : "⬇ Download Squad PDF"}
           </Button>
           <Link to={`/team/${teamId}`} target="_blank"
-            className="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm font-semibold border dark:border-white/[0.08] border-ink-300 dark:text-ink-300 text-ink-700 rounded-lg hover:border-gold-500 hover:text-gold-500 transition">
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm font-semibold border dark:border-white/[0.08] border-ink-300 dark:text-ink-300 text-ink-700 rounded-lg hover:border-jade-500 hover:text-jade-500 transition">
             🌐 Public Page ↗
           </Link>
         </div>
@@ -100,7 +100,7 @@ export default function TeamDetail() {
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
         {[
-          { label:"Players Bought",   value:team.squad?.length||0,                      accent:"border-l-gold-500"  },
+          { label:"Players Bought",   value:team.squad?.length||0,                      accent:"border-l-jade-500"  },
           { label:"Max Squad Size",   value:team.maxPlayers,                            accent:"border-l-ink-500"   },
           { label:"Total Spent",      value:`₹${spent.toLocaleString()}`,               accent:"border-l-flame-500" },
           { label:"Purse Remaining",  value:`₹${team.remainingPurse?.toLocaleString()}`,accent:"border-l-jade-500"  },
@@ -115,17 +115,17 @@ export default function TeamDetail() {
       {/* Purse bar */}
       <div className="dark:bg-white/[0.03] bg-white rounded-xl border dark:border-white/[0.08] border-ink-200 p-5 mb-6">
         <div className="flex justify-between text-sm mb-3">
-          <span className="dark:text-ink-400 text-ink-500 font-medium">Purse Utilisation</span>
-          <span className="font-mono dark:text-ink-300 text-ink-600">
+          <span className="dark:text-ink-400 text-ink-400 font-medium">Purse Utilisation</span>
+          <span className="font-mono dark:text-ink-300 text-ink-400">
             ₹{spent.toLocaleString()} spent of ₹{team.initialPurse?.toLocaleString()}
           </span>
         </div>
         <div className="h-3 dark:bg-white/[0.05] bg-ink-100 rounded-full overflow-hidden">
           <div className={`h-full rounded-full transition-all duration-700 ${
-            (100-pct) > 80 ? "bg-flame-500" : (100-pct) > 50 ? "bg-gold-500" : "bg-jade-500"
+            (100-pct) > 80 ? "bg-flame-500" : (100-pct) > 50 ? "bg-jade-500" : "bg-jade-500"
           }`} style={{ width: `${100 - pct}%` }} />
         </div>
-        <div className="flex justify-between text-2xs mt-2 dark:text-ink-600 text-ink-400">
+        <div className="flex justify-between text-2xs mt-2 dark:text-ink-400 text-ink-400">
           <span>{(100 - pct).toFixed(1)}% used</span>
           <span>{pct.toFixed(1)}% left</span>
         </div>
@@ -172,10 +172,10 @@ export default function TeamDetail() {
                               <span className="font-semibold dark:text-ink-100 text-ink-900">{p.fullName}</span>
                             </div>
                           </td>
-                          <td className="dark:text-ink-400 text-ink-500">{p.battingStyle || "—"}</td>
-                          <td className="dark:text-ink-400 text-ink-500">{p.bowlingStyle || "—"}</td>
-                          <td className="font-mono dark:text-ink-400 text-ink-500">₹{p.basePrice?.toLocaleString()}</td>
-                          <td className="font-mono font-bold text-gold-500">₹{p.soldPrice?.toLocaleString()}</td>
+                          <td className="dark:text-ink-400 text-ink-400">{p.battingStyle || "—"}</td>
+                          <td className="dark:text-ink-400 text-ink-400">{p.bowlingStyle || "—"}</td>
+                          <td className="font-mono dark:text-ink-400 text-ink-400">₹{p.basePrice?.toLocaleString()}</td>
+                          <td className="font-mono font-bold text-jade-500">₹{p.soldPrice?.toLocaleString()}</td>
                           <td className={`font-mono font-semibold ${profit >= 0 ? "text-jade-500" : "text-flame-500"}`}>
                             {profit >= 0 ? "+" : ""}₹{profit.toLocaleString()}
                           </td>
@@ -191,7 +191,7 @@ export default function TeamDetail() {
               {/* Total row */}
               <div className="px-4 py-3 border-t dark:border-white/[0.06] border-ink-100 flex justify-end gap-8 dark:bg-ink-900/40 bg-ink-50">
                 <span className="text-sm dark:text-ink-500 text-ink-400">Role total:</span>
-                <span className="font-mono font-bold text-gold-500">
+                <span className="font-mono font-bold text-jade-500">
                   ₹{players.reduce((s, p) => s + (p.soldPrice || 0), 0).toLocaleString()}
                 </span>
               </div>

@@ -51,7 +51,7 @@ export default function PlayerManagement() {
             const pool     = tPlayers.filter(p => p.auctionEligible).length;
             return (
               <Link key={t._id} to={`/admin/players/tournament/${t._id}`}
-                className="card p-6 hover:border-gold-500/40 hover:-translate-y-0.5 transition-all block">
+                className="card p-6 hover:border-jade-500/40 hover:-translate-y-0.5 transition-all block">
                 <div className="flex items-center gap-4 mb-5">
                   <div className="h-20 w-20 rounded-2xl dark:bg-white/[0.06] bg-ink-50 border dark:border-white/[0.1] border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
                     {t.logo ? <img src={t.logo} className="h-full w-full object-contain p-1.5" alt={t.name} /> : <i className="fa-solid fa-trophy text-2xl opacity-30" />}
@@ -71,7 +71,7 @@ export default function PlayerManagement() {
                     <p className="eyebrow mt-0.5">Registered</p>
                   </div>
                   <div>
-                    <p className="font-bold text-sm text-gold-600">{pending}</p>
+                    <p className="font-bold text-sm text-jade-600">{pending}</p>
                     <p className="eyebrow mt-0.5">Pending</p>
                   </div>
                   <div>
@@ -80,7 +80,7 @@ export default function PlayerManagement() {
                   </div>
                 </div>
 
-                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-gold-600 hover:text-gold-500 transition">
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-jade-600 hover:text-jade-500 transition">
                   Manage Players <i className="fa-solid fa-arrow-right text-2xs" />
                 </span>
               </Link>

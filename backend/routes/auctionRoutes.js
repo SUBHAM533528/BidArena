@@ -24,13 +24,23 @@ router.get("/state/:tournamentId", protect, ah(async (req, res) => {
 
 // Auction pool: approved + eligible + not yet sold/unsold
 router.get("/pool/:tournamentId", protect, ah(async (req, res) => {
+  const tournament = await Tournament.findById(req.params.tournamentId, "defaultBasePrice");
   const pool = await Player.find({
     tournament: req.params.tournamentId,
     status: "Approved",
     auctionEligible: true,
     auctionStatus: { $in: ["Not Started"] },
   });
-  res.json(pool);
+
+  // Self-heal players registered before basePrice existed on this model.
+  const withBasePrice = pool.map((p) => {
+    if (p.basePrice) return p;
+    const obj = p.toObject();
+    obj.basePrice = tournament?.defaultBasePrice || 0;
+    return obj;
+  });
+
+  res.json(withBasePrice);
 }));
 
 // ── Multi-auction control-center overview ──────────────────────────────

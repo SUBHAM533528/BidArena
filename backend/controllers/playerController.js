@@ -1,4 +1,6 @@
 const Player = require("../models/Player");
+const Tournament = require("../models/Tournament");
+const Notification = require("../models/Notification");
 const uploadToCloudinary = require("../utils/cloudinary");
 
 
@@ -9,13 +11,36 @@ exports.registerPlayer = async (req, res) => {
     if (req.files?.photo?.[0]) {
       photoUrl = await uploadToCloudinary(req.files.photo[0].buffer, "bidarena/photos");
     }
-    
+
+    // Base price isn't something a player sets for themselves — it comes
+    // from whatever the admin configured as this tournament's default
+    // player base price. Only fall back to it when the request didn't
+    // already supply one.
+    let basePrice = req.body.basePrice;
+    if (!basePrice) {
+      const tournament = await Tournament.findById(req.body.tournament);
+      basePrice = tournament?.defaultBasePrice || 0;
+    }
 
     const player = await Player.create({
       ...req.body,
       photo:   photoUrl,
+      basePrice,
 
     });
+
+    // Let the admin know a new player just registered — shows up as a
+    // bell notification with the player's name, tournament, and timestamp.
+    try {
+      await Notification.create({
+        type: "player_registered",
+        message: `${player.fullName} registered for the auction`,
+        tournament: player.tournament,
+        player: player._id,
+      });
+    } catch (notifyErr) {
+      console.error("Failed to create registration notification:", notifyErr.message);
+    }
 
     res.status(201).json(player);
   } catch (err) {
@@ -35,8 +60,20 @@ exports.getPlayers = async (req, res) => {
 
   const players = await Player.find(filter)
     .populate("soldTo", "name logo")
+    .populate("tournament", "defaultBasePrice")
     .sort({ createdAt: -1 });
-  res.json(players);
+
+  // Self-heal players registered before basePrice existed on this model —
+  // fall back to their tournament's configured default at read time
+  // instead of needing a one-off migration script.
+  const withBasePrice = players.map((p) => {
+    const obj = p.toObject();
+    if (!obj.basePrice) obj.basePrice = obj.tournament?.defaultBasePrice || 0;
+    obj.tournament = p.tournament?._id || p.tournament;
+    return obj;
+  });
+
+  res.json(withBasePrice);
 };
 
 exports.getPlayer = async (req, res) => {
@@ -67,6 +104,15 @@ exports.deletePlayer = async (req, res) => {
   const player = await Player.findByIdAndDelete(req.params.id);
   if (!player) return res.status(404).json({ message: "Player not found" });
   res.json({ message: "Player deleted" });
+};
+
+// Bulk delete — requires ?tournament=<id> so a stray call can never wipe
+// every player across every tournament by accident.
+exports.deleteAllPlayers = async (req, res) => {
+  const { tournament } = req.query;
+  if (!tournament) return res.status(400).json({ message: "tournament query param is required" });
+  const result = await Player.deleteMany({ tournament });
+  res.json({ message: `${result.deletedCount} player(s) deleted` });
 };
 
 exports.setStatus = async (req, res) => {

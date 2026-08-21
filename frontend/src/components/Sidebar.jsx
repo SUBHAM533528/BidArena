@@ -14,7 +14,7 @@ const NAV = [
   { to:"/admin/settings",     icon:"fa-solid fa-gear",              label:"Settings"       },
 ];
 
-/* Sidebar is always the dark navy brand rail — it does not depend on
+/* Sidebar is always the black brand rail — it does not depend on
    any ancestor "dark" class, so its colours are hardcoded (not dark:-
    prefixed) to guarantee readable light text on the dark fill. */
 export default function Sidebar({ onClose }) {
@@ -26,11 +26,11 @@ export default function Sidebar({ onClose }) {
       {/* Brand */}
       <div className="px-5 py-5 border-b border-white/[0.07] flex items-center justify-between shrink-0">
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center shrink-0 shadow-glow-gold p-1 overflow-hidden">
+          <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center shrink-0 shadow-glow-jade p-1 overflow-hidden">
             <img src="/logo.png" alt="BidArenaX" className="h-full w-full object-contain" />
           </div>
           <div className="min-w-0">
-            <span className="font-display text-lg font-bold text-gold-400 tracking-wide leading-none block truncate">BidArenaX</span>
+            <span className="font-display text-lg font-bold text-jade-400 tracking-wide leading-none block truncate">BidArenaX</span>
             <p className="text-[9px] text-ink-400 uppercase tracking-widest mt-1">Admin Panel</p>
           </div>
         </div>
@@ -55,7 +55,7 @@ export default function Sidebar({ onClose }) {
       {/* User footer */}
       <div className="px-3 py-4 border-t border-white/[0.07] shrink-0 space-y-0.5">
         <div className="flex items-center gap-2.5 px-3 py-2 mb-1 rounded-lg bg-white/[0.05]">
-          <div className="h-8 w-8 rounded-full bg-gold-500/20 border border-gold-500/30 flex items-center justify-center text-gold-400 text-xs font-bold shrink-0">
+          <div className="h-8 w-8 rounded-full bg-jade-500/20 border border-jade-500/30 flex items-center justify-center text-jade-400 text-xs font-bold shrink-0">
             {(user?.name || "A").charAt(0).toUpperCase()}
           </div>
           <div className="min-w-0">

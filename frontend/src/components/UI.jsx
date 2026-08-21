@@ -4,8 +4,8 @@ export function Card({ children, className = "" }) {
   return <div className={`card p-5 ${className}`}>{children}</div>;
 }
 
-export function Button({ children, variant="primary", size="md", className="", ...props }) {
-  const base = "inline-flex items-center justify-center gap-1.5 font-semibold rounded-lg transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed select-none";
+export function Button({ children, variant="primary", size="md", className="", loading=false, disabled=false, ...props }) {
+  const base = "inline-flex items-center justify-center gap-1.5 font-semibold rounded-lg transition-all duration-150 disabled:opacity-60 disabled:cursor-not-allowed select-none";
   const sizes = { xs:"px-2.5 py-1.5 text-2xs", sm:"px-3 py-2 text-xs", md:"px-4 py-2.5 text-sm", lg:"px-6 py-3 text-sm" };
   const variants = {
     primary:"bg-gold-500 hover:bg-gold-400 active:bg-gold-600 text-ink-950 shadow-sm hover:shadow-md",
@@ -14,8 +14,20 @@ export function Button({ children, variant="primary", size="md", className="", .
     danger:"bg-flame-600 hover:bg-flame-500 text-white shadow-sm",
     jade:"bg-jade-600 hover:bg-jade-500 text-white shadow-sm",
     soft:"bg-gold-500/10 hover:bg-gold-500/20 text-gold-500 border border-gold-500/20",
+    "soft-jade":"bg-jade-500/10 hover:bg-jade-500/20 text-jade-600 border border-jade-500/25",
+    sky:"bg-sky-600 hover:bg-sky-500 text-white shadow-sm",
   };
-  return <button className={`${base} ${sizes[size]} ${variants[variant]} ${className}`} {...props}>{children}</button>;
+  return (
+    <button
+      className={`${base} ${sizes[size]} ${variants[variant]} ${className}`}
+      disabled={disabled || loading}
+      aria-busy={loading}
+      {...props}
+    >
+      {loading && <i className="fa-solid fa-circle-notch animate-spin" />}
+      {children}
+    </button>
+  );
 }
 
 export function Input({ className="", ...props }) {

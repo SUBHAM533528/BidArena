@@ -39,6 +39,7 @@ const playerSchema = new mongoose.Schema(
       default: null,
     },
     soldPrice: { type: Number, default: 0 },
+    basePrice: { type: Number, default: 0 },
   },
   { timestamps: true },
 );

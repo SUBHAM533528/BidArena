@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import api from "../../api/axios";
 import { Input, Label, Button, Empty, Alert } from "../../components/UI";
+import ConfirmDialog from "../../components/ConfirmDialog";
+import useConfirm from "../../hooks/useConfirm";
 
 const empty = { name:"", ownerName:"", mobile:"", email:"", initialPurse:10000000, maxPlayers:18 };
 
@@ -15,6 +17,7 @@ export default function TeamsByTournament() {
   const [showForm, setShowForm]     = useState(false);
   const [error, setError]           = useState("");
   const [saving, setSaving]         = useState(false);
+  const confirmDialog = useConfirm();
 
   const loadTeams = () => api.get(`/teams?tournament=${tournamentId}`).then(r => setTeams(r.data))
     .catch(err => setError(err.response?.data?.message || "Failed to load teams"));
@@ -54,19 +57,33 @@ export default function TeamsByTournament() {
     setEditId(t._id); setShowForm(true);
   };
 
-  const remove = async id => {
-    if (!confirm("Delete this team?")) return;
-    try { await api.delete(`/teams/${id}`); loadTeams(); }
-    catch (err) { alert(err.response?.data?.message || "Delete failed"); }
+  const remove = (t) => {
+    confirmDialog.ask({
+      title: "Delete this team?",
+      message: `"${t.name}" and its squad assignments will be permanently removed. This can't be undone.`,
+      confirmLabel: "Delete Team",
+      danger: true,
+      onConfirm: async () => { await api.delete(`/teams/${t._id}`); loadTeams(); },
+    });
+  };
+
+  const removeAll = () => {
+    confirmDialog.ask({
+      title: `Delete all ${teams.length} teams?`,
+      message: `Every team registered under "${tournament?.name}" will be permanently removed, including squads. This can't be undone.`,
+      confirmLabel: "Delete All Teams",
+      danger: true,
+      onConfirm: async () => { await api.delete(`/teams?tournament=${tournamentId}`); loadTeams(); },
+    });
   };
 
   return (
     <div>
-      <Link to="/admin/teams" className="inline-flex items-center gap-1.5 text-xs font-semibold dark:text-ink-500 text-ink-400 hover:text-gold-600 transition mb-4">
+      <Link to="/admin/teams" className="inline-flex items-center gap-1.5 text-xs font-semibold dark:text-ink-500 text-ink-400 hover:text-jade-600 transition mb-4">
         <i className="fa-solid fa-arrow-left text-2xs" /> All Tournaments
       </Link>
 
-      <div className="flex items-start justify-between mb-8 gap-4">
+      <div className="flex items-start justify-between mb-8 gap-4 flex-wrap">
         <div className="flex items-center gap-3 min-w-0">
           {tournament?.logo && (
             <div className="h-11 w-11 rounded-xl dark:bg-white/[0.08] bg-ink-100 border dark:border-white/[0.1] border-ink-200 overflow-hidden flex items-center justify-center shrink-0">
@@ -80,9 +97,16 @@ export default function TeamsByTournament() {
             </h1>
           </div>
         </div>
-        <Button className="shrink-0" onClick={() => { setShowForm(!showForm); setEditId(null); setForm({ ...empty, initialPurse: tournament?.defaultTeamPurse || 10000000 }); }}>
-          {showForm ? "Cancel" : "+ Add Team"}
-        </Button>
+        <div className="flex gap-2 shrink-0">
+          {teams.length > 0 && (
+            <Button variant="danger" onClick={removeAll}>
+              <i className="fa-solid fa-trash-can" /> Delete All
+            </Button>
+          )}
+          <Button variant="jade" onClick={() => { setShowForm(!showForm); setEditId(null); setForm({ ...empty, initialPurse: tournament?.defaultTeamPurse || 10000000 }); }}>
+            {showForm ? "Cancel" : "+ Add Team"}
+          </Button>
+        </div>
       </div>
 
       {error && <div className="mb-6"><Alert type="error">{error}</Alert></div>}
@@ -102,7 +126,7 @@ export default function TeamsByTournament() {
             <div><Label>Initial Purse (₹)</Label><Input type="number" min="0" required value={form.initialPurse} onChange={e=>setForm({...form,initialPurse:e.target.value})}/></div>
             <div><Label>Max Players</Label><Input type="number" min="1" required value={form.maxPlayers} onChange={e=>setForm({...form,maxPlayers:e.target.value})}/></div>
             <div className="sm:col-span-2 pt-2">
-              <Button type="submit" disabled={saving}>{saving ? "Saving…" : (editId ? "Update Team" : "Add Team")}</Button>
+              <Button type="submit" variant="jade" loading={saving}>{editId ? "Update Team" : "Add Team"}</Button>
             </div>
           </form>
         </div>
@@ -138,7 +162,7 @@ export default function TeamsByTournament() {
                   <div className="purse-track">
                     <div className={`h-full rounded-full ${pct < 25 ? "bg-flame-500" : "bg-jade-500"}`} style={{ width: `${pct}%` }} />
                   </div>
-                  <div className="flex justify-between text-xs dark:text-ink-600 text-ink-400">
+                  <div className="flex justify-between text-xs dark:text-ink-400 text-ink-400">
                     <span>Squad: {t.squad?.length || 0}/{t.maxPlayers}</span>
                     <span>Spent: ₹{spent.toLocaleString()}</span>
                   </div>
@@ -146,17 +170,21 @@ export default function TeamsByTournament() {
 
                 <div className="flex gap-2 flex-wrap">
                   <Link to={`/admin/teams/${t._id}`}
-                    className="flex-1 py-2 text-xs font-semibold text-center rounded-lg dark:bg-white/[0.08] bg-ink-100 dark:text-ink-300 text-ink-600 hover:bg-gold-500/10 hover:text-gold-500 border dark:border-white/[0.1] border-ink-200 transition">
+                    className="flex-1 py-2 text-xs font-semibold text-center rounded-lg dark:bg-white/[0.08] bg-ink-100 dark:text-ink-300 text-ink-400 hover:bg-jade-500/10 hover:text-jade-500 border dark:border-white/[0.1] border-ink-200 transition">
                     👥 View Squad
                   </Link>
-                  <Button variant="ghost" size="sm" onClick={() => edit(t)}>Edit</Button>
-                  <Button variant="danger" size="sm" onClick={() => remove(t._id)}>Delete</Button>
+                  <Button variant="sky" size="sm" onClick={() => edit(t)}>
+                    <i className="fa-solid fa-pen text-flame-400" /> Edit
+                  </Button>
+                  <Button variant="danger" size="sm" onClick={() => remove(t)}>Delete</Button>
                 </div>
               </div>
             );
           })}
         </div>
       )}
+
+      <ConfirmDialog {...confirmDialog.props} />
     </div>
   );
 }
