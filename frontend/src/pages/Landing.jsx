@@ -296,11 +296,7 @@ export default function Landing() {
         </h2>
         <div className="grid md:grid-cols-2 gap-5">
           {(() => {
-            const links = [
-              "/owner/register",
-              "/player-registration",
-              t ? `/watch/${t._id}` : "/player-registration",
-            ];
+           
             return (
               <>
                 <img

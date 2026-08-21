@@ -152,10 +152,6 @@ export default function PlayerRegistration() {
             <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
               style={{ backgroundImage: "radial-gradient(circle at 30% 20%, #22c55e 0%, transparent 60%)" }} />
 
-            {tournament?.logo && (
-              <img src={tournament.logo} alt={tournament.name} className="h-10 w-10 rounded-lg object-contain bg-white/90 p-1 mb-4 relative z-10" />
-            )}
-
             <button
               type="button"
               onClick={() => photoInputRef.current?.click()}
