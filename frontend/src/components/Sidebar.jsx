@@ -30,7 +30,9 @@ export default function Sidebar({ onClose }) {
             <img src="/logo.png" alt="BidArenaX" className="h-full w-full object-contain" />
           </div>
           <div className="min-w-0">
-            <span className="font-display text-lg font-bold text-jade-400 tracking-wide leading-none block truncate">BidArenaX</span>
+             <span className="font-editorial text-xl font-bold tracking-wide text-green-400">
+              BidArena<span className="text-white">X</span>
+            </span>
             <p className="text-[9px] text-ink-400 uppercase tracking-widest mt-1">Admin Panel</p>
           </div>
         </div>

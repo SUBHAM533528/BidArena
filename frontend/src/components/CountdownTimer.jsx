@@ -13,10 +13,10 @@ export default function CountdownTimer({ target, dark = false }) {
     <div className="flex gap-2">
       {[["Days", left.d], ["Hrs", left.h], ["Min", left.m], ["Sec", left.s]].map(([l, v]) => (
         <div key={l} className={dark
-          ? "bg-black/40 rounded-lg border border-gold-500/20 px-3.5 py-2.5 text-center min-w-[56px] backdrop-blur-sm"
+          ? "bg-black/ rounded-lg border border-green-600/20 px-3.5 py-2.5 text-center min-w-[56px] backdrop-blur-sm"
           : "bg-white rounded-lg border border-ink-200 px-3 py-2 text-center min-w-[52px]"
         }>
-          <p className={`font-mono font-bold leading-none ${dark ? "text-xl text-red-600" : "text-lg text-red-500"}`}>{String(v).padStart(2,"0")}</p>
+          <p className={`font-mono font-bold leading-none ${dark ? "text-xl text-red-700" : "text-lg text-green-500"}`}>{String(v).padStart(2,"0")}</p>
           <p className={`text-2xs mt-1 uppercase tracking-widest ${dark ? "text-ink-400" : "text-ink-400"}`}>{l}</p>
         </div>
       ))}

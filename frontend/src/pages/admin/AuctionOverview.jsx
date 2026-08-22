@@ -37,7 +37,7 @@ export default function AuctionOverview() {
 
   return (
     <div>
-      <div className="flex items-start justify-between mb-8">
+      <div className="flex items-start justify-between mb-8 gap-3 flex-wrap">
         <div>
           <p className="eyebrow mb-1.5">Control Center</p>
           <h1 className="font-display text-3xl font-bold dark:text-white text-ink-900">Live Auctions</h1>

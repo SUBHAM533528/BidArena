@@ -20,14 +20,14 @@ function GlowCard({ icon, label, value, sub, tone = "gold" }) {
     dark:  "dark:bg-[#12160f] bg-ink-900 text-white border dark:border-white/[0.08] border-white/[0.08]",
   };
   return (
-    <div className={`rounded-2xl p-4 flex flex-col justify-between min-h-[92px] shadow-card-hover ${tones[tone]}`}>
-      <div className="flex items-start justify-between gap-2">
-        <span className="text-[10px] font-semibold uppercase tracking-widest opacity-80">{label}</span>
-        {icon && <i className={`${icon} text-sm opacity-70`} />}
+    <div className={`rounded-2xl p-4 flex flex-col justify-between min-h-[92px] min-w-0 shadow-card-hover ${tones[tone]}`}>
+      <div className="flex items-start justify-between gap-2 min-w-0">
+        <span className="text-[10px] font-semibold uppercase tracking-widest opacity-80 truncate">{label}</span>
+        {icon && <i className={`${icon} text-sm opacity-70 shrink-0`} />}
       </div>
-      <div>
-        <p className="font-display text-2xl font-bold leading-none mt-2">{value}</p>
-        {sub && <p className="text-[11px] opacity-75 mt-1">{sub}</p>}
+      <div className="min-w-0">
+        <p className="font-display text-2xl font-bold leading-none mt-2 truncate">{value}</p>
+        {sub && <p className="text-[11px] opacity-75 mt-1 truncate">{sub}</p>}
       </div>
     </div>
   );
@@ -96,13 +96,13 @@ export default function Dashboard() {
 
   return (
     <div>
-      <div className="flex items-start justify-between mb-6">
-        <div>
+      <div className="flex items-start justify-between gap-3 mb-6 flex-wrap">
+        <div className="min-w-0">
           <p className="eyebrow mb-1.5">Overview</p>
           <h1 className="font-editorial text-3xl font-bold dark:text-white text-ink-900">Dashboard</h1>
         </div>
         {tournaments.length > 0 && (
-          <Select value={tid} onChange={e => setTid(e.target.value)} className="w-auto text-xs">
+          <Select value={tid} onChange={e => setTid(e.target.value)} className="!w-auto max-w-full text-xs shrink-0">
             {tournaments.map(t => <option key={t._id} value={t._id}>{t.name}</option>)}
           </Select>
         )}
@@ -110,12 +110,12 @@ export default function Dashboard() {
 
       {/* ── Stat cards row ── */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
-        <div className="col-span-2 sm:col-span-1 rounded-2xl p-4 flex flex-col justify-between min-h-[92px] bg-gradient-to-br from-ink-900 to-[#161c17] border border-jade-500/25 text-white shadow-card-hover">
-          <div className="flex items-start justify-between gap-2">
-            <span className="text-[10px] font-semibold uppercase tracking-widest text-jade-400">{t?.name || "Tournament"}</span>
-            <i className="fa-solid fa-trophy text-sm text-jade-400 opacity-80" />
+        <div className="col-span-2 sm:col-span-1 rounded-2xl p-4 flex flex-col justify-between min-h-[92px] min-w-0 bg-gradient-to-br from-ink-900 to-[#161c17] border border-jade-500/25 text-white shadow-card-hover">
+          <div className="flex items-start justify-between gap-2 min-w-0">
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-jade-400 truncate">{t?.name || "Tournament"}</span>
+            <i className="fa-solid fa-trophy text-sm text-jade-400 opacity-80 shrink-0" />
           </div>
-          <div>
+          <div className="min-w-0">
             <p className="font-display text-lg font-bold leading-none mt-2 truncate">{t?.name || "—"}</p>
             <span className={`inline-flex items-center gap-1.5 mt-1.5 text-[10px] font-semibold uppercase tracking-wide ${t?.isActive ? "text-jade-400" : "text-ink-400"}`}>
               <span className={`w-1.5 h-1.5 rounded-full ${t?.isActive ? "bg-jade-400 animate-pulse" : "bg-ink-500"}`} />
@@ -134,11 +134,11 @@ export default function Dashboard() {
           sub={highestSold ? `${highestSold.fullName} · ${highestSold.soldTo?.name || ""}` : undefined} />
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-4">
+      <div className="grid lg:grid-cols-3 gap-4 min-w-0">
         {/* Left: charts */}
-        <div className="lg:col-span-2 space-y-4">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="card p-5 border-l-4 border-l-jade-600">
+        <div className="lg:col-span-2 space-y-4 min-w-0">
+          <div className="grid md:grid-cols-2 gap-4 min-w-0">
+            <div className="card p-5 border-l-4 border-l-jade-600 min-w-0">
               <p className="eyebrow mb-5">Team Spending</p>
               {spendData.every(d => d.spent === 0)
                 ? <Empty icon="fa-solid fa-sack-dollar" title="No bids placed yet" />
@@ -154,7 +154,7 @@ export default function Dashboard() {
                   </ResponsiveContainer>
                 )}
             </div>
-            <div className="card p-5 border-l-4 border-l-jade-500">
+            <div className="card p-5 border-l-4 border-l-jade-500 min-w-0">
               <p className="eyebrow mb-5">Sold by Role</p>
               {roleData.length === 0
                 ? <Empty icon="fa-solid fa-bullseye" title="No players sold yet" />
@@ -189,7 +189,7 @@ export default function Dashboard() {
         </div>
 
         {/* Right: Player Queue + Recent Sold */}
-        <div className="space-y-4">
+        <div className="space-y-4 min-w-0">
           <div className="card p-5 border-l-4 border-l-sky-500">
             <div className="flex items-center justify-between mb-4">
               <p className="eyebrow">Player Queue</p>
