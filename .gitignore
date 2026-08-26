@@ -7,6 +7,11 @@ node_modules/
 .env.local
 .env.production
 .env.development
+README.md
+pakage.json
+package-lock.json
+start.bat
+TODO.md
 
 dist/
 build/

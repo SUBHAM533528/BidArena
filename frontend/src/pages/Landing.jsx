@@ -193,7 +193,7 @@ export default function Landing() {
             >
               Player Registration
             </Link>
-            ur Team
+            
             {t && (
               <Link
                 to={`/watch/${t._id}`}
