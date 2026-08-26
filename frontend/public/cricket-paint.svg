@@ -1,0 +1,70 @@
+<svg width="1200" height="1400" viewBox="0 0 1200 1400" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- PAINT BALL 1 (gold) top-left -->
+  <g transform="translate(190 150)">
+    <circle cx="0" cy="0" r="66" fill="#f59e0b" opacity="0.85"/>
+    <circle cx="52" cy="-40" r="16" fill="#f59e0b" opacity="0.7"/>
+    <circle cx="-58" cy="34" r="12" fill="#f59e0b" opacity="0.6"/>
+    <circle cx="70" cy="24" r="9" fill="#f59e0b" opacity="0.55"/>
+    <circle cx="-30" cy="-64" r="8" fill="#f59e0b" opacity="0.5"/>
+    <circle cx="90" cy="-4" r="6" fill="#f59e0b" opacity="0.45"/>
+    <path d="M-40 -30 Q0 -8 40 -30" stroke="#1a1206" stroke-width="4" fill="none" opacity="0.5"/>
+    <path d="M-40 30 Q0 8 40 30" stroke="#1a1206" stroke-width="4" fill="none" opacity="0.5"/>
+  </g>
+
+  <!-- PAINT BAT (jade) right side -->
+  <g transform="translate(1010 340) rotate(18)">
+    <path d="M-30 -160 C -50 -150 -52 -70 -46 10 C -60 40 -60 90 -30 120 C 0 145 34 130 40 95 C 46 60 42 20 34 -20 C 44 -80 40 -140 20 -158 C 5 -170 -14 -170 -30 -160 Z"
+          fill="#22c55e" opacity="0.8"/>
+    <circle cx="42" cy="-6" r="14" fill="#22c55e" opacity="0.55"/>
+    <circle cx="-58" cy="60" r="10" fill="#22c55e" opacity="0.5"/>
+    <circle cx="50" cy="70" r="8" fill="#22c55e" opacity="0.45"/>
+    <circle cx="-10" cy="150" r="7" fill="#22c55e" opacity="0.4"/>
+    <circle cx="30" cy="170" r="5" fill="#22c55e" opacity="0.35"/>
+  </g>
+
+  <!-- WICKET / STUMPS (gold) lower-left -->
+  <g transform="translate(230 990)">
+    <rect x="-58" y="-120" width="22" height="180" rx="10" fill="#f59e0b" opacity="0.8"/>
+    <rect x="-11" y="-132" width="22" height="192" rx="10" fill="#f59e0b" opacity="0.82"/>
+    <rect x="36" y="-120" width="22" height="180" rx="10" fill="#f59e0b" opacity="0.8"/>
+    <rect x="-64" y="-146" width="46" height="14" rx="6" fill="#f59e0b" opacity="0.65"/>
+    <rect x="18" y="-146" width="46" height="14" rx="6" fill="#f59e0b" opacity="0.65"/>
+    <circle cx="-50" cy="72" r="10" fill="#f59e0b" opacity="0.45"/>
+    <circle cx="10" cy="90" r="8" fill="#f59e0b" opacity="0.4"/>
+    <circle cx="52" cy="66" r="7" fill="#f59e0b" opacity="0.4"/>
+    <circle cx="70" cy="-40" r="9" fill="#f59e0b" opacity="0.4"/>
+    <circle cx="-78" cy="-60" r="7" fill="#f59e0b" opacity="0.35"/>
+  </g>
+
+  <!-- PAINT BALL 2 (jade) lower-right -->
+  <g transform="translate(1010 1180)">
+    <circle cx="0" cy="0" r="54" fill="#22c55e" opacity="0.8"/>
+    <circle cx="-44" cy="-30" r="13" fill="#22c55e" opacity="0.6"/>
+    <circle cx="48" cy="20" r="10" fill="#22c55e" opacity="0.5"/>
+    <circle cx="-16" cy="52" r="8" fill="#22c55e" opacity="0.45"/>
+    <circle cx="60" cy="-24" r="6" fill="#22c55e" opacity="0.4"/>
+    <path d="M-32 -22 Q0 -6 32 -22" stroke="#04180f" stroke-width="3.5" fill="none" opacity="0.5"/>
+    <path d="M-32 22 Q0 6 32 22" stroke="#04180f" stroke-width="3.5" fill="none" opacity="0.5"/>
+  </g>
+
+  <!-- PAINT BAT 2 (gold) bottom-left smaller mirrored -->
+  <g transform="translate(150 1290) rotate(-24) scale(0.65)">
+    <path d="M-30 -160 C -50 -150 -52 -70 -46 10 C -60 40 -60 90 -30 120 C 0 145 34 130 40 95 C 46 60 42 20 34 -20 C 44 -80 40 -140 20 -158 C 5 -170 -14 -170 -30 -160 Z"
+          fill="#f59e0b" opacity="0.75"/>
+    <circle cx="42" cy="-6" r="14" fill="#f59e0b" opacity="0.5"/>
+    <circle cx="-58" cy="60" r="10" fill="#f59e0b" opacity="0.45"/>
+  </g>
+
+  <!-- WICKET 2 (jade) top-right smaller -->
+  <g transform="translate(980 60) scale(0.55)">
+    <rect x="-58" y="-120" width="22" height="180" rx="10" fill="#22c55e" opacity="0.75"/>
+    <rect x="-11" y="-132" width="22" height="192" rx="10" fill="#22c55e" opacity="0.78"/>
+    <rect x="36" y="-120" width="22" height="180" rx="10" fill="#22c55e" opacity="0.75"/>
+    <rect x="-64" y="-146" width="46" height="14" rx="6" fill="#22c55e" opacity="0.6"/>
+    <rect x="18" y="-146" width="46" height="14" rx="6" fill="#22c55e" opacity="0.6"/>
+    <circle cx="-50" cy="72" r="10" fill="#22c55e" opacity="0.4"/>
+    <circle cx="52" cy="66" r="7" fill="#22c55e" opacity="0.35"/>
+  </g>
+
+</svg>

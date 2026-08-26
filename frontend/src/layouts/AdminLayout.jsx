@@ -53,10 +53,6 @@ function Topbar({ onMenu }) {
 
           {menuOpen && (
             <div className="absolute right-0 top-full mt-2 w-48 rounded-xl border dark:border-white/[0.08] border-ink-200 dark:bg-[#12160f] bg-white shadow-card-hover overflow-hidden animate-slide-down">
-              <Link to="/admin/change-password" onClick={() => setMenuOpen(false)}
-                className="flex items-center gap-2.5 px-4 py-2.5 text-sm dark:text-ink-300 text-ink-400 dark:hover:bg-white/[0.05] hover:bg-ink-50 transition">
-                <i className="fa-solid fa-lock text-xs w-4" /> Change Password
-              </Link>
               <Link to="/admin/settings" onClick={() => setMenuOpen(false)}
                 className="flex items-center gap-2.5 px-4 py-2.5 text-sm dark:text-ink-300 text-ink-400 dark:hover:bg-white/[0.05] hover:bg-ink-50 transition">
                 <i className="fa-solid fa-gear text-xs w-4" /> Settings
@@ -82,10 +78,10 @@ export default function AdminLayout() {
     // throughout the admin pages.
     <div className="dark flex min-h-screen bg-[#0a0d0a]">
       {open && <div className="fixed inset-0 z-20 bg-black/60 md:hidden" onClick={() => setOpen(false)} />}
-      <div className={`fixed md:sticky md:top-0 md:h-screen z-30 transition-transform duration-200 ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
+      <div className={`fixed top-0 left-0 h-screen z-30 transition-transform duration-200 ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
         <Sidebar onClose={() => setOpen(false)} />
       </div>
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 md:ml-64">
         <div className="md:hidden h-12 px-4 flex items-center justify-between bg-[#0a0d0a] border-b border-white/[0.08] sticky top-0 z-10">
           <div className="flex items-center gap-3">
             <button onClick={() => setOpen(true)} className="p-1.5 rounded-lg hover:bg-white/[0.06] transition">

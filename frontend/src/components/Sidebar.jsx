@@ -22,17 +22,15 @@ export default function Sidebar({ onClose }) {
   const navigate = useNavigate();
 
   return (
-    <aside className="sidebar w-64 h-screen flex flex-col border-r">
+    <aside className="sidebar w-64 h-screen flex flex-col border-r ">
       {/* Brand */}
       <div className="px-5 py-5 border-b border-white/[0.07] flex items-center justify-between shrink-0">
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center shrink-0 shadow-glow-jade p-1 overflow-hidden">
+          <div className="h-12 w-12 flex items-center justify-center shrink-0">
             <img src="/logo.png" alt="BidArenaX" className="h-full w-full object-contain" />
           </div>
           <div className="min-w-0">
-             <span className="font-editorial text-xl font-bold tracking-wide text-green-400">
-              BidArena<span className="text-white">X</span>
-            </span>
+            <span className="font-display text-lg font-bold text-jade-400 tracking-wide leading-none block truncate">BidArenaX</span>
             <p className="text-[9px] text-ink-400 uppercase tracking-widest mt-1">Admin Panel</p>
           </div>
         </div>
@@ -65,11 +63,6 @@ export default function Sidebar({ onClose }) {
             <p className="text-2xs text-ink-400 truncate">{user?.email}</p>
           </div>
         </div>
-        <NavLink to="/admin/change-password" onClick={onClose}
-          className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
-          <span className="w-5 text-center"><i className="fa-solid fa-lock text-[15px]" /></span>
-          <span>Change Password</span>
-        </NavLink>
         <button
           onClick={async () => { await logout(); navigate("/admin/login"); }}
           className="nav-link w-full text-left text-flame-400 hover:text-flame-300 hover:bg-flame-500/10">

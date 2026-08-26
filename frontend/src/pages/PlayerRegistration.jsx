@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
-import { Input, Label, Select, Button } from "../components/UI";
+import { Input, Label, Button } from "../components/UI";
+import SelectField from "../components/SelectField";
 import StadiumBg from "../components/StadiumBg";
 import SEO from "../components/SEO";
 
@@ -80,9 +81,21 @@ export default function PlayerRegistration() {
     if (t?.defaultBasePrice) setForm((f) => ({ ...f, basePrice: t.defaultBasePrice.toString() }));
   };
 
+  const ROLE_OPTIONS = ["Batsman", "Bowler", "All-Rounder", "Wicket Keeper"];
+
   const submit = async (e) => {
     e.preventDefault();
     setError("");
+
+    if (roleConf.hasBatting && !form.battingStyle) {
+      setError("Please select your batting style.");
+      return;
+    }
+    if (roleConf.hasBowling && !form.bowlingStyle) {
+      setError("Please select your bowling style.");
+      return;
+    }
+
     setLoading(true);
     try {
       const fd = new FormData();
@@ -140,9 +153,9 @@ export default function PlayerRegistration() {
           type="button"
           onClick={() => navigate("/")}
           aria-label="Close registration form"
-          className="absolute -top-2 -right-2 sm:top-3 sm:right-3 z-20 h-9 w-9 rounded-full flex items-center justify-center bg-white/[0.06] border border-white/[0.1] text-ink-400 hover:text-flame-400 hover:bg-flame-500/10 hover:border-flame-500/30 transition"
-        >
-          <i className="fa-solid fa-xmark text-lg" />
+          className="absolute -top-2 -right-2 sm:top-3 sm:right-3 z-20 h-9 w-9 rounded-full flex items-center justify-center  text-ink-400 hover:text-flame-400 hover:bg-flame-500/10 hover:border-flame-500/30 transition"
+        > 
+          <i className="fa-solid fa-xmark text-sm" />
         </button>
 
         <div className="rounded-3xl overflow-hidden border border-white/[0.08] shadow-[0_20px_60px_rgba(0,0,0,0.5)] grid md:grid-cols-[300px_1fr]">
@@ -152,9 +165,7 @@ export default function PlayerRegistration() {
             <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
               style={{ backgroundImage: "radial-gradient(circle at 30% 20%, #22c55e 0%, transparent 60%)" }} />
 
-            {tournament?.logo && (
-              <img src={tournament.logo} alt={tournament.name} className="h-10 w-10 rounded-lg object-contain bg-white/90 p-1 mb-4 relative z-10" />
-            )}
+            
 
             <button
               type="button"
@@ -185,7 +196,7 @@ export default function PlayerRegistration() {
               </button>
             )}
 
-            <p className="relative z-10 text-2xs text-ink-500 leading-relaxed max-w-[180px] mt-2">
+            <p className="relative z-10 text-xl text-left text-ink-500 leading-relaxed max-w-[180px] mt-2">
               A clear, front-facing photo helps team owners recognize you during the live auction.
             </p>
 
@@ -205,9 +216,14 @@ export default function PlayerRegistration() {
                 <p className="text-jade-400 text-sm mt-1">{tournament?.name}</p>
               </div>
               {tournaments.length > 1 && (
-                <Select value={tournamentId} onChange={(e) => handleTournamentChange(e.target.value)} className="w-44 shrink-0">
-                  {tournaments.map((t) => <option key={t._id} value={t._id}>{t.name}</option>)}
-                </Select>
+                <div className="w-44 mt-5 shrink-0">
+                  <SelectField
+                    options={tournaments.map((t) => ({ value: t._id, label: t.name }))}
+                    value={tournamentId}
+                    onChange={handleTournamentChange}
+                    isSearchable={false}
+                  />
+                </div>
               )}
             </div>
 
@@ -236,26 +252,25 @@ export default function PlayerRegistration() {
 
               <div>
                 <Label>Playing Role *</Label>
-                <Select value={form.role} onChange={(e) => handleRoleChange(e.target.value)}>
-                  <option>Batsman</option>
-                  <option>Bowler</option>
-                  <option>All-Rounder</option>
-                  <option>Wicket Keeper</option>
-                </Select>
+                <SelectField
+                  options={ROLE_OPTIONS}
+                  value={form.role}
+                  onChange={handleRoleChange}
+                  isSearchable={false}
+                />
               </div>
 
               {/* Batting style — shown for Batsman, All-Rounder, WK */}
               {roleConf.hasBatting && (
                 <div>
                   <Label>Batting Style *</Label>
-                  <Select
+                  <SelectField
+                    options={BATTING_STYLES}
                     value={form.battingStyle}
-                    onChange={(e) => setForm({ ...form, battingStyle: e.target.value })}
-                    required
-                  >
-                    <option value="">Select batting style</option>
-                    {BATTING_STYLES.map((s) => <option key={s}>{s}</option>)}
-                  </Select>
+                    onChange={(v) => setForm({ ...form, battingStyle: v })}
+                    placeholder="Select batting style"
+                    isSearchable={false}
+                  />
                 </div>
               )}
 
@@ -263,14 +278,12 @@ export default function PlayerRegistration() {
               {roleConf.hasBowling && (
                 <div>
                   <Label>Bowling Style *</Label>
-                  <Select
+                  <SelectField
+                    options={BOWLING_STYLES}
                     value={form.bowlingStyle}
-                    onChange={(e) => setForm({ ...form, bowlingStyle: e.target.value })}
-                    required
-                  >
-                    <option value="">Select bowling style</option>
-                    {BOWLING_STYLES.map((s) => <option key={s}>{s}</option>)}
-                  </Select>
+                    onChange={(v) => setForm({ ...form, bowlingStyle: v })}
+                    placeholder="Select bowling style"
+                  />
                 </div>
               )}
 
@@ -281,15 +294,7 @@ export default function PlayerRegistration() {
                 </div>
               )}
 
-              {/* ── Documents ── */}
-              <div className="sm:col-span-2 mt-2">
-                <p className="text-xs uppercase tracking-widest text-jade-500 font-semibold mb-3 border-b border-white/[0.08] pb-1.5">Documents</p>
-              </div>
-              <div className="sm:col-span-2">
-                <Label>ID Proof (optional)</Label>
-                <Input type="file" accept="image/*,.pdf" onChange={(e) => setIdProof(e.target.files[0])} />
-                <p className="text-2xs text-ink-500 mt-1.5">Your profile photo is uploaded on the left.</p>
-              </div>
+             
 
               {error && <p className="text-flame-400 text-sm sm:col-span-2">{error}</p>}
 
