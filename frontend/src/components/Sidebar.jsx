@@ -11,6 +11,10 @@ const NAV = [
   { to:"/admin/sold",         icon:"fa-solid fa-circle-check",      label:"Sold Players"   },
   { to:"/admin/unsold",       icon:"fa-solid fa-circle-xmark",      label:"Unsold Players" },
   { to:"/admin/reports",      icon:"fa-solid fa-file-lines",        label:"Reports"        },
+  { to:"/admin/gallery",      icon:"fa-solid fa-images",            label:"Gallery"        },
+  { to:"/admin/faqs",         icon:"fa-solid fa-circle-question",   label:"FAQs"           },
+  { to:"/admin/contact-messages", icon:"fa-solid fa-envelope",      label:"Contact Messages" },
+  { to:"/admin/terms",        icon:"fa-solid fa-file-contract",     label:"Terms & Conditions" },
   { to:"/admin/settings",     icon:"fa-solid fa-gear",              label:"Settings"       },
 ];
 
@@ -26,11 +30,11 @@ export default function Sidebar({ onClose }) {
       {/* Brand */}
       <div className="px-5 py-5 border-b border-white/[0.07] flex items-center justify-between shrink-0">
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="h-12 w-12 flex items-center justify-center shrink-0">
-            <img src="/logo.png" alt="BidArenaX" className="h-full w-full object-contain" />
+          <div className="h-20 w-20 flex items-center justify-center shrink-0">
+            <img src="/logo2.png" alt="BidArenaX" className="h-full w-full object-contain" />
           </div>
           <div className="min-w-0">
-            <span className="font-display text-lg font-bold text-jade-400 tracking-wide leading-none block truncate">BidArenaX</span>
+            <span className="font-display text-lg font-bold text-jade-400 tracking-wide leading-none block truncate">Welcome to ...</span>
             <p className="text-[9px] text-ink-400 uppercase tracking-widest mt-1">Admin Panel</p>
           </div>
         </div>

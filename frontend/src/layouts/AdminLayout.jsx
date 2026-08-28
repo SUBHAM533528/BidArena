@@ -19,7 +19,7 @@ function Topbar({ onMenu }) {
   return (
     <div className="hidden md:flex h-16 px-6 items-center justify-between gap-4 dark:bg-white/[0.02] bg-white border-b dark:border-white/[0.06] border-ink-200 sticky top-0 z-10 backdrop-blur-xl">
       <div className="min-w-0">
-        <h1 className="font-display text-base font-semibold dark:text-white text-ink-900 leading-tight">Auction Admin Panel</h1>
+        <h1 className="font-display text-base font-semibold dark:text-white text-ink-900 leading-tight">Admin Panel</h1>
       </div>
 
       <div className="flex-1 max-w-sm">
@@ -93,7 +93,7 @@ export default function AdminLayout() {
           </div>
         </div>
         <Topbar />
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 animate-fade-up">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 animate-fade-in">
           <Outlet />
         </main>
       </div>

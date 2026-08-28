@@ -52,7 +52,8 @@ export default function NotificationBell() {
       } catch {}
     }
     setOpen(false);
-    if (n.tournament?._id) navigate(`/admin/players/tournament/${n.tournament._id}`);
+    if (n.type === "contact_message") navigate("/admin/contact-messages");
+    else if (n.tournament?._id) navigate(`/admin/players/tournament/${n.tournament._id}`);
   };
 
   return (
@@ -93,8 +94,14 @@ export default function NotificationBell() {
                   onClick={() => openItem(n)}
                   className={`w-full text-left px-4 py-3 border-b dark:border-white/[0.05] border-ink-50 dark:hover:bg-white/[0.04] hover:bg-ink-50 transition flex gap-3 ${!n.read ? "dark:bg-jade-500/[0.06] bg-jade-50" : ""}`}
                 >
-                  <div className="h-8 w-8 rounded-full bg-jade-500/15 border border-jade-500/25 flex items-center justify-center shrink-0 mt-0.5">
-                    <i className="fa-solid fa-user-plus text-jade-500 text-xs" />
+                  <div className="h-8 w-8 rounded-full bg-jade-500/15 border border-jade-500/25 flex items-center justify-center shrink-0 mt-0.5 overflow-hidden">
+                    {n.type === "player_registered" && n.player?.photo ? (
+                      <img src={n.player.photo} alt={n.player.fullName || "Player"} className="h-full w-full object-cover" />
+                    ) : n.type === "contact_message" ? (
+                      <i className="fa-solid fa-envelope text-jade-500 text-xs" />
+                    ) : (
+                      <i className="fa-solid fa-user-plus text-jade-500 text-xs" />
+                    )}
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className={`text-xs leading-snug ${!n.read ? "font-semibold dark:text-ink-100 text-ink-900" : "dark:text-ink-300 text-ink-600"}`}>
@@ -102,6 +109,9 @@ export default function NotificationBell() {
                     </p>
                     {n.tournament?.name && (
                       <p className="text-2xs dark:text-ink-500 text-ink-400 mt-0.5">{n.tournament.name}</p>
+                    )}
+                    {n.type === "contact_message" && n.contactMessage?.email && (
+                      <p className="text-2xs dark:text-ink-500 text-ink-400 mt-0.5">{n.contactMessage.email}</p>
                     )}
                     <p className="text-2xs dark:text-ink-600 text-ink-400 mt-1 font-mono">{formatWhen(n.createdAt)}</p>
                   </div>

@@ -21,6 +21,11 @@ import UnsoldPlayers from "./pages/admin/UnsoldPlayers";
 import Reports from "./pages/admin/Reports";
 import Settings from "./pages/admin/Settings";
 import ChangePassword from "./pages/admin/ChangePassword";
+import GalleryManagement from "./pages/admin/GalleryManagement";
+import FaqManagement from "./pages/admin/FaqManagement";
+import ContactMessages from "./pages/admin/ContactMessages";
+import TermsManagement from "./pages/admin/TermsManagement";
+import TermsAndConditions from "./pages/TermsAndConditions";
 
 export default function App() {
   return (
@@ -31,6 +36,7 @@ export default function App() {
       <Route path="/watch/:tournamentId" element={<BroadcastDisplay />} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/player-registration" element={<PlayerRegistration />} />
+      <Route path="/terms" element={<TermsAndConditions />} />
 
       {/* ── Admin ── */}
       <Route
@@ -53,6 +59,10 @@ export default function App() {
         <Route path="sold"           element={<SoldPlayers />} />
         <Route path="unsold"         element={<UnsoldPlayers />} />
         <Route path="reports"        element={<Reports />} />
+        <Route path="gallery"        element={<GalleryManagement />} />
+        <Route path="faqs"           element={<FaqManagement />} />
+        <Route path="contact-messages" element={<ContactMessages />} />
+        <Route path="terms"          element={<TermsManagement />} />
         <Route path="settings"       element={<Settings />} />
         <Route path="change-password"element={<ChangePassword />} />
       </Route>

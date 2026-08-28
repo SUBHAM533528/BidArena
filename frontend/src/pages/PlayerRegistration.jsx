@@ -4,7 +4,6 @@ import api from "../api/axios";
 import { Input, Label, Button } from "../components/UI";
 import SelectField from "../components/SelectField";
 import StadiumBg from "../components/StadiumBg";
-import SuccessCheck from "../components/SuccessCheck";
 import SEO from "../components/SEO";
 
 // Role-aware options so players don't type styles manually
@@ -136,15 +135,9 @@ export default function PlayerRegistration() {
       <div className="min-h-screen bg-[#0a0d0a] flex items-center justify-center px-4 relative">
         <StadiumBg opacity={0.2} />
         <div className="card max-w-md text-center p-8 relative z-10">
-          <div className="flex justify-center mb-2">
-            <SuccessCheck />
-          </div>
-          <h1 className="font-display text-2xl text-jade-400 mb-2 animate-fade-up" style={{ animationDelay: "0.9s", animationFillMode: "both" }}>
-            Registration Submitted!
-          </h1>
-          <p className="text-ink-400 text-sm animate-fade-up" style={{ animationDelay: "1.05s", animationFillMode: "both" }}>
-            Your profile is pending admin review. You'll be contacted once approved for the auction.
-          </p>
+          <p className="text-6xl mb-4">✅</p>
+          <h1 className="font-display text-2xl text-jade-400 mb-2">Registration Submitted!</h1>
+          <p className="text-ink-400 text-sm">Your profile is pending admin review. You'll be contacted once approved for the auction.</p>
         </div>
       </div>
     );
@@ -160,7 +153,7 @@ export default function PlayerRegistration() {
           type="button"
           onClick={() => navigate("/")}
           aria-label="Close registration form"
-          className="absolute -top-2 -right-2 sm:top-3 sm:right-3 z-20 h-9 w-9 rounded-full flex items-center justify-center  text-ink-400 hover:text-flame-400 hover:bg-flame-500/10 hover:border-flame-500/30 transition"
+          className="absolute top-3 right-3 sm:-top-3 sm:-right-3 z-20 h-9 w-9 rounded-full flex items-center justify-center bg-[#0a0d0a]/80 sm:bg-transparent border border-white/[0.1] sm:border-transparent text-ink-300 hover:text-flame-400 hover:bg-flame-500/10 hover:border-flame-500/30 transition"
         > 
           <i className="fa-solid fa-xmark text-sm" />
         </button>

@@ -7,6 +7,7 @@ import SEO, {
   buildOrganizationSchema,
 } from "../components/SEO";
 import { cldOptimize } from "../utils/cloudinaryOptimize";
+import PaintBg from "../components/PaintBg";
 
 function AnimatedWords({ text, startIndex = 0 }) {
   return text.split(" ").map((word, i) => (
@@ -59,6 +60,11 @@ export default function Landing() {
   const [nav, setNav] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [gallery, setGallery] = useState([]);
+  const [faqs, setFaqs] = useState([]);
+  const [openFaq, setOpenFaq] = useState(0);
+  const [contactForm, setContactForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
+  const [contactStatus, setContactStatus] = useState({ sending: false, sent: false, error: "" });
   const auctionScrollRef = useRef(null);
   const scrollAuctions = (dir) =>
     auctionScrollRef.current?.scrollBy({ left: dir * 340, behavior: "smooth" });
@@ -71,6 +77,8 @@ export default function Landing() {
       .then((r) => setTournaments(r.data))
       .catch(() => {})
       .finally(() => setLoading(false));
+    api.get("/gallery/public").then((r) => setGallery(r.data)).catch(() => {});
+    api.get("/faqs/public").then((r) => setFaqs(r.data)).catch(() => {});
   }, []);
   useEffect(() => {
     if (t)
@@ -79,6 +87,18 @@ export default function Landing() {
         .then((r) => setTeams(r.data))
         .catch(() => {});
   }, [t?._id]);
+
+  const submitContact = async (e) => {
+    e.preventDefault();
+    setContactStatus({ sending: true, sent: false, error: "" });
+    try {
+      await api.post("/contact", contactForm);
+      setContactStatus({ sending: false, sent: true, error: "" });
+      setContactForm({ name: "", email: "", phone: "", subject: "", message: "" });
+    } catch (err) {
+      setContactStatus({ sending: false, sent: false, error: err.response?.data?.message || "Couldn't send your message. Please try again." });
+    }
+  };
 
   // Transparent navbar — becomes solid after scrolling past the hero
   useEffect(() => {
@@ -102,11 +122,11 @@ export default function Landing() {
         <img
           src="/logo2.png"
           alt="BidArenaX"
-          className="h-20 w-20 object-contain animate-pulse"
+          className="h-28 w-28 object-contain animate-pulse"
         />
         <div className="flex items-center gap-2 text-jade-500">
           <i className="fa-solid fa-circle-notch animate-spin" />
-          <span className="text-sm font-medium">Loading tournament data…</span>
+          <span className="text-sm font-medium">Loading.....</span>
         </div>
       </div>
     );
@@ -155,6 +175,19 @@ export default function Landing() {
             >
               Player Registration
             </Link>
+            {gallery.length > 0 && (
+              <a href="#gallery" className="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 text-ink-300 hover:text-green-400 hover:bg-white/5">
+                Gallery
+              </a>
+            )}
+            {faqs.length > 0 && (
+              <a href="#faq" className="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 text-ink-300 hover:text-green-400 hover:bg-white/5">
+                FAQ
+              </a>
+            )}
+            <a href="#contact" className="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 text-ink-300 hover:text-green-400 hover:bg-white/5">
+              Contact Us
+            </a>
             {t && (
               <Link
                 to={`/watch/${t._id}`}
@@ -193,6 +226,22 @@ export default function Landing() {
             >
               Player Registration
             </Link>
+            {gallery.length > 0 && (
+              <a href="#gallery" onClick={() => setNav(false)}
+                className="block px-3 py-2.5 text-sm rounded-lg text-ink-300 hover:bg-white/5 hover:text-green-400 transition">
+                Gallery
+              </a>
+            )}
+            {faqs.length > 0 && (
+              <a href="#faq" onClick={() => setNav(false)}
+                className="block px-3 py-2.5 text-sm rounded-lg text-ink-300 hover:bg-white/5 hover:text-green-400 transition">
+                FAQ
+              </a>
+            )}
+            <a href="#contact" onClick={() => setNav(false)}
+              className="block px-3 py-2.5 text-sm rounded-lg text-ink-300 hover:bg-white/5 hover:text-green-400 transition">
+              Contact Us
+            </a>
             
             {t && (
               <Link
@@ -793,6 +842,146 @@ export default function Landing() {
         </section>
       )}
 
+      {/* ── GALLERY ───────────────────────────────────────────── */}
+      {gallery.length > 0 && (
+        <section id="gallery" className="relative max-w-7xl mx-auto px-4 sm:px-8 py-16 overflow-hidden scroll-mt-20">
+          <PaintBg />
+          <div className="relative z-10">
+            <p className="text-2xs font-semibold uppercase tracking-widest text-gold-400 mb-2 text-center">
+              Moments
+            </p>
+            <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-white mb-10 text-center">
+              Gallery
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {gallery.map((g) => (
+                <div key={g._id} className="group rounded-2xl overflow-hidden border border-white/[0.08] bg-white/[0.02] relative">
+                  <img
+                    src={cldOptimize(g.image, 400)}
+                    alt={g.caption || g.location || "Auction gallery photo"}
+                    className="w-full aspect-square object-cover transition duration-300 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  {(g.caption || g.location) && (
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-3">
+                      {g.caption && <p className="text-xs font-semibold text-white truncate">{g.caption}</p>}
+                      {g.location && (
+                        <p className="text-2xs text-ink-300 truncate flex items-center gap-1 mt-0.5">
+                          <i className="fa-solid fa-location-dot text-gold-400" /> {g.location}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── FAQ ───────────────────────────────────────────────── */}
+      {faqs.length > 0 && (
+        <section id="faq" className="relative border-t border-white/[0.06] bg-white/[0.015] overflow-hidden scroll-mt-20">
+          <PaintBg />
+          <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-8 py-16">
+            <p className="text-2xs font-semibold uppercase tracking-widest text-gold-400 mb-2 text-center">
+              Have Questions?
+            </p>
+            <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-white mb-10 text-center">
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-3">
+              {faqs.map((f, i) => (
+                <div key={f._id} className="rounded-2xl border border-white/[0.08] bg-white/[0.025] overflow-hidden">
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq(openFaq === i ? -1 : i)}
+                    className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left"
+                  >
+                    <span className="font-semibold text-white text-sm">{f.question}</span>
+                    <i className={`fa-solid fa-chevron-down text-xs text-green-600 shrink-0 transition-transform ${openFaq === i ? "rotate-180" : ""}`} />
+                  </button>
+                  {openFaq === i && (
+                    <div className="px-5 pb-4 text-sm text-ink-400 leading-relaxed animate-fade-in">
+                      {f.answer}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── CONTACT US ────────────────────────────────────────── */}
+      <section id="contact" className="relative max-w-7xl mx-auto px-4 sm:px-8 py-16 overflow-hidden scroll-mt-20">
+        <PaintBg />
+        <div className="relative z-10 grid md:grid-cols-2 gap-10 lg:gap-16 items-start">
+          <div>
+            <p className="text-2xs font-semibold uppercase tracking-widest text-gold-400 mb-2">
+              Get In Touch
+            </p>
+            <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-white mb-5 leading-tight">
+              Contact Us
+            </h2>
+            <p className="text-ink-400 leading-relaxed max-w-md mb-7">
+              Questions about registration, teams, or an upcoming auction? Send us a message and our team will get back to you.
+            </p>
+            {t?.contactDetails && (
+              <p className="text-sm text-jade-400 flex items-center gap-2">
+                <i className="fa-solid fa-phone" /> {t.contactDetails}
+              </p>
+            )}
+          </div>
+
+          <form onSubmit={submitContact} className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-7 grid gap-4">
+            {contactStatus.sent ? (
+              <div className="text-center py-6">
+                <p className="text-4xl mb-3">✅</p>
+                <p className="text-jade-400 font-semibold">Message sent — thanks for reaching out!</p>
+              </div>
+            ) : (
+              <>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-ink-500 mb-1.5 uppercase tracking-wide">Name *</label>
+                    <input required value={contactForm.name} onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
+                      className="form-input" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-ink-500 mb-1.5 uppercase tracking-wide">Email *</label>
+                    <input type="email" required value={contactForm.email} onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
+                      className="form-input" />
+                  </div>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-ink-500 mb-1.5 uppercase tracking-wide">Phone</label>
+                    <input value={contactForm.phone} onChange={(e) => setContactForm({ ...contactForm, phone: e.target.value })}
+                      className="form-input" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-ink-500 mb-1.5 uppercase tracking-wide">Subject</label>
+                    <input value={contactForm.subject} onChange={(e) => setContactForm({ ...contactForm, subject: e.target.value })}
+                      className="form-input" />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-ink-500 mb-1.5 uppercase tracking-wide">Message *</label>
+                  <textarea required rows={4} value={contactForm.message} onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
+                    className="form-input resize-none" />
+                </div>
+                {contactStatus.error && <p className="text-flame-400 text-sm">{contactStatus.error}</p>}
+                <button type="submit" disabled={contactStatus.sending}
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-jade-600 hover:bg-jade-500 disabled:opacity-60 text-white font-semibold text-sm rounded-lg transition">
+                  {contactStatus.sending ? <><i className="fa-solid fa-circle-notch animate-spin" /> Sending…</> : "Send Message"}
+                </button>
+              </>
+            )}
+          </form>
+        </div>
+      </section>
+
       {/* ── FOOTER ────────────────────────────────────────────── */}
       <footer className="border-t border-white/[0.06] bg-[#0a0d0a]">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -809,7 +998,7 @@ export default function Landing() {
               ©{new Date().getFullYear()} BidArenaX All rights reserved here 
             </span>
           </div>
-          <div className="flex gap-6 text-sm text-ink-500">
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-ink-500">
             <Link
               to="/player-registration"
               className="hover:text-green-400 transition"
@@ -824,6 +1013,10 @@ export default function Landing() {
                 Watch Auction
               </Link>
             )}
+            {gallery.length > 0 && <a href="#gallery" className="hover:text-green-400 transition">Gallery</a>}
+            {faqs.length > 0 && <a href="#faq" className="hover:text-green-400 transition">FAQ</a>}
+            <a href="#contact" className="hover:text-green-400 transition">Contact Us</a>
+            <Link to="/terms" className="hover:text-green-400 transition">Terms &amp; Conditions</Link>
           </div>
         </div>
       </footer>

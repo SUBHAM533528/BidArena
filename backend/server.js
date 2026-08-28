@@ -19,6 +19,10 @@ const auctionRoutes = require("./routes/auctionRoutes");
 const reportRoutes = require("./routes/reportRoutes");
 const bannerRoutes = require("./routes/bannerRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
+const galleryRoutes = require("./routes/galleryRoutes");
+const faqRoutes = require("./routes/faqRoutes");
+const contactRoutes = require("./routes/contactRoutes");
+const contentRoutes = require("./routes/contentRoutes");
 
 connectDB().then(() => {
   seedAdmin();
@@ -77,12 +81,22 @@ app.use("/api/auction", auctionRoutes);
 app.use("/api/reports", reportRoutes);
 app.use("/api/banners", bannerRoutes);
 app.use("/api/notifications", notificationRoutes);
+app.use("/api/gallery", galleryRoutes);
+app.use("/api/faqs", faqRoutes);
+app.use("/api/contact", contactRoutes);
+app.use("/api/content", contentRoutes);
 
 app.get("/api/health", (req, res) => res.json({ status: "ok" }));
 
 // Centralized error handler (multer errors, etc.)
 app.use((err, req, res, next) => {
   console.error(err);
+  if (err && err.name === "MulterError") {
+    if (err.code === "LIMIT_FILE_SIZE") {
+      return res.status(413).json({ message: "That image is too large — please upload a file under 8MB." });
+    }
+    return res.status(400).json({ message: `Upload error: ${err.message}` });
+  }
   res.status(err.status || 500).json({ message: err.message || "Server error" });
 });
 
