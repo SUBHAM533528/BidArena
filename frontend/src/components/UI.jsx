@@ -1,4 +1,5 @@
 import React from "react";
+import SelectField from "./SelectField";
 
 export function Card({ children, className = "" }) {
   return <div className={`card p-5 ${className}`}>{children}</div>;
@@ -34,8 +35,29 @@ export function Input({ className="", ...props }) {
   return <input {...props} className={`form-input ${className}`} />;
 }
 
-export function Select({ className="", children, ...props }) {
-  return <select {...props} className={`form-input ${className}`}>{children}</select>;
+// Every call site in the app already uses this the way a native <select>
+// works — <option> children, value, onChange={e => ...e.target.value}.
+// Rather than touching every one of those call sites individually, this
+// wrapper parses those <option> children into react-select's option
+// shape and re-synthesizes a fake event on change, so react-select (with
+// its search box, keyboard nav, and themed dark+green menu) now renders
+// everywhere a <Select> is used, with zero other files changed.
+export function Select({ className="", children, value, onChange, ...props }) {
+  const options = React.Children.toArray(children)
+    .filter((child) => React.isValidElement(child))
+    .map((child) => ({
+      value: child.props.value !== undefined ? child.props.value : child.props.children,
+      label: child.props.children,
+    }));
+  return (
+    <SelectField
+      options={options}
+      value={value}
+      onChange={(v) => onChange && onChange({ target: { value: v } })}
+      className={className}
+      {...props}
+    />
+  );
 }
 
 export function Label({ children, required }) {

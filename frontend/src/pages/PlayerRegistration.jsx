@@ -4,6 +4,7 @@ import api from "../api/axios";
 import { Input, Label, Button } from "../components/UI";
 import SelectField from "../components/SelectField";
 import StadiumBg from "../components/StadiumBg";
+import SuccessCheck from "../components/SuccessCheck";
 import SEO from "../components/SEO";
 
 // Role-aware options so players don't type styles manually
@@ -135,9 +136,15 @@ export default function PlayerRegistration() {
       <div className="min-h-screen bg-[#0a0d0a] flex items-center justify-center px-4 relative">
         <StadiumBg opacity={0.2} />
         <div className="card max-w-md text-center p-8 relative z-10">
-          <p className="text-6xl mb-4">✅</p>
-          <h1 className="font-display text-2xl text-jade-400 mb-2">Registration Submitted!</h1>
-          <p className="text-ink-400 text-sm">Your profile is pending admin review. You'll be contacted once approved for the auction.</p>
+          <div className="flex justify-center mb-2">
+            <SuccessCheck />
+          </div>
+          <h1 className="font-display text-2xl text-jade-400 mb-2 animate-fade-up" style={{ animationDelay: "0.9s", animationFillMode: "both" }}>
+            Registration Submitted!
+          </h1>
+          <p className="text-ink-400 text-sm animate-fade-up" style={{ animationDelay: "1.05s", animationFillMode: "both" }}>
+            Your profile is pending admin review. You'll be contacted once approved for the auction.
+          </p>
         </div>
       </div>
     );
